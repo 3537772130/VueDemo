@@ -1,11 +1,7 @@
 <script type="text/javascript">
-  const ipPath = "http://localhost:8060";
-
-  function getIpPath() {
-    return ipPath;
-  }
+  const serverSrc = "http://localhost:8060";
 
   export default {
-    getIpPath
+    serverSrc
   }
 </script>
