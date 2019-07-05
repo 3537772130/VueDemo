@@ -67,7 +67,7 @@
 </script>
 <style type="text/css">
   #app{
-    margin-top: 0px;
+    margin-top: 10px;
   }
   .form-div{
     margin: auto;
@@ -80,6 +80,7 @@
   .form-div>form{
     margin: auto;
     width: 189px;
+    margin-top: 10px;
   }
   .form-div .but-div{
     width: 189px;
