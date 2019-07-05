@@ -3,39 +3,37 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-//导入iview
+import store from 'store'
 import iView from 'iview'
-import 'iview/dist/styles/iview.css' // 使用 CSS
-Vue.use(iView)
-//导入axios异步请求
 import axios from 'axios'
+import global_ from './components/tool/Global'
+import 'iview/dist/styles/iview.css' // 使用 CSS
+import 'lib-flexible'
+
+Vue.use(iView)
+
 Vue.prototype.$axios = axios
+Vue.prototype.GLOBAL = global_
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前,格式化参数，增加token
-  let data = config.data;
+  let data = config.data
   let params = new URLSearchParams()
   for (var key in config.data) {
     params.append(key, data[key])
   }
-  //params.append("tokenStr", getTimes())
-  config.data = params;
-  return config;
+  // params.append("tokenStr", getTimes())
+  config.data = params
+  return config
 }, function (error) {
-  return Promise.reject(error);
-});
-
-//导入自定义全局变量
-import global_ from './components/tool/Global'
-Vue.prototype.GLOBAL = global_
-
-Vue.config.productionTip = false
-
+  return Promise.reject(error)
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  store,
+  components: {App},
   template: '<App/>'
 })
