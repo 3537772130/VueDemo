@@ -9,7 +9,9 @@
 </style>
 <template>
   <el-tabs v-model="editableTabsValue" type="border-card" @tab-remove="removeTab">
-    <el-tab-pane label="个人主页" name="0" :style="{height: tabPaneHeight + 'px',display: mainShow}">个人主页</el-tab-pane>
+    <el-tab-pane label="个人主页" name="0" :style="{height: tabPaneHeight + 'px',display: mainShow}">
+      <personalMain></personalMain>
+    </el-tab-pane>
     <el-tab-pane v-for="(item, index) in editableTabs" :key="item.name"
       :label="item.title" :name="item.name" :style="{height: tabPaneHeight + 'px'}" closable>
       {{item.content}}
@@ -17,6 +19,8 @@
   </el-tabs>
 </template>
 <script>
+  import personalMain from '@/views/personal/main.vue'
+
   export default {
     data() {
       return {
@@ -26,6 +30,9 @@
         editableTabs: [],
         tabIndex: 0
       }
+    },
+    components: {
+      'personalMain': personalMain
     },
     methods: {
       addTab(menuId, title) {

@@ -6,7 +6,7 @@ import router from './router'
 import store from 'store'
 import ElementUI from 'element-ui'
 import axios from 'axios'
-import global_ from './components/tool/Global'
+import global_ from '@/components/tool/Global'
 import VueJsDialog from "vuejs-dialog"
 import 'element-ui/lib/theme-chalk/index.css'
 import 'lib-flexible'

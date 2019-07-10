@@ -126,8 +126,8 @@
             <img src="@/assets/logo.png" class="user-photo">
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item disabled>{{userName}}</el-dropdown-item>
-            <el-dropdown-item>{{nickName}}</el-dropdown-item>
+            <el-dropdown-item disabled>{{info.userName}}</el-dropdown-item>
+            <el-dropdown-item>{{info.nickName}}</el-dropdown-item>
             <el-dropdown-item divided @click.native="exitLogin()">注销登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -146,9 +146,7 @@
     data() {
       return {
         bodyHeight: `${document.documentElement.clientHeight}` + 'px',
-        userName: '',
-        nickName: '',
-        createTime: ''
+        info: {}
       }
     },
     components: {
@@ -165,9 +163,8 @@
           console.info('后台返回的数据', res.data)
           if (res.data.code === '1') {
             const info = res.data.data
-            this.userName = info.userName
-            this.nickName = info.nickName
-            this.createTime = info.createTime
+            this.GLOBAL.userInfo = info
+            this.info = info
           } else {
             this.$message.error(res.data.data)
             this.$router.push({path: '/login'})

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '@/views/index'
 import Login from '@/views/login'
 import Main from '@/views/main-info'
-import BottomMenu from '@/views/common/bottom-menu'
+import personalMain from '@/views/personal/main.vue'
 
 Vue.use(Router)
 
@@ -29,9 +29,9 @@ export default new Router({
       component: Main
     },
     {
-      path: '/bottom-menu',
-      name: 'bottom-menu',
-      component: BottomMenu
+      path: '/personal-main',
+      name: 'personal-main',
+      component: personalMain
     }
   ]
 })
