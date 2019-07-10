@@ -1,37 +1,86 @@
+<style type="text/css">
+  .login-div {
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+  }
+
+  .login-div > .img-div {
+    width: 100%;
+    height: 200px;
+    text-align: center;
+  }
+
+  .login-div > .img-div > img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .login-div > .form-div {
+    width: 259px;
+    height: 189px;
+    margin: auto;
+    border: 1px #DCDFE6 solid;
+    border-radius: 5px;
+    padding-top: 50px;
+    box-shadow: 10px 10px 5px #DCDFE6;
+  }
+
+  .login-div > .form-div > form {
+    width: 189px;
+    margin: auto;
+  }
+
+  .login-div > .form-div > form button {
+    width: 189px;
+    position: relative;
+    left: -80px;
+  }
+  .input-div{
+    width: 189px;
+    position: relative;
+    left: -80px;
+  }
+  .el-form-item__error{
+    left: -80px;
+  }
+</style>
 <template>
-  <div class="form-div">
+  <div class="login-div">
     <div class="img-div">
-      <img src="@/assets/logo.png" alt="">
+      <img src="@/assets/logo.png">
     </div>
-    <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-      <FormItem prop="userName">
-        <Input type="text" v-model="formInline.userName" placeholder="Username" value="17601301913">
-        <Icon type="ios-person-outline" slot="prepend"></Icon>
-        </Input>
-      </FormItem>
-      <FormItem prop="userPass">
-        <Input type="password" v-model="formInline.userPass" placeholder="Password" value="zhouhuahu">
-        <Icon type="ios-lock-outline" slot="prepend"></Icon>
-        </Input>
-      </FormItem>
-      <FormItem class="but-div">
-        <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
-      </FormItem>
-    </Form>
+    <div class="form-div">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px">
+        <el-form-item prop="userName">
+          <el-input class="input-div" placeholder="请输入账户名" prefix-icon="el-icon-user"
+                    v-model="ruleForm.userName"></el-input>
+        </el-form-item>
+        <el-form-item prop="userName">
+          <el-input type="password" class="input-div" placeholder="请输入密码" prefix-icon="el-icon-lock"
+                    v-model="ruleForm.userPass" show-password></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit('ruleForm')">立即登录</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 <script type="text/javascript">
+  import {Loading} from 'element-ui'
+
   export default {
     name: 'login',
-    data () {
+    data() {
       return {
-        formInline: {
+        ruleForm: {
           userName: '17601301913',
           userPass: 'zhouhuahu'
         },
-        ruleInline: {
+        rules: {
           userName: [
-            {required: true, message: '请输入账户', trigger: 'blur'}
+            {required: true, message: '请输入账户名', trigger: 'blur'}
           ],
           userPass: [
             {required: true, message: '请输入密码', trigger: 'blur'},
@@ -41,54 +90,33 @@
       }
     },
     methods: {
-      handleSubmit (name) {
+      onSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.loading('正在登录')
+            let loading = Loading.service({fullscreen: true, text: '正在登录'});
             this.$axios({
               url: '/api/doLogin',
               method: 'post',
-              data: this.formInline
+              data: this.ruleForm
             }).then(res => {
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
                 this.$router.push({path: '/main-info'})
               } else {
-                this.$Message.error(res.data.data)
+                this.$message.error(res.data.data)
               }
+              this.$nextTick(() => {
+                loading.close();
+              });
             })
           } else {
-            this.$Message.error('表单校验失败!')
+            this.$message({
+              message: '表单校验失败!',
+              type: 'warning'
+            });
           }
         })
       }
     }
   }
 </script>
-<style type="text/css">
-  #app{
-    margin-top: 10px;
-  }
-  .form-div{
-    margin: auto;
-  }
-  .img-div{
-    margin: auto;
-    width: 100%;
-    height: 200px;
-  }
-  .form-div>form{
-    margin: auto;
-    width: 189px;
-    margin-top: 10px;
-  }
-  .form-div .but-div{
-    width: 189px;
-    margin-right: 0px;
-  }
-  .form-div .but-div button{
-    width: 179px;
-    position: relative;
-    left: -5px;
-  }
-</style>

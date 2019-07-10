@@ -7,17 +7,17 @@
 <script>
   import Login from '@/views/login'
   import Main from '@/views/main-info'
-  import VueElementLoading from 'vue-element-loading'
+  import { Loading } from 'element-ui'
+
   export default {
     name: 'index',
     components: {
-      'VueElementLoading': VueElementLoading,
       'Login': Login,
       'Main': Main
     },
     methods: {
       indexs: function () {
-        this.$Message.loading('加载中')
+        let loading = Loading.service({fullscreen:true,text: '加载中'});
         this.$axios({
           url: '/api/checkLogin',
           method: 'post'
@@ -28,6 +28,9 @@
           } else {
             this.$router.push({path: '/login'})
           }
+          this.$nextTick(() => {
+            loading.close();
+          });
         })
       }
     },

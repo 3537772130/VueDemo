@@ -4,13 +4,15 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from 'store'
-import iView from 'iview'
+import ElementUI from 'element-ui'
 import axios from 'axios'
 import global_ from './components/tool/Global'
-import 'iview/dist/styles/iview.css' // 使用 CSS
+import VueJsDialog from "vuejs-dialog"
+import 'element-ui/lib/theme-chalk/index.css'
 import 'lib-flexible'
 
-Vue.use(iView)
+Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
+Vue.use(VueJsDialog)
 
 Vue.prototype.$axios = axios
 Vue.prototype.GLOBAL = global_
