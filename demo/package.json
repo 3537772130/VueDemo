@@ -19,6 +19,7 @@
     "lib-flexible": "^0.3.2",
     "store": "^2.0.12",
     "vue": "^2.5.2",
+    "vue-cookies": "^1.5.13",
     "vue-element-loading": "^1.1.1",
     "vue-router": "^3.0.7",
     "vuejs-dialog": "^1.4.0",

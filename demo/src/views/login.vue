@@ -101,6 +101,7 @@
             }).then(res => {
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
+                this.$cookies.set('userInfo', res.data.data)
                 this.$router.push({path: '/main-info'})
               } else {
                 this.$message.error(res.data.data)

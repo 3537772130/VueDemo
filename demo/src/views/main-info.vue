@@ -146,7 +146,7 @@
     data() {
       return {
         bodyHeight: `${document.documentElement.clientHeight}` + 'px',
-        info: {}
+        info: this.$cookies.get('userInfo')
       }
     },
     components: {
@@ -155,47 +155,32 @@
     methods: {
       getLoginInfo() {
         let loading = Loading.service({fullscreen: true, text: '加载中'});
-        this.$axios({
-          url: '/api/user/getUserInfo',
-          method: 'post',
-          contentType: 'application/json;charset=utf-8'
-        }).then(res => {
-          console.info('后台返回的数据', res.data)
-          if (res.data.code === '1') {
-            const info = res.data.data
-            this.GLOBAL.userInfo = info
-            this.info = info
-          } else {
-            this.$message.error(res.data.data)
-            this.$router.push({path: '/login'})
-          }
-          this.$nextTick(() => {
-            loading.close();
-          });
-        })
+        this.$nextTick(() => {
+          loading.close();
+        });
       },
       exitLogin() {
-        this.$alert('确定注销登录吗？', '温馨提示', {
+        this.$confirm('确定注销登录吗？', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
         }).then(() => {
+          let loading = Loading.service({fullscreen: true, text: '正在注销'});
           this.$axios({
             url: '/api/exitLogin',
             method: 'post'
           }).then(res => {
             console.info('后台返回的数据', res.data)
             if (res.data.code === '1') {
+              this.$cookies.remove('userInfo')
               this.$router.push({path: '/login'})
             } else {
               this.$message.error(res.data.data)
             }
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消删除'
+            this.$nextTick(() => {
+              loading.close();
             });
-          });
+          })
         })
       },
       loadMenuContent(menuId, title) {
@@ -203,7 +188,7 @@
       }
     },
     created() {
-      this.getLoginInfo()
+
     }
   }
 </script>
