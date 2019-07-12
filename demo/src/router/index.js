@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '@/views/index'
 import Login from '@/views/login'
 import Main from '@/views/main-info'
-import updateUserInfo from '@/views/personal/update-user-info.vue'
+import userInfo from '@/views/personal/user-info'
 
 Vue.use(Router)
 
@@ -29,9 +29,9 @@ export default new Router({
       component: Main
     },
     {
-      path: '/update-user-info',
-      name: 'update-user-info',
-      component: updateUserInfo
+      path: '/user-info',
+      name: 'user-info',
+      component: userInfo
     }
   ]
 })

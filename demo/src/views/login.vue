@@ -93,7 +93,7 @@
       onSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            let loading = Loading.service({fullscreen: true, text: '正在登录'});
+            let loading = Loading.service({fullscreen: true, text: '正在登录'})
             this.$axios({
               url: '/api/doLogin',
               method: 'post',
@@ -106,15 +106,10 @@
               } else {
                 this.$message.error(res.data.data)
               }
-              this.$nextTick(() => {
-                loading.close();
-              });
+              this.$nextTick(() => {loading.close();})
             })
           } else {
-            this.$message({
-              message: '表单校验失败!',
-              type: 'warning'
-            });
+            this.$message({message: '表单校验失败!', type: 'warning'})
           }
         })
       }

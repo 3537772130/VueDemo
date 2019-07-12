@@ -72,6 +72,7 @@
   .form-info-div {
     text-align: left;
   }
+
   .form-info-val {
     width: 215px;
   }
@@ -95,8 +96,8 @@
     </el-card>
     <el-dialog :visible.sync="dialogFormVisible">
       <el-tabs v-model="editableTabsValue" type="border-card">
-        <el-tab-pane label="修改信息" name="up-info" ref="infoForm" style="height: 400px;">
-          <el-form :model="upInfo" :rules="rules">
+        <el-tab-pane label="修改信息" name="up-info" style="height: 400px;">
+          <el-form :model="upInfo" :rules="infoRules" ref="upInfo">
             <el-form-item label="账户" :label-width="formLabelWidth" class="form-info-div">
               <span>{{upInfo.userName}}</span>
             </el-form-item>
@@ -106,24 +107,27 @@
             <el-form-item label="性别" :label-width="formLabelWidth" class="form-info-div">
               <el-select v-model="upInfo.sex" name="sex" placeholder="请选择活动区域" class="form-info-val">
                 <el-option label="男" value="1"></el-option>
-                <el-option label="女" value="0"></el-option>
+                <el-option label="女" value="0" :label="0"></el-option>
               </el-select>
             </el-form-item>
-            <el-button type="primary" @click="">确 定</el-button>
+            <el-button type="primary" @click="onSubmitInfo('upInfo')">提&nbsp;&nbsp;交</el-button>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="修改密码" name="up-pass" style="height: 400px;">
-          <el-form :rules="rules" ref="passForm">
+          <el-form :model="passForm" :rules="passRules" ref="passForm">
             <el-form-item label="原密码" :label-width="formLabelWidth" class="form-info-div">
-              <el-input name="oldPass" type="password" autocomplete="off" class="form-info-val" show-password></el-input>
+              <el-input name="oldPass" type="password" autocomplete="off" class="form-info-val"
+                        show-password></el-input>
             </el-form-item>
             <el-form-item label="新密码" :label-width="formLabelWidth" class="form-info-div">
-              <el-input name="newPass" type="password" autocomplete="off" class="form-info-val" show-password></el-input>
+              <el-input name="newPass" type="password" autocomplete="off" class="form-info-val"
+                        show-password></el-input>
             </el-form-item>
             <el-form-item label="确认密码" :label-width="formLabelWidth" class="form-info-div">
-              <el-input name="confirmPass" type="password" autocomplete="off" class="form-info-val" show-password></el-input>
+              <el-input name="confirmPass" type="password" autocomplete="off" class="form-info-val"
+                        show-password></el-input>
             </el-form-item>
-            <el-button type="primary" @click="">提&nbsp;&nbsp;交</el-button>
+            <el-button type="primary" @click="onSubmitPass('passForm')">提&nbsp;&nbsp;交</el-button>
           </el-form>
         </el-tab-pane>
       </el-tabs>
@@ -132,12 +136,20 @@
 </template>
 
 <script type="text/javascript">
+  import {Loading} from 'element-ui'
+
   export default {
     name: 'personal-main',
     data() {
+      var confirmPassValidator = (rule, value, callback) => {
+        if (value !== this.passForm.newPass) {
+          callback(new Error('两次输入密码不一致!'));
+        }
+      }
       return {
         info: this.$cookies.get('userInfo'),
         upInfo: {},
+        passForm: {},
         dialogTableVisible: false,
         dialogFormVisible: false,
         editableTabsValue: 'up-info',
@@ -152,28 +164,75 @@
         },
         passRules: {
           oldPass: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
+            {required: true, message: '请输入原密码', trigger: 'blur'},
             {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'}
           ],
           newPass: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
+            {required: true, message: '请输入新密码', trigger: 'blur'},
             {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'}
           ],
           confirmPass: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
-            {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'}
+            {required: true, message: '请输入确认密码', trigger: 'blur'},
+            {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
+            {validator: confirmPassValidator, trigger: 'blur'}
           ]
         }
       }
     },
     methods: {
-      loadUpdateUserInfo() {
-        this.$router.push({path: '/update-user-info'})
+      onSubmitInfo(name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            let loading = Loading.service({fullscreen: true, text: '正在提交'})
+            this.$axios({
+              url: '/api/user/updateUserInfo',
+              method: 'post',
+              data: this.upInfo
+            }).then(res => {
+              console.info('后台返回的数据', res.data)
+              if (res.data.code === '1') {
+                this.$cookies.set('userInfo', res.data.data)
+                this.$message({message: '修改信息成功', type: 'success'})
+              } else {
+                this.$message.error(res.data.data)
+              }
+              this.$nextTick(() => {
+                loading.close();
+              });
+            })
+          } else {
+            this.$message({message: '信息提交失败', type: 'warning'})
+          }
+        })
       },
+      onSubmitPass(name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            let loading = Loading.service({fullscreen: true, text: '正在提交'})
+            this.$axios({
+              url: '/api/user/updateUserInfoByPassword',
+              method: 'post',
+              data: this.passForm
+            }).then(res => {
+              console.info('后台返回的数据', res.data)
+              if (res.data.code === '1') {
+                this.$message({message: res.data.data, type: 'success'})
+              } else {
+                this.$message.error(res.data.data)
+              }
+              this.$nextTick(() => {
+                loading.close();
+              });
+            })
+          } else {
+            this.$message({message: '信息提交失败', type: 'warning'})
+          }
+        })
+      }
     },
     created() {
       let info = this.$cookies.get('userInfo')
-      info.sex = info.sex ? '男':'女'
+      info.sex = info.sex ? '男' : '女'
       this.upInfo = info
     }
   }
