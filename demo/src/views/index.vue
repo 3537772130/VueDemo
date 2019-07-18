@@ -17,7 +17,7 @@
     },
     methods: {
       indexs: function () {
-        let loading = Loading.service({fullscreen:true,text: '加载中'});
+        let loading = Loading.service({fullscreen:true,text: '加载中'})
         this.$axios({
           url: '/api/checkLogin',
           method: 'post'

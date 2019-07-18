@@ -7,12 +7,12 @@ import store from 'store'
 import ElementUI from 'element-ui'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
-import global_ from '@/components/tool/Global'
 import VueJsDialog from "vuejs-dialog"
+import global_ from '@/components/tool/Global'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'lib-flexible'
 
-Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
+Vue.use(ElementUI, {size: 'small', zIndex: 3000})
 Vue.use(VueCookies)
 Vue.use(VueJsDialog)
 

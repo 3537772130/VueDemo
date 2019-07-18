@@ -76,7 +76,7 @@
       return {
         ruleForm: {
           userName: '17601301913',
-          userPass: 'zhouhuahu'
+          userPass: '123456'
         },
         rules: {
           userName: [
@@ -101,12 +101,15 @@
             }).then(res => {
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
-                this.$cookies.set('userInfo', res.data.data)
+                this.$cookies.set('user_info', res.data.data)
                 this.$router.push({path: '/main-info'})
               } else {
                 this.$message.error(res.data.data)
               }
-              this.$nextTick(() => {loading.close();})
+              this.$nextTick(() => {loading.close()})
+            }).catch(error => {
+              this.$nextTick(() => {loading.close()})
+              this.$message({message: '请求失败', type: 'error'})
             })
           } else {
             this.$message({message: '表单校验失败!', type: 'warning'})

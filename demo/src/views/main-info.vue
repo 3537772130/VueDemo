@@ -133,7 +133,7 @@
         </el-dropdown>
       </el-header>
       <el-main style="background-color: #DCDFE6;">
-        <tabsContent ref="tabsContent"></tabsContent>
+        <tabsContent ref="tabsContent" v-on:updateInfo="updateInfo"></tabsContent>
       </el-main>
     </el-container>
   </el-container>
@@ -146,49 +146,46 @@
     data() {
       return {
         bodyHeight: `${document.documentElement.clientHeight}` + 'px',
-        info: this.$cookies.get('userInfo')
+        info: this.$cookies.get('user_info')
       }
     },
     components: {
       'tabsContent': tabsContent
     },
     methods: {
-      getLoginInfo() {
-        let loading = Loading.service({fullscreen: true, text: '加载中'});
-        this.$nextTick(() => {
-          loading.close();
-        });
-      },
       exitLogin() {
         this.$confirm('确定注销登录吗？', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
         }).then(() => {
-          let loading = Loading.service({fullscreen: true, text: '正在注销'});
+          let loading = Loading.service({fullscreen: true, text: '正在注销'})
           this.$axios({
             url: '/api/exitLogin',
             method: 'post'
           }).then(res => {
             console.info('后台返回的数据', res.data)
             if (res.data.code === '1') {
-              this.$cookies.remove('userInfo')
+              this.$cookies.remove('user_info')
               this.$router.push({path: '/login'})
             } else {
               this.$message.error(res.data.data)
             }
             this.$nextTick(() => {
-              loading.close();
+              loading.close()
             });
           })
         })
       },
       loadMenuContent(menuId, title) {
         this.$refs.tabsContent.addTab(menuId, title)
+      },
+      updateInfo() {
+        this.info = this.$cookies.get('user_info')
       }
     },
     created() {
-
+      this.GLOBAL.checkLogin(this)
     }
   }
 </script>

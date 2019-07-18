@@ -99,7 +99,7 @@
         <el-tab-pane label="修改信息" name="up-info" style="height: 400px;">
           <el-form :model="upInfo" :rules="infoRules" ref="upInfo">
             <el-form-item label="账户" :label-width="formLabelWidth" class="form-info-div">
-              <span>{{upInfo.userName}}</span>
+              <span>{{info.userName}}</span>
             </el-form-item>
             <el-form-item label="昵称" :label-width="formLabelWidth" class="form-info-div">
               <el-input v-model="upInfo.nickName" name="nickName" autocomplete="off" class="form-info-val"></el-input>
@@ -107,7 +107,7 @@
             <el-form-item label="性别" :label-width="formLabelWidth" class="form-info-div">
               <el-select v-model="upInfo.sex" name="sex" placeholder="请选择活动区域" class="form-info-val">
                 <el-option label="男" value="1"></el-option>
-                <el-option label="女" value="0" :label="0"></el-option>
+                <el-option label="女" value="0"></el-option>
               </el-select>
             </el-form-item>
             <el-button type="primary" @click="onSubmitInfo('upInfo')">提&nbsp;&nbsp;交</el-button>
@@ -115,16 +115,17 @@
         </el-tab-pane>
         <el-tab-pane label="修改密码" name="up-pass" style="height: 400px;">
           <el-form :model="passForm" :rules="passRules" ref="passForm">
+            <el-form-item label="昵称" :label-width="formLabelWidth" class="form-info-div">
+              <el-input v-model="upInfo.nickName" name="nickName" autocomplete="off" class="form-info-val"></el-input>
+            </el-form-item>
             <el-form-item label="原密码" :label-width="formLabelWidth" class="form-info-div">
-              <el-input name="oldPass" type="password" autocomplete="off" class="form-info-val"
-                        show-password></el-input>
+              <el-input name="oldPass" maxlength="20" type="password" class="form-info-val" show-password></el-input>
             </el-form-item>
             <el-form-item label="新密码" :label-width="formLabelWidth" class="form-info-div">
-              <el-input name="newPass" type="password" autocomplete="off" class="form-info-val"
-                        show-password></el-input>
+              <el-input name="newPass" maxlength="20" type="password" class="form-info-val" show-password></el-input>
             </el-form-item>
             <el-form-item label="确认密码" :label-width="formLabelWidth" class="form-info-div">
-              <el-input name="confirmPass" type="password" autocomplete="off" class="form-info-val"
+              <el-input name="confirmPass" maxlength="20" type="password" class="form-info-val"
                         show-password></el-input>
             </el-form-item>
             <el-button type="primary" @click="onSubmitPass('passForm')">提&nbsp;&nbsp;交</el-button>
@@ -141,13 +142,13 @@
   export default {
     name: 'personal-main',
     data() {
-      var confirmPassValidator = (rule, value, callback) => {
+      let confirmPassValidator = (rule, value, callback) => {
         if (value !== this.passForm.newPass) {
           callback(new Error('两次输入密码不一致!'));
         }
       }
       return {
-        info: this.$cookies.get('userInfo'),
+        info: this.$cookies.get('user_info'),
         upInfo: {},
         passForm: {},
         dialogTableVisible: false,
@@ -184,21 +185,30 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             let loading = Loading.service({fullscreen: true, text: '正在提交'})
+            let nickName = this.upInfo.nickName
+            let sex = this.upInfo.sex === '男' ? 1 : this.upInfo.sex === '女' ? 0 : this.upInfo.sex
             this.$axios({
               url: '/api/user/updateUserInfo',
               method: 'post',
-              data: this.upInfo
+              data: {nickName: nickName, sex: sex},
             }).then(res => {
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
-                this.$cookies.set('userInfo', res.data.data)
+                let info = res.data.data
+                info.sex = info.sex ? '男' : '女'
+                this.upInfo = info
+                this.$cookies.set('user_info', info)
+                this.$emit('updateInfo')
                 this.$message({message: '修改信息成功', type: 'success'})
               } else {
                 this.$message.error(res.data.data)
               }
               this.$nextTick(() => {
-                loading.close();
-              });
+                loading.close()
+              })
+            }).catch(error => {
+              console.info('错误信息', error)
+              this.GLOBAL.loginExpire(this, loading)
             })
           } else {
             this.$message({message: '信息提交失败', type: 'warning'})
@@ -216,13 +226,16 @@
             }).then(res => {
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
-                this.$message({message: res.data.data, type: 'success'})
+                this.GLOBAL.loginExpire(this, loading)
               } else {
                 this.$message.error(res.data.data)
               }
               this.$nextTick(() => {
-                loading.close();
-              });
+                loading.close()
+              })
+            }).catch(error => {
+              console.info('错误信息', error)
+              this.GLOBAL.loginExpire(this, loading)
             })
           } else {
             this.$message({message: '信息提交失败', type: 'warning'})
@@ -231,7 +244,7 @@
       }
     },
     created() {
-      let info = this.$cookies.get('userInfo')
+      let info = this.info
       info.sex = info.sex ? '男' : '女'
       this.upInfo = info
     }

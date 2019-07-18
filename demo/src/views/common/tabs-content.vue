@@ -11,7 +11,7 @@
 <template>
   <el-tabs v-model="editableTabsValue" type="border-card" @tab-remove="removeTab">
     <el-tab-pane label="个人主页" name="0" :style="{height: tabPaneHeight + 'px',display: mainShow}">
-      <userInfo></userInfo>
+      <userInfo v-on:updateInfo="updateInfo"></userInfo>
     </el-tab-pane>
     <el-tab-pane v-for="item in editableTabs" :key="item.name"
                  :label="item.title" :name="item.name" :style="{height: tabPaneHeight + 'px'}" closable>
@@ -73,6 +73,9 @@
         if (tabs.length === 1) {
           this.mainShow = 'block'
         }
+      },
+      updateInfo (){
+        this.$emit('updateInfo')
       }
     },
     method() {
