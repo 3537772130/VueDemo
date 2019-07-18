@@ -76,6 +76,22 @@
   .form-info-val {
     width: 215px;
   }
+
+  .el-form-item__error{
+    left: 0px;
+  }
+
+  .el-form{
+    text-align: left;
+  }
+
+  .sub-but{
+    width: 215px;
+    height: 30px;
+    position: relative;
+    top: -50px;
+    left: 120px;
+  }
 </style>
 <template>
   <div>
@@ -83,13 +99,13 @@
       <div slot="header" class="clearfix">
         <span>个人信息</span>
         <el-button class="el-button-update" style="float: right; padding: 3px 0" type="text"
-                   @click="dialogFormVisible = true">
+                   @click="recoveryInfo()">
           <i class="el-icon-edit"></i><span style="font-size: 14px">修改信息</span>
         </el-button>
       </div>
-      <div class="text item"><label>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</label>{{info.nickName}}</div>
       <div class="text item"><label>账&nbsp;&nbsp;户&nbsp;&nbsp;名：</label>{{info.userName}}</div>
-      <div class="text item"><label>登录时间：</label>{{info.createTime}}</div>
+      <div class="text item"><label>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</label>{{info.nickName}}</div>
+      <div class="text item"><label>注册时间：</label>{{info.createTime}}</div>
       <div class="photo-div">
         <img src="@/assets/logo.png" class="user-photo">
       </div>
@@ -101,16 +117,16 @@
             <el-form-item label="账户" :label-width="formLabelWidth" class="form-info-div">
               <span>{{info.userName}}</span>
             </el-form-item>
-            <el-form-item label="昵称" :label-width="formLabelWidth" class="form-info-div">
-              <el-input v-model="upInfo.nickName" name="nickName" autocomplete="off" class="form-info-val"></el-input>
+            <el-form-item label="昵称" prop="nickName" :label-width="formLabelWidth" class="form-info-div">
+              <el-input v-model="upInfo.nickName" name="nickName" maxlength="20" autocomplete="off" class="form-info-val"></el-input>
             </el-form-item>
-            <el-form-item label="性别" :label-width="formLabelWidth" class="form-info-div">
+            <el-form-item label="性别" prop="sex" :label-width="formLabelWidth" class="form-info-div">
               <el-select v-model="upInfo.sex" name="sex" placeholder="请选择活动区域" class="form-info-val">
                 <el-option label="男" value="1"></el-option>
                 <el-option label="女" value="0"></el-option>
               </el-select>
             </el-form-item>
-            <el-button type="primary" @click="onSubmitInfo('upInfo')">提&nbsp;&nbsp;交</el-button>
+            <el-button class="sub-but" type="primary" @click="onSubmitInfo('upInfo')">提&nbsp;&nbsp;交</el-button>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="修改密码" name="up-pass" style="height: 400px;">
@@ -118,17 +134,17 @@
             <el-form-item label="昵称" :label-width="formLabelWidth" class="form-info-div">
               <el-input v-model="upInfo.nickName" name="nickName" autocomplete="off" class="form-info-val"></el-input>
             </el-form-item>
-            <el-form-item label="原密码" :label-width="formLabelWidth" class="form-info-div">
-              <el-input name="oldPass" maxlength="20" type="password" class="form-info-val" show-password></el-input>
+            <el-form-item label="原密码" prop="oldPass" :label-width="formLabelWidth" class="form-info-div">
+              <el-input name="oldPass" maxlength="20" type="password" value="123" class="form-info-val" show-password></el-input>
             </el-form-item>
-            <el-form-item label="新密码" :label-width="formLabelWidth" class="form-info-div">
+            <el-form-item label="新密码" prop="newPass" :label-width="formLabelWidth" class="form-info-div">
               <el-input name="newPass" maxlength="20" type="password" class="form-info-val" show-password></el-input>
             </el-form-item>
-            <el-form-item label="确认密码" :label-width="formLabelWidth" class="form-info-div">
+            <el-form-item label="确认密码" prop="confirmPass" :label-width="formLabelWidth" class="form-info-div">
               <el-input name="confirmPass" maxlength="20" type="password" class="form-info-val"
                         show-password></el-input>
             </el-form-item>
-            <el-button type="primary" @click="onSubmitPass('passForm')">提&nbsp;&nbsp;交</el-button>
+            <el-button class="sub-but" type="primary" @click="onSubmitPass('passForm')">提&nbsp;&nbsp;交</el-button>
           </el-form>
         </el-tab-pane>
       </el-tabs>
@@ -181,6 +197,14 @@
       }
     },
     methods: {
+      recoveryInfo(){
+        this.dialogFormVisible = true
+        this.editableTabsValue = 'up-info'
+        let info = this.$cookies.get('user_info')
+        info.sex = info.sex ? '男' : '女'
+        this.upInfo = info
+        this.passForm = {}
+      },
       onSubmitInfo(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
@@ -195,8 +219,7 @@
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
                 let info = res.data.data
-                info.sex = info.sex ? '男' : '女'
-                this.upInfo = info
+                this.info = info
                 this.$cookies.set('user_info', info)
                 this.$emit('updateInfo')
                 this.$message({message: '修改信息成功', type: 'success'})
@@ -244,9 +267,7 @@
       }
     },
     created() {
-      let info = this.info
-      info.sex = info.sex ? '男' : '女'
-      this.upInfo = info
+
     }
   }
 </script>
