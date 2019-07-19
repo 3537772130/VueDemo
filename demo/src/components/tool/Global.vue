@@ -2,8 +2,9 @@
 
   let checkLogin = function (that) {
     if (that.$cookies.get('user_info') === '' || that.$cookies.get('user_info') === null){
-      that.$router.push({path: '/login'})
+      return false
     }
+    return true
   }
 
   let loginExpire = function (that, loading) {
@@ -11,7 +12,9 @@
       loading.close()
     })
     that.$message({
-      message: '登录过期', type: 'error', onClose: function () {
+      message: '登录过期，请重新登录',
+      type: 'error',
+      onClose: function () {
         that.$cookies.remove("user_info")
         that.$router.push({path: '/login'})
       }

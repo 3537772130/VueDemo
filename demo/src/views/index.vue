@@ -1,41 +1,128 @@
+<link rel="shortcut icon" type="image/x-icon" href="@/assets/logo.png" rel="external nofollow" />
+<style>
+  .el-row {
+    margin-bottom: 20px;
+
+  &
+  :last-child {
+    margin-bottom: 0;
+  }
+
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+
+  .bg-purple-dark {
+    background: #545c64;
+  }
+
+  .bg-purple {
+    background: #d3dce6;
+  }
+
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+
+  .top-menu {
+    text-align: right;
+  }
+</style>
 <template>
-  <div id="app">
-    <div ref='box'></div>
+  <div>
+    <el-row>
+      <el-col :span="24">
+        <div class="grid-content bg-purple-dark top-menu">
+          <headerMenu></headerMenu>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="12">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+      <el-col :span="12">
+        <div class="grid-content bg-purple-light"></div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="8">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+      <el-col :span="8">
+        <div class="grid-content bg-purple-light"></div>
+      </el-col>
+      <el-col :span="8">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="6">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple-light"></div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple-light"></div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="4">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+      <el-col :span="4">
+        <div class="grid-content bg-purple-light"></div>
+      </el-col>
+      <el-col :span="4">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+      <el-col :span="4">
+        <div class="grid-content bg-purple-light"></div>
+      </el-col>
+      <el-col :span="4">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+      <el-col :span="4">
+        <div class="grid-content bg-purple-light"></div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-  import Login from '@/views/login'
-  import Main from '@/views/main-info'
-  import { Loading } from 'element-ui'
+  import headerMenu from '@/views/admin/common/header-menu.vue'
+  import {Loading} from 'element-ui'
 
   export default {
     name: 'index',
     components: {
-      'Login': Login,
-      'Main': Main
+      'headerMenu': headerMenu
     },
-    methods: {
-      indexs: function () {
-        let loading = Loading.service({fullscreen:true,text: '加载中'})
-        this.$axios({
-          url: '/api/checkLogin',
-          method: 'post'
-        }).then(res => {
-          console.info('后台返回的数据', res.data)
-          if (res.data.code === '1') {
-            this.$router.push({path: '/main-info'})
-          } else {
-            this.$router.push({path: '/login'})
-          }
-          this.$nextTick(() => {
-            loading.close();
-          });
-        })
+    data() {
+      return {
+
       }
     },
     created() {
-      this.indexs()
+
+    },
+    methods: {
+
     }
   }
 </script>

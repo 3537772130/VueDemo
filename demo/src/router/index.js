@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/index'
-import Login from '@/views/login'
-import Main from '@/views/main-info'
-import userInfo from '@/views/personal/user-info'
+import Login from '@/views/admin/login'
+import Main from '@/views/admin/main-info'
+import userInfo from '@/views/admin/personal/user-info'
 
 Vue.use(Router)
 

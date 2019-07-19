@@ -36,42 +36,53 @@
     position: relative;
     left: -80px;
   }
-  .input-div{
+
+  .input-div {
     width: 189px;
     position: relative;
     left: -80px;
   }
-  .el-form-item__error{
+
+  .login-form .el-form-item__error {
     left: -80px;
   }
 </style>
 <template>
-  <div class="login-div">
-    <div class="img-div">
-      <img src="@/assets/logo.png">
+  <div>
+    <div style="background-color: #545c64;text-align: right;padding-right: 30px;">
+      <headerMenu ref="headerMenu"></headerMenu>
     </div>
-    <div class="form-div">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px">
-        <el-form-item prop="userName">
-          <el-input class="input-div" placeholder="请输入账户名" prefix-icon="el-icon-user"
-                    v-model="ruleForm.userName"></el-input>
-        </el-form-item>
-        <el-form-item prop="userName">
-          <el-input type="password" class="input-div" placeholder="请输入密码" prefix-icon="el-icon-lock"
-                    v-model="ruleForm.userPass" show-password></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit('ruleForm')">立即登录</el-button>
-        </el-form-item>
-      </el-form>
+    <div class="login-div">
+      <div class="img-div">
+        <img src="/static/logo.png">
+      </div>
+      <div class="form-div">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="login-form">
+          <el-form-item prop="userName">
+            <el-input class="input-div" placeholder="请输入账户名" prefix-icon="el-icon-user"
+                      v-model="ruleForm.userName"></el-input>
+          </el-form-item>
+          <el-form-item prop="userName">
+            <el-input type="password" class="input-div" placeholder="请输入密码" prefix-icon="el-icon-lock"
+                      v-model="ruleForm.userPass" show-password></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit('ruleForm')">立即登录</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
   </div>
 </template>
 <script type="text/javascript">
+  import headerMenu from '@/views/admin/common/header-menu.vue'
   import {Loading} from 'element-ui'
 
   export default {
     name: 'login',
+    components: {
+      'headerMenu': headerMenu
+    },
     data() {
       return {
         ruleForm: {
@@ -88,6 +99,9 @@
           ]
         }
       }
+    },
+    mounted() {
+      this.$refs.headerMenu.setMenuIndex("3")
     },
     methods: {
       onSubmit(name) {
@@ -106,9 +120,13 @@
               } else {
                 this.$message.error(res.data.data)
               }
-              this.$nextTick(() => {loading.close()})
+              this.$nextTick(() => {
+                loading.close()
+              })
             }).catch(error => {
-              this.$nextTick(() => {loading.close()})
+              this.$nextTick(() => {
+                loading.close()
+              })
               this.$message({message: '请求失败', type: 'error'})
             })
           } else {
