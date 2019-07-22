@@ -1,4 +1,3 @@
-<link rel="shortcut icon" type="image/x-icon" href="@/assets/logo.png" rel="external nofollow" />
 <style>
   .el-row {
     margin-bottom: 20px;

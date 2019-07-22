@@ -8,14 +8,14 @@
     @select="handleSelect"
     background-color="#545c64"
     text-color="#fff"
-    active-text-color="#409EFF" style="display: inline-block;border-bottom: none;width: 280px;">
+    active-text-color="#409EFF" :style="menuWidth">
     <el-menu-item index="1">首页</el-menu-item>
     <el-menu-item index="3" v-if="!loginStatus">登录</el-menu-item>
     <el-menu-item index="4">立刻注册</el-menu-item>
     <el-submenu index="5" v-if="loginStatus" @click.native="handleSelect('5-1','5')">
       <template slot="title">
-        <el-avatar :size="50" src="@/assets/default-avatar.jpeg" @error="errorHandler">
-          <img src="@/assets/default-avatar.jpeg"/>
+        <el-avatar :size="50" :src="info.headPortrait" @error="errorHandler">
+          <img :src="info.headPortrait"/>
         </el-avatar>
       </template>
       <el-menu-item disabled>{{info.nickName}}</el-menu-item>
@@ -34,6 +34,7 @@
       return {
         activeIndex: '1',
         loginStatus: false,
+        menuWidth: {'display':'inline-block','border-bottom':'none','width':'280px','margin-right': '30px'},
         info: this.$cookies.get('user_info')
       }
     },
@@ -56,6 +57,7 @@
             this.$router.push({path: '/login'})
             break
           case "4":
+            this.$router.push({path: '/register'})
             break
           case "5-1":
             this.$router.push({path: '/main-info'})
@@ -67,6 +69,9 @@
       },
       checkLogin() {
         this.loginStatus = this.GLOBAL.checkLogin(this)
+        if (!this.loginStatus){
+          this.menuWidth = {'display':'inline-block','border-bottom':'none','width':'235px','margin-right': '30px'}
+        }
       },
       setMenuIndex(index) {
         this.activeIndex = index

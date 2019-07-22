@@ -4,6 +4,7 @@ import Index from '@/views/index'
 import Login from '@/views/admin/login'
 import Main from '@/views/admin/main-info'
 import userInfo from '@/views/admin/personal/user-info'
+import Register from '@/views/admin/personal/register'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
       path: '/user-info',
       name: 'user-info',
       component: userInfo
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     }
   ]
 })

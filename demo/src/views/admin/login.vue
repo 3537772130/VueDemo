@@ -49,7 +49,7 @@
 </style>
 <template>
   <div>
-    <div style="background-color: #545c64;text-align: right;padding-right: 30px;">
+    <div style="background-color: #545c64;text-align: right;">
       <headerMenu ref="headerMenu"></headerMenu>
     </div>
     <div class="login-div">
@@ -100,6 +100,8 @@
         }
       }
     },
+    created() {
+    },
     mounted() {
       this.$refs.headerMenu.setMenuIndex("3")
     },
@@ -117,17 +119,13 @@
               if (res.data.code === '1') {
                 this.$cookies.set('user_info', res.data.data)
                 this.$router.push({path: '/main-info'})
-              } else {
+              } else if (res.data.code === "-1") {
                 this.$message.error(res.data.data)
               }
-              this.$nextTick(() => {
-                loading.close()
-              })
+              this.GLOBAL.exitLoad(this, loading, res.data)
             }).catch(error => {
-              this.$nextTick(() => {
-                loading.close()
-              })
-              this.$message({message: '请求失败', type: 'error'})
+              console.info('错误信息', error)
+              this.GLOBAL.exitLoad(this, loading, "")
             })
           } else {
             this.$message({message: '表单校验失败!', type: 'warning'})

@@ -164,6 +164,8 @@
           this.$cookies.remove("user_info")
           this.$router.push({path: '/login'})
         }
+      }).catch(error => {
+        console.info('错误信息', error)
       })
     },
     mounted() {
@@ -182,24 +184,6 @@
       },
       handleSelect(key, keyPath) {
         console.log(key, keyPath)
-        switch (key) {
-          case "1":
-            this.$router.push({path: '/index'})
-            break
-          case "2":
-            break
-          case "3":
-            this.$router.push({path: '/login'})
-            break
-          case "4":
-            break
-          case "5-1":
-            this.$router.push({path: '/main-info'})
-            break
-          case "5-2":
-            this.exitLogin()
-            break
-        }
       },
       handleSOpen(key, keyPath) {
         console.log("打开：", key, keyPath)
