@@ -31,6 +31,9 @@
           that.$router.push({path: '/login'})
         }
       })
+    } else {
+      let userInfo = that.$cookies.get("user_info")
+      that.$cookies.set("user_info", userInfo, 3600)
     }
   }
 

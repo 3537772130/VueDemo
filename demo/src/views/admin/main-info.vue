@@ -151,7 +151,7 @@
       return {
         bodyHeight: `${document.documentElement.clientHeight}` + 'px',
         info: this.$cookies.get('user_info'),
-        activeIndex: '1'
+        activeIndex: ''
       }
     },
     created() {
