@@ -90,39 +90,10 @@
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#409EFF">
-        <el-submenu index="s1" style="margin-top: 60px;">
-          <template slot="title"><i class="el-icon-platform-eleme"></i>导航一</template>
-          <el-menu-item-group style="color: red;">
-            <el-menu-item index="1" @click.native="loadMenuContent('1','选项1')">选项1</el-menu-item>
-            <el-menu-item index="2" @click.native="loadMenuContent('2','选项2')">选项2</el-menu-item>
-            <el-menu-item index="3" @click.native="loadMenuContent('3','选项3')">选项3</el-menu-item>
-            <el-menu-item index="4" @click.native="loadMenuContent('4','选项4')">选项4</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="s2">
-          <template slot="title"><i class="el-icon-menu"></i>导航二</template>
+        <el-submenu v-for="menu in menuList" :key="menu.index" :index="menu.index" :style="{'margin-top': menu.index === 'm-1' ? '60px':'0px'}">
+          <template slot="title"><i :class="menu.icon"></i>{{menu.title}}</template>
           <el-menu-item-group>
-            <el-menu-item index="5" @click.native="loadMenuContent('5','选项5')">选项5</el-menu-item>
-            <el-menu-item index="6" @click.native="loadMenuContent('6','选项6')">选项6</el-menu-item>
-            <el-menu-item index="7" @click.native="loadMenuContent('7','选项7')">选项7</el-menu-item>
-            <el-menu-item index="8" @click.native="loadMenuContent('8','选项8')">选项8</el-menu-item>
-            <el-menu-item index="9" @click.native="loadMenuContent('9','选项9')">选项9</el-menu-item>
-            <el-menu-item index="10" @click.native="loadMenuContent('10','选项10')">选项10</el-menu-item>
-            <el-menu-item index="11" @click.native="loadMenuContent('11','选项11')">选项11</el-menu-item>
-            <el-menu-item index="12" @click.native="loadMenuContent('12','选项12')">选项12</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="s3">
-          <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-          <el-menu-item-group>
-            <el-menu-item index="13" @click.native="loadMenuContent('13','选项13')">选项13</el-menu-item>
-            <el-menu-item index="14" @click.native="loadMenuContent('14','选项14')">选项14</el-menu-item>
-            <el-menu-item index="15" @click.native="loadMenuContent('15','选项15')">选项15</el-menu-item>
-            <el-menu-item index="16" @click.native="loadMenuContent('16','选项16')">选项16</el-menu-item>
-            <el-menu-item index="17" @click.native="loadMenuContent('17','选项17')">选项17</el-menu-item>
-            <el-menu-item index="18" @click.native="loadMenuContent('18','选项18')">选项18</el-menu-item>
-            <el-menu-item index="19" @click.native="loadMenuContent('19','选项19')">选项19</el-menu-item>
-            <el-menu-item index="20" @click.native="loadMenuContent('20','选项20')">选项20</el-menu-item>
+            <el-menu-item v-for="item in menu.items" :key="item.index" :index="item.index">{{item.title}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -151,7 +122,78 @@
       return {
         bodyHeight: `${document.documentElement.clientHeight}` + 'px',
         info: this.$cookies.get('user_info'),
-        activeIndex: ''
+        activeIndex: '',
+        menuList: [
+          {
+            index: 'm-1',
+            title: '菜单一',
+            icon: 'el-icon-platform-eleme',
+            items: [
+              {
+                index: '1-1',
+                title: '导航1-1'
+              },
+              {
+                index: '1-2',
+                title: '导航1-2'
+              },
+              {
+                index: '1-3',
+                title: '导航1-3'
+              },
+              {
+                index: '1-4',
+                title: '导航1-4'
+              }
+            ]
+          },
+          {
+            index: 'm-2',
+            title: '菜单二',
+            icon: 'el-icon-menu',
+            items: [
+              {
+                index: '2-1',
+                title: '导航2-1'
+              },
+              {
+                index: '2-2',
+                title: '导航2-2'
+              },
+              {
+                index: '2-3',
+                title: '导航2-3'
+              },
+              {
+                index: '2-4',
+                title: '导航2-4'
+              }
+            ]
+          },
+          {
+            index: 'm-3',
+            title: '菜单三',
+            icon: 'el-icon-setting',
+            items: [
+              {
+                index: '3-1',
+                title: '导航3-1'
+              },
+              {
+                index: '3-2',
+                title: '导航3-2'
+              },
+              {
+                index: '3-3',
+                title: '导航3-3'
+              },
+              {
+                index: '3-4',
+                title: '导航3-4'
+              }
+            ]
+          }
+        ]
       }
     },
     created() {
@@ -172,11 +214,8 @@
       this.$refs.headerMenu.setMenuIndex("5-1")
     },
     methods: {
-      loadMenuContent(menuId, title) {
-        this.$refs.tabsContent.addTab(menuId, title)
-      },
       updateInfo(index) {
-        if (index){
+        if (index) {
           this.activeIndex = index
         } else {
           this.$refs.headerMenu.updateInfo()
@@ -184,6 +223,19 @@
       },
       handleSelect(key, keyPath) {
         console.log(key, keyPath)
+        let keyTitle = ''
+        let list = this.menuList
+        for(let i = 0;i < list.length;i++){
+          let items = list[i].items
+          for (let k = 0;k < items.length;k++){
+            let item = items[k]
+            if (item.index === key){
+              keyTitle = item.title
+              break
+            }
+          }
+        }
+        this.$refs.tabsContent.addTab(key, keyTitle)
       },
       handleSOpen(key, keyPath) {
         console.log("打开：", key, keyPath)
