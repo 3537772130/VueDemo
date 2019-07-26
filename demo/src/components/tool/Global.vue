@@ -17,10 +17,14 @@
    * @param loading
    */
   let exitLoad = function (that, loading, data) {
-    that.$nextTick(() => {
-      loading.close()
-    })
-    if (data === ""){
+    if (loading === null) {
+      that.loading = false
+    } else {
+      that.$nextTick(() => {
+        loading.close()
+      })
+    }
+    if (data === "") {
       that.$message.error("当前访问人数过多，请稍后再试")
     } else if (data.code === "0") {
       that.$message({

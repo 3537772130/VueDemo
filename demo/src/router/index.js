@@ -4,7 +4,7 @@ import Index from '@/views/index'
 import Login from '@/views/admin/login'
 import Main from '@/views/admin/main-info'
 import userInfo from '@/views/admin/personal/user-info'
-import Register from '@/views/admin/personal/register'
+import Register from '@/views/admin/register'
 
 Vue.use(Router)
 
