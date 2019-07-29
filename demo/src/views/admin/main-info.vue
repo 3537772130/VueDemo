@@ -130,7 +130,7 @@
             items: [
               {
                 index: '1-1',
-                title: '导航1-1'
+                title: '登录日志'
               },
               {
                 index: '1-2',
@@ -200,7 +200,7 @@
         url: '/api/checkLogin',
         method: 'post'
       }).then(res => {
-        console.info('后台返回的数据', res.data)
+        // console.info('后台返回的数据', res.data)
         if (res.data.code != '1') {
           this.$cookies.remove("user_info")
           this.$router.push({path: '/login'})
@@ -221,7 +221,7 @@
         }
       },
       handleSelect(key, keyPath) {
-        console.log(key, keyPath)
+        // console.log(key, keyPath)
         let keyTitle = ''
         let list = this.menuList
         for(let i = 0;i < list.length;i++){
@@ -237,10 +237,10 @@
         this.$refs.tabsContent.addTab(key, keyTitle)
       },
       handleSOpen(key, keyPath) {
-        console.log("打开：", key, keyPath)
+        // console.log("打开：", key, keyPath)
       },
       handleClose(key, keyPath) {
-        console.log("关闭：", key, keyPath)
+        // console.log("关闭：", key, keyPath)
       }
     }
   }

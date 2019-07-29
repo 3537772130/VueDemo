@@ -40,7 +40,7 @@
   export default {
     data() {
       return {
-        tabPaneHeight: `${document.documentElement.clientHeight - 155}`,
+        tabPaneHeight: `${document.documentElement.clientHeight - 125}`,
         mainShow: 'block',
         editableTabsValue: '2',
         editableTabs: [],
@@ -82,7 +82,7 @@
       //选中标签页
       clickTab(targetName){
         //更新main-info菜单选中目标
-        console.log("打开的是：", targetName.$el.id.replace("pane-", ""))
+        // console.log("打开的是：", targetName.$el.id.replace("pane-", ""))
         this.parentMenuIndex = targetName.$el.id.replace("pane-", "")
         this.setActiveIndex()
       },

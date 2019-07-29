@@ -84,9 +84,50 @@
     }
   }
 
+  /**
+   * 查询地域信息
+   * @param that
+   * @param id
+   */
+  let selectRegion = function (that, id) {
+    if(id){
+      that.$axios({
+        url: '/api/selectRegionList',
+        method: 'post',
+        data:{id: id}
+      }).then(res => {
+        console.info('后台返回的数据', res.data)
+        if (res.data.code != '1') {
+          return null
+        } else {
+          return res.data.data
+        }
+      }).catch(error => {
+        console.info('错误信息', error)
+        return null
+      })
+    } else {
+      that.$axios({
+        url: '/api/selectRegionList',
+        method: 'post'
+      }).then(res => {
+        console.info('后台返回的数据', res.data)
+        if (res.data.code != '1') {
+          return null
+        } else {
+          return res.data.data
+        }
+      }).catch(error => {
+        console.info('错误信息', error)
+        return null
+      })
+    }
+  }
+
   export default {
     checkLogin,
     exitLoad,
-    validate
+    validate,
+    selectRegion
   }
 </script>
