@@ -148,7 +148,7 @@
 
     },
     mounted() {
-      this.$refs.headerMenu.setMenuIndex("4")
+      this.$refs.headerMenu.setMenuIndex('4')
     },
     methods: {
       getPassword() {
@@ -167,22 +167,27 @@
               if (res.data.code === '1') {
                 let that = this
                 that.$message({
-                  message: '注册成功', type: 'success', onClose: function () {
+                  message: '注册成功',
+                  type: 'success',
+                  onClose: function () {
                     that.$router.push({path: '/login'})
                   }
                 })
-              } else if (res.data.code === "-1") {
+              } else if (res.data.code === '-1') {
                 this.$message.error(res.data.data)
               }
               this.GLOBAL.exitLoad(this, loading, res.data)
             }).catch(error => {
               console.info('错误信息', error)
-              this.GLOBAL.exitLoad(this, loading, "")
+              this.GLOBAL.exitLoad(this, loading, '')
             })
           } else {
-            this.$message({message: '信息提交失败', type: 'warning'})
+            this.$message({
+              message: '信息提交失败',
+              type: 'warning'
+            })
           }
-        });
+        })
       }
     }
   }

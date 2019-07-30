@@ -243,13 +243,13 @@
                 this.$cookies.set('user_info', info)
                 this.$emit('updateInfo')
                 this.$message({message: '修改信息成功', type: 'success'})
-              } else if (res.data.code === "-1") {
+              } else if (res.data.code === '-1') {
                 this.$message.error(res.data.data)
               }
               this.GLOBAL.exitLoad(this, loading, res.data)
             }).catch(error => {
               console.info('错误信息', error)
-              this.GLOBAL.exitLoad(this, loading, "")
+              this.GLOBAL.exitLoad(this, loading, '')
             })
           } else {
             this.$message({message: '信息提交失败', type: 'warning'})
@@ -257,7 +257,6 @@
         })
       },
       onSubmitPass(name) {
-        let bool = true
         this.$refs[name].validate((valid) => {
           if (valid) {
             let loading = Loading.service({fullscreen: true, text: '正在提交'})
@@ -270,17 +269,19 @@
               if (res.data.code === '1') {
                 let that = this
                 that.$message({
-                  message: res.data.data, type: 'success', onClose: function () {
-                    that.GLOBAL.exitLoad(that, loading, {code: "0"})
+                  message: res.data.data,
+                  type: 'success',
+                  onClose: function () {
+                    that.GLOBAL.exitLoad(that, loading, {code: '0'})
                   }
                 })
-              } else if (res.data.code === "-1") {
+              } else if (res.data.code === '-1') {
                 this.$message.error(res.data.data)
                 this.GLOBAL.exitLoad(this, loading, res.data)
               }
             }).catch(error => {
               console.info('错误信息', error)
-              this.GLOBAL.exitLoad(this, loading, "")
+              this.GLOBAL.exitLoad(this, loading, '')
             })
           } else {
             this.$message({message: '信息提交失败', type: 'warning'})

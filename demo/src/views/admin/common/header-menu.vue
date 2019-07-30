@@ -34,7 +34,7 @@
       return {
         activeIndex: '1',
         loginStatus: false,
-        menuWidth: {'display':'inline-block','border-bottom':'none','width':'280px','margin-right': '30px'},
+        menuWidth: {'display': 'inline-block', 'border-bottom': 'none', 'width': '280px', 'margin-right': '30px'},
         info: this.$cookies.get('user_info')
       }
     },
@@ -69,8 +69,13 @@
       },
       checkLogin() {
         this.loginStatus = this.GLOBAL.checkLogin(this)
-        if (!this.loginStatus){
-          this.menuWidth = {'display':'inline-block','border-bottom':'none','width':'235px','margin-right': '30px'}
+        if (!this.loginStatus) {
+          this.menuWidth = {
+            'display': 'inline-block',
+            'border-bottom': 'none',
+            'width': '235px',
+            'margin-right': '30px'
+          }
         }
       },
       setMenuIndex(index) {
@@ -83,7 +88,7 @@
         this.$confirm('确定注销登录吗？', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning',
+          type: 'warning'
         }).then(() => {
           let loading = Loading.service({fullscreen: true, text: '正在注销'})
           this.$axios({
@@ -99,7 +104,7 @@
             }
             this.$nextTick(() => {
               loading.close()
-            });
+            })
           })
         })
       }

@@ -105,7 +105,6 @@
 
 <script>
   import headerMenu from '@/views/admin/common/header-menu.vue'
-  import {Loading} from 'element-ui'
 
   export default {
     name: 'index',

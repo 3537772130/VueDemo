@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script type='text/javascript'>
   /**
    * 判断登录是否失效
    * @param that
@@ -24,20 +24,20 @@
         loading.close()
       })
     }
-    if (data === "") {
-      that.$message.error("当前访问人数过多，请稍后再试")
-    } else if (data.code === "0") {
+    if (data === '') {
+      that.$message.error('当前访问人数过多，请稍后再试')
+    } else if (data.code === '0') {
       that.$message({
         message: '登录过期，请重新登录',
         type: 'error',
         onClose: function () {
-          that.$cookies.remove("user_info")
+          that.$cookies.remove('user_info')
           that.$router.push({path: '/login'})
         }
       })
     } else {
-      let userInfo = that.$cookies.get("user_info")
-      that.$cookies.set("user_info", userInfo, 3600)
+      let userInfo = that.$cookies.get('user_info')
+      that.$cookies.set('user_info', userInfo, 3600)
     }
   }
 
@@ -59,7 +59,7 @@
             method: 'post',
             data: {userName: value}
           }).then(res => {
-            console.info('后台返回的数据', res.data)
+            // console.info('后台返回的数据', res.data)
             if (res.data.code != '1') {
               callback(new Error(res.data.data))
             } else {
@@ -89,45 +89,44 @@
    * @param that
    * @param id
    */
-  let selectRegion = function (that, id) {
-    if(id){
-      that.$axios({
-        url: '/api/selectRegionList',
-        method: 'post',
-        data:{id: id}
-      }).then(res => {
-        console.info('后台返回的数据', res.data)
-        if (res.data.code != '1') {
-          return null
-        } else {
-          return res.data.data
-        }
-      }).catch(error => {
-        console.info('错误信息', error)
-        return null
-      })
-    } else {
-      that.$axios({
-        url: '/api/selectRegionList',
-        method: 'post'
-      }).then(res => {
-        console.info('后台返回的数据', res.data)
-        if (res.data.code != '1') {
-          return null
-        } else {
-          return res.data.data
-        }
-      }).catch(error => {
-        console.info('错误信息', error)
-        return null
-      })
-    }
+  let selectRegionJson = function (that) {
+    that.$axios({
+      url: '/api/selectRegionJson',
+      method: 'post'
+    }).then(res => {
+      // console.info('后台返回的数据', res.data)
+      that.options = JSON.parse(res.data.data)
+    }).catch(error => {
+      console.info('错误信息', error)
+      return null
+    })
+  }
+
+  let selectRegionList = function (that, id, level) {
+    that.$axios({
+      url: '/api/selectRegionList',
+      method: 'post',
+      data: {id: id}
+    }).then(res => {
+      // console.info('后台返回的数据', res.data)
+      if (level === '1') {
+        that.provList = res.data.data
+      } else if (level === '2') {
+        that.cityList = res.data.data
+      } else {
+        that.countyList = res.data.data
+      }
+    }).catch(error => {
+      console.info('错误信息', error)
+      return null
+    })
   }
 
   export default {
     checkLogin,
     exitLoad,
     validate,
-    selectRegion
+    selectRegionJson,
+    selectRegionList
   }
 </script>

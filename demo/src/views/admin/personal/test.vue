@@ -5,23 +5,28 @@
     <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding: 20px;">
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="省份">
-            <el-select v-model="formInline.region" placeholder="选择省份" @change="selectProvince" style="width: 200px;">
-              <el-option label="全部" value=''></el-option>
-              <el-option v-for="prov in provList" :key="prov" :label="prov.name" :value="prov.name"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="城市">
-            <el-select v-model="formInline.city" placeholder="选择城市" @change="selectCity" style="width: 200px;">
-              <el-option label="全部" value=''></el-option>
-              <el-option v-for="city in cityList" :key="city" :label="city.name" :value="city.name"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="区/县">
-            <el-select v-model="formInline.county" placeholder="选择区/县" style="width: 200px;">
-              <el-option label="全部" value=''></el-option>
-              <el-option v-for="county in countyList" :key="county" :label="county.name" :value="county.name"></el-option>
-            </el-select>
+          <!--          <el-form-item label="省份">-->
+          <!--            <el-select v-model="formInline.region" placeholder="选择省份">-->
+          <!--              <el-option label="全部" value=""></el-option>-->
+          <!--              <el-option label="上海" value="上海"></el-option>-->
+          <!--              <el-option label="湖南省" value="湖南省"></el-option>-->
+          <!--            </el-select>-->
+          <!--          </el-form-item>-->
+          <!--          <el-form-item label="城市">-->
+          <!--            <el-select v-model="formInline.city" placeholder="选择城市">-->
+          <!--              <el-option label="全部" value=""></el-option>-->
+          <!--              <el-option label="上海市" value="上海市"></el-option>-->
+          <!--            </el-select>-->
+          <!--          </el-form-item>-->
+          <!--          <el-form-item label="区/县">-->
+          <!--            <el-select v-model="formInline.county" placeholder="选择区/县">-->
+          <!--              <el-option label="全部" value=""></el-option>-->
+          <!--              <el-option label="闵行区" value="闵行区"></el-option>-->
+          <!--              <el-option label="松江区" value="松江区"></el-option>-->
+          <!--            </el-select>-->
+          <!--          </el-form-item>-->
+          <el-form-item label="区域">
+            <el-cascader v-model="value" :options="options" @change="handleChange"></el-cascader>
           </el-form-item>
           <el-form-item label="街道">
             <el-input v-model="formInline.area" placeholder="输入街道"></el-input>
@@ -99,15 +104,14 @@
           page: 1,
           pageSize: 15
         },
-        provList: [],
-        cityList: [],
-        countyList: [],
+        value: [],
+        options: [],
         tableData: []
       }
     },
     created() {
       this.onSubmit()
-      this.GLOBAL.selectRegionList(this, '', '1')
+      this.selectRegion("")
     },
     mounted() {
     },
@@ -133,7 +137,7 @@
           this.GLOBAL.exitLoad(this, null, res.data)
         }).catch(error => {
           console.info('错误信息', error)
-          this.GLOBAL.exitLoad(this, null, '')
+          this.GLOBAL.exitLoad(this, null, "")
         })
       },
       selectList() {
@@ -144,27 +148,11 @@
         this.formInline.page = val
         this.onSubmit()
       },
-      selectProvince() {
-        let region = this.formInline.region
-        this.formInline.city = ''
-        this.formInline.county = ''
-        this.countyList = []
-        if (region != ''){
-          let obj = this.provList.find((item)=> {
-            return item.name === region;
-          })
-          this.GLOBAL.selectRegionList(this, obj.id, '2')
-        }
+      selectRegion(id){
+        this.GLOBAL.selectRegionJson(this)
       },
-      selectCity() {
-        let city = this.formInline.city
-        this.formInline.county = ''
-        if (city != ''){
-          let obj = this.cityList.find((item)=> {
-            return item.name === city;
-          })
-          this.GLOBAL.selectRegionList(this, obj.id, '3')
-        }
+      handleChange(val) {
+
       }
     }
   }

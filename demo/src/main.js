@@ -8,7 +8,7 @@ import ElementUI from 'element-ui'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import VueJsDialog from "vuejs-dialog"
-import global_ from '@/components/tool/Global'
+import global_ from '@/components/tool/global'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'lib-flexible'
 
