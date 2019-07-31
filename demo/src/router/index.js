@@ -5,6 +5,7 @@ import Login from '@/views/admin/login'
 import Main from '@/views/admin/main-info'
 import userInfo from '@/views/admin/personal/user-info'
 import Register from '@/views/admin/register'
+import Test from '@/views/admin/test'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test
     }
   ]
 })

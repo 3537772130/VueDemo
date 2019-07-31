@@ -85,9 +85,8 @@
   }
 
   /**
-   * 查询地域信息
+   * 查询地域信息 json
    * @param that
-   * @param id
    */
   let selectRegionJson = function (that) {
     that.$axios({
@@ -102,6 +101,12 @@
     })
   }
 
+  /**
+   * 查询地域信息 list
+   * @param that
+   * @param id
+   * @param level
+   */
   let selectRegionList = function (that, id, level) {
     that.$axios({
       url: '/api/selectRegionList',

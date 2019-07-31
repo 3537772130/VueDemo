@@ -10,6 +10,7 @@
     text-color="#fff"
     active-text-color="#409EFF" :style="menuWidth">
     <el-menu-item index="1">首页</el-menu-item>
+    <el-menu-item index="2">前往TEST</el-menu-item>
     <el-menu-item index="3" v-if="!loginStatus">登录</el-menu-item>
     <el-menu-item index="4">立刻注册</el-menu-item>
     <el-submenu index="5" v-if="loginStatus" @click.native="handleSelect('5-1','5')">
@@ -34,7 +35,7 @@
       return {
         activeIndex: '1',
         loginStatus: false,
-        menuWidth: {'display': 'inline-block', 'border-bottom': 'none', 'width': '280px', 'margin-right': '30px'},
+        menuWidth: {'display': 'inline-block', 'border-bottom': 'none', 'width': '390px', 'margin-right': '30px'},
         info: this.$cookies.get('user_info')
       }
     },
@@ -52,6 +53,7 @@
             this.$router.push({path: '/index'})
             break
           case "2":
+            this.$router.push({path: '/test'})
             break
           case "3":
             this.$router.push({path: '/login'})
@@ -73,7 +75,7 @@
           this.menuWidth = {
             'display': 'inline-block',
             'border-bottom': 'none',
-            'width': '235px',
+            'width': '340px',
             'margin-right': '30px'
           }
         }
