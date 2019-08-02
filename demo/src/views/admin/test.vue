@@ -31,7 +31,7 @@
   // import {Loading} from 'element-ui'
 
   export default {
-    name: 'user-login-log',
+    name: 'test',
     data() {
       return {
         loading: true,
@@ -46,7 +46,7 @@
       }
     },
     created() {
-      this.selectRegion()
+      // this.selectRegion()
     },
     mounted() {
     },

@@ -161,13 +161,6 @@
     <el-row>
       <el-col :span="8">
         <div class="grid-content bg-purple">
-          <div class="demo-image__preview">
-            <el-image
-              style="width: 100px; height: 100px"
-              :src="carouselImg2[0]"
-              :preview-src-list="carouselImg2">
-            </el-image>
-          </div>
         </div>
       </el-col>
       <el-col :span="8">
