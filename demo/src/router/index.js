@@ -6,6 +6,7 @@ import Main from '@/views/admin/main-info'
 import userInfo from '@/views/admin/personal/user-info'
 import Register from '@/views/admin/register'
 import Test from '@/views/admin/test'
+import Echarts from '@/views/admin/echarts'
 
 Vue.use(Router)
 
@@ -44,6 +45,11 @@ export default new Router({
       path: '/test',
       name: 'test',
       component: Test
+    },
+    {
+      path: '/echarts',
+      name: 'echarts',
+      component: Echarts
     }
   ]
 })

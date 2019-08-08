@@ -25,7 +25,6 @@
   }
 
   .grid-content {
-    border-radius: 4px;
     min-height: 36px;
   }
 
@@ -82,7 +81,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-row style="padding-top: 20px;background-image: url('/static/home/timg.jpg');">
+    <el-row style="padding-top: 20px;background-image: url('/static/images/home/timg.jpg');">
       <el-col :span="24">
         <el-carousel :interval="5000" arrow="never" type="card" height="600px">
           <el-carousel-item v-for="img in carouselImg1" :key="img">
@@ -225,38 +224,38 @@
         paneHeight: `${document.documentElement.clientHeight / 2}`,
         backTopStatus: false,
         carouselImg1: [
-          '/static/home/computer/computer-1.jpg',
-          '/static/home/computer/computer-2.jpg',
-          '/static/home/computer/computer-3.jpg',
-          '/static/home/computer/computer-4.jpg',
-          '/static/home/computer/computer-5.jpg',
-          '/static/home/computer/computer-6.jpg'
+          '/static/images/home/computer/computer-1.jpg',
+          '/static/images/home/computer/computer-2.jpg',
+          '/static/images/home/computer/computer-3.jpg',
+          '/static/images/home/computer/computer-4.jpg',
+          '/static/images/home/computer/computer-5.jpg',
+          '/static/images/home/computer/computer-6.jpg'
         ],
         carouselImg2: [
-          '/static/home/hometown/hometown-1.jpg',
-          '/static/home/hometown/hometown-2.jpg',
-          '/static/home/hometown/hometown-3.jpg',
-          '/static/home/hometown/hometown-4.jpg'
+          '/static/images/home/hometown/hometown-1.jpg',
+          '/static/images/home/hometown/hometown-2.jpg',
+          '/static/images/home/hometown/hometown-3.jpg',
+          '/static/images/home/hometown/hometown-4.jpg'
         ],
         carouselImg3: [
-          '/static/home/sea/sea-1.jpg',
-          '/static/home/sea/sea-2.jpg',
-          '/static/home/sea/sea-3.jpg',
-          '/static/home/sea/sea-4.jpg'
+          '/static/images/home/sea/sea-1.jpg',
+          '/static/images/home/sea/sea-2.jpg',
+          '/static/images/home/sea/sea-3.jpg',
+          '/static/images/home/sea/sea-4.jpg'
         ],
         carouselImg4: [
-          '/static/home/metropolis/dusk/dusk-1.jpg',
-          '/static/home/metropolis/dusk/dusk-2.jpg',
-          '/static/home/metropolis/dusk/dusk-3.jpg',
-          '/static/home/metropolis/dusk/dusk-4.jpg',
-          '/static/home/metropolis/dusk/dusk-5.jpg'
+          '/static/images/home/metropolis/dusk/dusk-1.jpg',
+          '/static/images/home/metropolis/dusk/dusk-2.jpg',
+          '/static/images/home/metropolis/dusk/dusk-3.jpg',
+          '/static/images/home/metropolis/dusk/dusk-4.jpg',
+          '/static/images/home/metropolis/dusk/dusk-5.jpg'
         ],
         carouselImg5: [
-          '/static/home/metropolis/night/night-1.jpg',
-          '/static/home/metropolis/night/night-2.jpg',
-          '/static/home/metropolis/night/night-3.jpg',
-          '/static/home/metropolis/night/night-4.jpg',
-          '/static/home/metropolis/night/night-5.jpg'
+          '/static/images/home/metropolis/night/night-1.jpg',
+          '/static/images/home/metropolis/night/night-2.jpg',
+          '/static/images/home/metropolis/night/night-3.jpg',
+          '/static/images/home/metropolis/night/night-4.jpg',
+          '/static/images/home/metropolis/night/night-5.jpg'
         ]
       }
     },

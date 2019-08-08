@@ -32,12 +32,12 @@
           </el-form-item>
           <el-form-item label="登录时间">
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date1"
+              <el-date-picker type="date" placeholder="选择日期" v-model="formInline.startDate" format="yyyy-MM-dd"
                               style="width: 100%;"></el-date-picker>
             </el-col>
             <el-col class="line" :span="2" style="text-align: center;">-</el-col>
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date2"
+              <el-date-picker type="date" placeholder="选择日期" v-model="formInline.endDate" format="yyyy-MM-dd"
                               style="width: 100%;"></el-date-picker>
             </el-col>
           </el-form-item>
@@ -55,7 +55,7 @@
           :data="tableData"
           stripe
           style="width: 100%">
-          <el-table-column type="index" :index="indexMethod" label="#" width="80"></el-table-column>
+          <el-table-column type="index" :index="indexMethod" label="序号" width="80"></el-table-column>
           <el-table-column prop="ipAddress" label="IP地址" width="180"></el-table-column>
           <el-table-column prop="country" label="国家" width="180"></el-table-column>
           <el-table-column prop="region" label="省份" width="180"></el-table-column>
@@ -94,8 +94,8 @@
           city: '',
           county: '',
           area: '',
-          date1: '',
-          date2: '',
+          startDate: '',
+          endDate: '',
           page: 1,
           pageSize: 15
         },

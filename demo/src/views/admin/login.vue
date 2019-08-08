@@ -54,7 +54,7 @@
     </div>
     <div class="login-div">
       <div class="img-div">
-        <img src="/static/logo.png">
+        <img src="/static/images/logo.png">
       </div>
       <div class="form-div">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="login-form">
@@ -117,7 +117,11 @@
             }).then(res => {
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
-                this.$cookies.set('user_info', res.data.data, 3600)
+                let info = res.data.data
+                if (info.headPortrait === null || info.headPortrait === ''){
+                  info.headPortrait = '/static/images/personal/default-avatar.jpeg'
+                }
+                this.$cookies.set('user_info', info, 3600)
                 this.$router.push({path: '/main-info'})
               } else if (res.data.code === "-1") {
                 this.$message.error(res.data.data)

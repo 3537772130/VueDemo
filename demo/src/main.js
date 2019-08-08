@@ -4,18 +4,20 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from 'store'
-import ElementUI from 'element-ui'
+import elementUI from 'element-ui'
+import echarts from 'echarts'
 import axios from 'axios'
-import VueCookies from 'vue-cookies'
-import VueJsDialog from "vuejs-dialog"
+import vueCookies from 'vue-cookies'
+import vueJsDialog from "vuejs-dialog"
 import global_ from '@/components/tool/global'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'lib-flexible'
 
-Vue.use(ElementUI, {size: 'small', zIndex: 3000})
-Vue.use(VueCookies)
-Vue.use(VueJsDialog)
+Vue.use(elementUI, {size: 'small', zIndex: 3000})
+Vue.use(vueCookies)
+Vue.use(vueJsDialog)
 
+Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
 Vue.prototype.GLOBAL = global_
 // 添加请求拦截器
