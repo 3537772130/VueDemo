@@ -410,12 +410,10 @@
         })
       },
       drawActivity(data) {
-        // 基于准备好的dom，初始化echarts实例
-        let activity = this.$echarts.init(document.getElementById('activity'))
-        // 绘制图表
+        let activity = this.$echarts.init(document.getElementById('activity'));
         activity.setOption({
           title: {
-            text: '最近六个月活跃情况',
+            text: '最近' + JSON.parse(data.monthJson).length + '个月活跃情况',
             x: 'center',
             y: 'top',
             textStyle: {
@@ -426,16 +424,25 @@
               fontSize: 16
             }
           },
-          tooltip: {},
+          tooltip: {
+            trigger: 'axis'
+          },
           xAxis: {
+            type: 'category',
+            boundaryGap: false,
             data: JSON.parse(data.monthJson)
           },
-          yAxis: {},
-          series: [{
-            name: '活跃度',
-            type: 'bar',
-            data: JSON.parse(data.activityJson)
-          }]
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              name: '活跃度',
+              type: 'line',
+              stack: '总量',
+              data: JSON.parse(data.activityJson)
+            }
+          ]
         })
       }
     },

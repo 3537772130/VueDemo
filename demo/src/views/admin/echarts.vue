@@ -19,7 +19,9 @@
 
     <div id="column" style="width: 500px;height: 300px;display: inline-block;"></div>
 
-    <div id="lines" style="width: 500px;height: 300px;display: inline-block;"/>
+    <div id="lines" style="width: 500px;height: 300px;display: inline-block;"></div>
+
+    <div id="line" style="width: 500px;height: 300px;display: inline-block;"></div>
 
     <div></div>
 
@@ -28,7 +30,7 @@
 </template>
 <script type="text/javascript">
   import headerMenu from '@/views/admin/common/header-menu.vue'
-  // import china from '../static/js/china.js'
+  import china from '../../../static/js/echarts/china.js'
 
   export default {
     name: 'echarts',
@@ -48,6 +50,7 @@
         this.drawColumn()
         this.drawCake()
         this.drawLines()
+        this.drawLine()
         this.drawChartMap()
       })
     },
@@ -280,6 +283,35 @@
               type: 'line',
               stack: '总量',
               data: [2, 45, 42, 23, 34, 3, 22]
+            }
+          ]
+        })
+      },
+      drawLine() {
+        let line = this.$echarts.init(document.getElementById('line'));
+        line.setOption({
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            y: 'bottom',
+            x: 'center',
+            data: ['A股']
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              name: 'A股',
+              type: 'line',
+              stack: '总量',
+              data: [3, 54, 65, 43, 24, 5, 31]
             }
           ]
         })

@@ -8,19 +8,19 @@
           <el-form-item label="省份">
             <el-select v-model="formInline.region" placeholder="选择省份" @change="selectProvince" style="width: 200px;">
               <el-option label="全部" value=''></el-option>
-              <el-option v-for="prov in provList" :key="prov" :label="prov.name" :value="prov.name"></el-option>
+              <el-option v-for="prov in provList" :key="prov" :label="prov.areaName" :value="prov.areaName"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="城市">
             <el-select v-model="formInline.city" placeholder="选择城市" @change="selectCity" style="width: 200px;">
               <el-option label="全部" value=''></el-option>
-              <el-option v-for="city in cityList" :key="city" :label="city.name" :value="city.name"></el-option>
+              <el-option v-for="city in cityList" :key="city" :label="city.areaName" :value="city.areaName"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="区/县">
             <el-select v-model="formInline.county" placeholder="选择区/县" style="width: 200px;">
               <el-option label="全部" value=''></el-option>
-              <el-option v-for="county in countyList" :key="county" :label="county.name" :value="county.name"></el-option>
+              <el-option v-for="county in countyList" :key="county" :label="county.areaName" :value="county.areaName"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="街道">
@@ -151,7 +151,7 @@
         this.countyList = []
         if (region != ''){
           let obj = this.provList.find((item)=> {
-            return item.name === region;
+            return item.areaName === region;
           })
           this.GLOBAL.selectRegionList(this, obj.id, '2')
         }
@@ -161,7 +161,7 @@
         this.formInline.county = ''
         if (city != ''){
           let obj = this.cityList.find((item)=> {
-            return item.name === city;
+            return item.areaName === city;
           })
           this.GLOBAL.selectRegionList(this, obj.id, '3')
         }

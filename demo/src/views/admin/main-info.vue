@@ -89,7 +89,10 @@
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#409EFF">
-        <el-submenu v-for="menu in menuList" :key="menu.index" :index="menu.index" :style="{'margin-top': menu.index === 'm-1' ? '60px':'0px'}">
+        <div style="width: 200px;height: 60px;display: inline-block;">
+          <img style="position: relative;top: -60px;" src="/api/image/getImage">
+        </div>
+        <el-submenu v-for="menu in menuList" :key="menu.index" :index="menu.index">
           <template slot="title"><i :class="menu.icon"></i>{{menu.title}}</template>
           <el-menu-item-group>
             <el-menu-item v-for="item in menu.items" :key="item.index" :index="item.index">{{item.title}}</el-menu-item>
