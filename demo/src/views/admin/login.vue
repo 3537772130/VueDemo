@@ -1,8 +1,8 @@
 <style type="text/css">
   .login-div {
     width: 100%;
-    height: 100%;
-    margin-top: 50px;
+    position: relative;
+    top: 30%;
   }
 
   .login-div > .img-div {
@@ -48,31 +48,32 @@
   }
 </style>
 <template>
-  <div>
-    <div style="background-color: #545c64;text-align: right;">
-      <headerMenu ref="headerMenu"></headerMenu>
-    </div>
-    <div class="login-div">
-      <div class="img-div">
-        <img src="/static/images/logo.png">
+  <el-container style="margin: 0px;">
+    <el-header style="padding: 0px;">
+      <div style="background-color: #545c64;text-align: right;">
+        <headerMenu ref="headerMenu"></headerMenu>
       </div>
-      <div class="form-div">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="login-form">
-          <el-form-item prop="userName">
-            <el-input class="input-div" placeholder="请输入账户名" prefix-icon="el-icon-user"
-                      v-model="ruleForm.userName"></el-input>
-          </el-form-item>
-          <el-form-item prop="userName">
-            <el-input type="password" class="input-div" placeholder="请输入密码" prefix-icon="el-icon-lock"
-                      v-model="ruleForm.userPass" show-password></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit('ruleForm')">立即登录</el-button>
-          </el-form-item>
-        </el-form>
+    </el-header>
+    <el-main :style="contentStyle">
+      <div class="login-div">
+        <div class="form-div">
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="login-form">
+            <el-form-item prop="userName">
+              <el-input class="input-div" placeholder="请输入账户名" prefix-icon="el-icon-user"
+                        v-model="ruleForm.userName"></el-input>
+            </el-form-item>
+            <el-form-item prop="userName">
+              <el-input type="password" class="input-div" placeholder="请输入密码" prefix-icon="el-icon-lock"
+                        v-model="ruleForm.userPass" show-password></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit('ruleForm')">立即登录</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
-    </div>
-  </div>
+    </el-main>
+  </el-container>
 </template>
 <script type="text/javascript">
   import headerMenu from '@/views/admin/common/header-menu.vue'
@@ -85,6 +86,13 @@
     },
     data() {
       return {
+        contentStyle: {
+          'width': '100%',
+          'height': `${document.documentElement.clientHeight - 76}` + 'px',
+          'background-image': 'url(\'/static/images/home/computer/computer-5.jpg\')',
+          'background-repeat': 'no-repeat',
+          'background-size': 'cover',
+        },
         ruleForm: {
           userName: '17601301913',
           userPass: '123456'

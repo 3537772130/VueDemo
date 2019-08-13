@@ -80,7 +80,10 @@
 </style>
 <template>
   <el-container :style="{height: bodyHeight}">
-    <el-aside width="200px" style="background-color: #515a6e">
+    <el-aside width="200px" style="background-color: rgb(84, 92, 100)">
+      <div style="width: 200px;height: 60px;display: inline-block;">
+        <img style="position: relative;top: -60px;" src="/api/image/getImage?text=applet site&color=16777215&fontFamily=华文隶书">
+      </div>
       <el-menu
         :default-active="activeIndex"
         @select="handleSelect"
@@ -88,10 +91,7 @@
         @close="handleClose"
         background-color="#545c64"
         text-color="#fff"
-        active-text-color="#409EFF">
-        <div style="width: 200px;height: 60px;display: inline-block;">
-          <img style="position: relative;top: -60px;" src="/api/image/getImage">
-        </div>
+        active-text-color="#409EFF" style="position: relative;top: -140px;">
         <el-submenu v-for="menu in menuList" :key="menu.index" :index="menu.index">
           <template slot="title"><i :class="menu.icon"></i>{{menu.title}}</template>
           <el-menu-item-group>
@@ -227,11 +227,11 @@
         // console.log(key, keyPath)
         let keyTitle = ''
         let list = this.menuList
-        for(let i = 0;i < list.length;i++){
+        for (let i = 0; i < list.length; i++) {
           let items = list[i].items
-          for (let k = 0;k < items.length;k++){
+          for (let k = 0; k < items.length; k++) {
             let item = items[k]
-            if (item.index === key){
+            if (item.index === key) {
               keyTitle = item.title
               break
             }

@@ -10,21 +10,13 @@
     <div style="text-align: right;background: #545c64;min-height: 36px;">
       <headerMenu ref="headerMenu"></headerMenu>
     </div>
-
     <div id="hollowCircle" style="width: 500px;height: 500px;display: inline-block;"></div>
-
     <div id="cake" style="width: 500px;height: 500px;border:1px solid rgb(180,180,180);display: inline-block;"></div>
-
     <div></div>
-
     <div id="column" style="width: 500px;height: 300px;display: inline-block;"></div>
-
     <div id="lines" style="width: 500px;height: 300px;display: inline-block;"></div>
-
     <div id="line" style="width: 500px;height: 300px;display: inline-block;"></div>
-
     <div></div>
-
     <div id="chartMap" style="width: 100%;height: 800px;"></div>
   </div>
 </template>
@@ -56,8 +48,8 @@
     },
     methods: {
       drawHollowCircle() {
-        let hollowCircle = this.$echarts.init(document.getElementById('hollowCircle'))
-        hollowCircle.setOption({
+        let myChart = this.$echarts.init(document.getElementById('hollowCircle'))
+        myChart.setOption({
           title: {text: '空心圆比例图'},
           tooltip: {
             trigger: 'item',
@@ -105,9 +97,9 @@
       },
       drawColumn() {
         // 基于准备好的dom，初始化echarts实例
-        let column = this.$echarts.init(document.getElementById('column'))
+        let myChart = this.$echarts.init(document.getElementById('column'))
         // 绘制图表
-        column.setOption({
+        myChart.setOption({
           title: {
             text: '柱形图',
             x: 'center',
@@ -207,7 +199,7 @@
                 {value: 235, name: '视频广告'},
                 {value: 400, name: '搜索引擎'}
               ].sort(function (a, b) {
-                return a.value - b.value;
+                return a.value - b.value
               }),
               roseType: 'radius',//角度和半径展现百分比，'area'只用半径展现
               label: { //饼图图形的文本标签
@@ -238,7 +230,7 @@
               animationType: 'scale', //初始动画效果，scale是缩放，expansion是展开
               animationEasing: 'elasticOut', //初始动画缓动效果
               animationDelay: function (idx) {  //数据更新动画时长，idx限定了每个数据块从无到有的速度
-                return Math.random() * 200;
+                return Math.random() * 200
               }
             }
           ]
@@ -246,9 +238,9 @@
       },
       drawLines() {
         // 基于准备好的dom，初始化echarts实例
-        let lines = this.$echarts.init(document.getElementById('lines'));
+        let myChart = this.$echarts.init(document.getElementById('lines'))
         // 绘制图表，this.echarts1_option是数据
-        lines.setOption({
+        myChart.setOption({
           tooltip: {
             trigger: 'axis'
           },
@@ -288,8 +280,8 @@
         })
       },
       drawLine() {
-        let line = this.$echarts.init(document.getElementById('line'));
-        line.setOption({
+        let myChart = this.$echarts.init(document.getElementById('line'))
+        myChart.setOption({
           tooltip: {
             trigger: 'axis'
           },
@@ -317,7 +309,7 @@
         })
       },
       drawChartMap() {
-        let chartMap = this.$echarts.init(document.getElementById('chartMap'));
+        let myChart = this.$echarts.init(document.getElementById('chartMap'))
         // 地图上数据,经度和纬度，最后一个是销量，或者说你要统计的当地数据个数，这些都是后台返给你的你想在哪显示就在哪显示
         let myData = [
           {name: '分店1', value: [121.15, 31.89, 90]},
@@ -327,7 +319,7 @@
           {name: '分店5', value: [110.245672, 30.7787677, 566]}
         ]
 
-        chartMap.setOption({
+        myChart.setOption({
           // 新建一个地理坐标系 geo ，
           geo: {
             map: 'china',//地图类型为中国地图,要是世界那就是world,要是省市区：例如beijing、shanghai
