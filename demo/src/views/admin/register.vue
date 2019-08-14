@@ -11,6 +11,7 @@
   .content-div {
     width: 100%;
     margin: auto;
+    margin-top: 100px;
   }
 
   .content-div > .c-title-div {
@@ -73,12 +74,6 @@
                       class="form-info-val"
                       show-password></el-input>
           </el-form-item>
-          <!--          <el-form-item label="性别" prop="sex">-->
-          <!--            <el-select v-model="ruleForm.sex" placeholder="请选择性别">-->
-          <!--              <el-option label="男" value="1"></el-option>-->
-          <!--              <el-option label="女" value="0"></el-option>-->
-          <!--            </el-select>-->
-          <!--          </el-form-item>-->
           <el-form-item :label-width="formLabelWidth" class="form-info-div">
             <el-button class="sub-but" type="primary" @click="submitForm('ruleForm')">立即注册</el-button>
           </el-form-item>

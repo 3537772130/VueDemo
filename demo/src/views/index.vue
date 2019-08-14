@@ -1,15 +1,10 @@
 <style>
-  .el-row {
-    margin-bottom: 20px;
-
-  &
-  :last-child {
-    margin-bottom: 0;
-  }
-
-  }
   .el-col {
     border-radius: 4px;
+  }
+
+  img:hover {
+    cursor: pointer;
   }
 
   .bg-purple-dark {
@@ -70,6 +65,324 @@
   .back-top:hover {
     border: 1px #303133 solid;
     background-color: #303133;
+    cursor: pointer;
+  }
+
+  .server-title {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: '黑体';
+  }
+
+  .server-describe {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    color: rgb(102, 102, 102);
+    text-align: center;
+  }
+
+  .server-introduce {
+    height: 360px;
+    line-height: 360px;
+    text-align: center;
+  }
+
+  .server-introduce > .introduce {
+    display: inline-block;
+    width: 260px;
+    height: 200px;
+    font-size: 16px;
+    margin: 0px 10px;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    top: 60px;
+    /*-moz-transition: -moz-transform 1s; !* Firefox 4 *!*/
+    /*-webkit-transition: -webkit-transform 1s; !* Safari and Chrome *!*/
+    /*-o-transition: -o-transform 1s; !* Opera *!*/
+  }
+
+  .server-introduce > .introduce:hover {
+    cursor: pointer;
+    background-color: #e6e6e6;
+    /*transform:rotate(360deg);*/
+    /*-moz-transform:rotate(360deg); !* Firefox 4 *!*/
+    /*-webkit-transform:rotate(360deg); !* Safari and Chrome *!*/
+    /*-o-transform:rotate(360deg); !* Opera *!*/
+    font-weight: bold;
+    margin: 20px;
+  }
+
+  .server-introduce > .introduce > .img {
+    height: 130px;
+    line-height: 130px;
+  }
+
+  .server-introduce > .introduce > .img > img {
+    width: 128px;
+    height: 128px;
+  }
+
+  .server-introduce > .introduce > .text {
+    margin-top: 20px;
+    height: 50px;
+    line-height: normal;
+  }
+
+  .advantage {
+    height: 800px;
+    display: block;
+    position: relative;
+  }
+
+  .advantage::before {
+    content: "";
+    background-image: url('../../static/images/background/force-potential.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 800px;
+    opacity: 0.5;
+    -webkit-filter: opacity(50%);
+    filter: opacity(50%);
+    width: 100%;
+    height: 800px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+  }
+
+  .advantage-title {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: '黑体';
+    opacity: 1;
+  }
+
+  .advantage-describe {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    color: rgb(102, 102, 102);
+    text-align: center;
+    opacity: 1;
+  }
+
+  .advantage-introduce {
+    height: 360px;
+    line-height: 360px;
+    text-align: center;
+    opacity: 1;
+  }
+
+  .advantage-introduce > .introduce {
+    margin: auto;
+    display: inline-block;
+    width: 260px;
+    height: 300px;
+    padding-top: 80px;
+    margin: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-align: center;
+    background-color: #f5260b;
+    opacity: 0.5;
+    position: relative;
+    top: 80px;
+  }
+
+  .advantage-introduce > .introduce:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    font-weight: bold;
+    height: 300px;
+    padding-top: 60px;
+    top: 40px;
+  }
+
+  .advantage-introduce > .introduce > .img {
+    margin: auto;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    border: 2px #FFFFFF solid;
+    border-radius: 60px;
+  }
+
+  .advantage-introduce > .introduce > .img > img {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    top: 28px;
+  }
+
+  .advantage-introduce > .introduce > .text {
+    margin-top: 60px;
+    height: 50px;
+    line-height: normal;
+    color: #FFFFFF;
+    border-top: 2px #FFFFFF solid;
+    padding-top: 40px;
+  }
+
+  .product{
+    height: 900px;
+    display: block;
+    position: relative;
+  }
+
+  .product::before {
+    content: "";
+    background-image: url('../../static/images/home/business/business-affairs-1.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 900px;
+    opacity: 0.5;
+    -webkit-filter: opacity(50%);
+    filter: opacity(50%);
+    width: 100%;
+    height: 900px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+  }
+
+  .product-title{
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000;
+    letter-spacing: 2px;
+    margin-top: 220px;
+  }
+
+  .product-describe{
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    color: rgb(102, 102, 102);
+  }
+
+  .product-register{
+    height: 141px;
+    line-height: 216px;
+    text-align: center;
+    padding-top: 75px;
+  }
+
+  .product-register>div{
+    width: 180px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 25px;
+    color: #FFFFFF;
+    background-color: #f5260b;
+    opacity: 0.6;
+    margin: auto;
+  }
+
+  .product-register>div:hover{
+    cursor: pointer;
+    margin: auto;
+    width: 200px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 30px;
+    font-size: 26px;
+    opacity: 0.8;
+  }
+
+  .product-img{
+    height: 350px;
+    vertical-align: bottom;
+  }
+
+  .product-img>img{
+    width: 964px;
+    height: 310px;
+    position: relative;
+    top: 40px;
+  }
+
+  .product-img>img:hover{
+    width: 1060px;
+    height: 341px;
+    top: 9px;
+  }
+
+  .team{
+    height: 650px;
+  }
+
+  .team-title {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: '黑体';
+    position: relative;
+  }
+
+  .team-describe {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    color: rgb(102, 102, 102);
+    text-align: center;
+  }
+  .team-introduce{
+    margin: auto;
+    margin-top: 60px;
+  }
+  .team-introduce-img{
+    width: 180px;
+    height: 180px;
+    border-radius: 90px;
+    position: relative;
+    top: 20px;
+  }
+
+  .recommend{
+    background-color: #e6e6e6;
+    height: 400px;
+  }
+
+  .recommend-title{
+    font-size: 30px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #000000;
+  }
+
+  .recommend-describe{
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    color: rgb(102, 102, 102);
+    margin-bottom: 40px;
+  }
+
+  .recommend-button{
+    margin: auto;
+    width: 180px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 25px;
+    color: #FFFFFF;
+    background-color: #f5260b;
+    opacity: 0.6;
+  }
+
+  .recommend-button:hover{
+    cursor: pointer;
+    margin: auto;
+    width: 200px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 30px;
+    font-size: 26px;
+    opacity: 0.8;
   }
 </style>
 <template>
@@ -81,7 +394,8 @@
         </div>
       </el-col>
     </el-row>
-    <el-row style="padding-top: 20px;background-image: url('/static/images/home/timg.jpg');">
+
+    <el-row style="padding-top: 20px;background-image: url('/static/images/background/timg.jpg');">
       <el-col :span="24">
         <el-carousel :interval="5000" arrow="never" type="card" height="600px">
           <el-carousel-item v-for="img in carouselImg1" :key="img">
@@ -90,119 +404,116 @@
         </el-carousel>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="12">
-        <div class="grid-content" style="margin-right: 10px;">
-          <el-divider><span>故乡的原风景</span></el-divider>
-          <el-carousel :interval="3000" arrow="never" height="500px">
-            <el-carousel-item v-for="img in carouselImg2" :key="img">
-              <img :src="img" style="width: 100%;height: 500px;">
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-      </el-col>
-      <el-col :span="12">
-        <div class="grid-content" style="margin-left: 10px;">
-          <el-divider><span>憧憬的海岸</span></el-divider>
-          <el-carousel :interval="3000" arrow="never" height="500px">
-            <el-carousel-item v-for="img in carouselImg3" :key="img">
-              <img :src="img" style="width: 100%;height: 500px;">
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="12">
-        <div class="grid-content" style="margin-right: 10px;">
-          <el-divider content-position="left"><span>华灯初上</span></el-divider>
-          <el-carousel :interval="3000" arrow="never" height="500px">
-            <el-carousel-item v-for="img in carouselImg4" :key="img">
-              <img :src="img" style="width: 100%;height: 500px;">
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-      </el-col>
-      <el-col :span="12">
-        <div class="grid-content" style="margin-left: 10px;">
-          <el-divider content-position="right"><span>夜色微凉</span></el-divider>
-          <el-carousel :interval="3000" arrow="never" height="500px">
-            <el-carousel-item v-for="img in carouselImg5" :key="img">
-              <img :src="img" style="width: 100%;height: 500px;">
-            </el-carousel-item>
-          </el-carousel>
+
+    <el-row style="padding-top: 100px;">
+      <el-col :span="24">
+        <div class="grid-content" style="height: 600px;">
+          <el-divider><span class="server-title">客户至上 , 我们致力于服务</span></el-divider>
+          <div class="server-describe">设计精美和易于修改是AppletSite的两大特点</div>
+          <div class="server-introduce">
+            <div class="introduce" style="color: #1296db;">
+              <div class="img"><img src="/static/images/icon/customer-service.png"></div>
+              <div class="text">利用企业QQ提供在线解答<br/>帮助企业快速准确解决问题和故障</div>
+            </div>
+            <div class="introduce" style="color: #f808e2;">
+              <div class="img"><img src="/static/images/icon/hotline.png"></div>
+              <div class="text">由专业客服提供人工服务<br/>负责疑难问题和故障受理</div>
+            </div>
+            <div class="introduce" style="color: #269f43;">
+              <div class="img"><img src="/static/images/icon/long-range.png"></div>
+              <div class="text">利用远程视频工具，提供协助<br/>帮助客户进行调试、解决故障</div>
+            </div>
+            <div class="introduce" style="color: #e0620d;">
+              <div class="img"><img src="/static/images/icon/feedback.png"></div>
+              <div class="text">由技术支持工程师<br/>负责问题解答、需求受理及故障受理</div>
+            </div>
+          </div>
         </div>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="6">
-        <div class="grid-content bg-purple" style="text-align: center;height: 250px;">
-          <img src="/static/home/chun.jpg" style="width: 300px;height: 250px;">
-        </div>
-      </el-col>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light" style="text-align: center;height: 250px;">
-          <img src="/static/home/xia.jpg" style="width: 300px;height: 250px;">
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple" style="text-align: center;height: 250px;">
-          <img src="/static/home/qiu.jpg" style="width: 300px;height: 250px;">
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light" style="text-align: center;height: 250px;">
-          <img src="/static/home/dong.jpg" style="width: 300px;height: 250px;">
+
+    <el-row class="advantage">
+      <el-col :span="24">
+        <div class="grid-content" style="height: 800px;">
+          <el-divider><span class="advantage-title">平台三大优势</span></el-divider>
+          <div class="advantage-describe">无与伦比的设计感是AppletSite为您带来的一份承诺</div>
+          <div class="advantage-introduce">
+            <div class="introduce">
+              <div class="img"><img src="/static/images/icon/computer.png"></div>
+              <div class="text">响应式创建</div>
+            </div>
+            <div class="introduce">
+              <div class="img"><img src="/static/images/icon/mobile-phone.png"></div>
+              <div class="text">自助创建</div>
+            </div>
+            <div class="introduce">
+              <div class="img"><img src="/static/images/icon/editor.png"></div>
+              <div class="text">无需编程</div>
+            </div>
+          </div>
         </div>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
+
+    <el-row class="product">
+      <el-col :span="24">
+        <div class="grid-content" style="height: 900px;text-align: center;">
+          <div class="product-title">功能多样满足您的各项需求</div>
+          <div class="product-describe">您需要的就是我们追求的，没有最好，只有更好</div>
+          <div class="product-register">
+            <div>现在注册 GO</div>
+          </div>
+          <div class="product-img">
+            <img src="/static/images/home/business/business-affairs-2.jpg">
+          </div>
         </div>
       </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple"></div>
+    </el-row>
+
+    <el-row class="team">
+      <el-col :span="24">
+        <div class="grid-content" style="height: 600px;text-align: center;position: relative;top: -180px;">
+          <el-divider><span class="team-title">原创团队</span></el-divider>
+          <div class="team-describe">一路携手，同舟共雨，砥砺前行</div>
+          <div class="team-introduce">
+            <el-carousel indicator-position="outside" interval="5000" arrow="never" height="280"
+                         style="width: 900px;margin: auto;text-align: left;background-color: #FFFFFF;">
+              <el-carousel-item v-for="team in teams" :key="team" style="background-color: #FFFFFF;">
+                <div style="width: 240px;height: 280px;display: inline-block;text-align: center;">
+                  <img class="team-introduce-img" :src="team.avatar">
+                </div>
+                <div style="width: 620px;height: 280px;display: inline-block;">
+                  <div style="height: 70px;"></div>
+                  <div style="height: 180px;font-size: 14px;color: rgb(102, 102, 102);">
+                    <div style="height: 130px;text-indent: 2em;">{{team.introduce}}</div>
+                    <div style="color: #ef4f19;">
+                      <span style="font-size: 22px">{{team.name}}</span>&nbsp;&nbsp;({{team.position}})
+                    </div>
+                  </div>
+                  <div style="height: 50px;"></div>
+                </div>
+              </el-carousel-item>
+            </el-carousel>
+          </div>
+        </div>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
+
+    <el-row class="recommend">
+      <el-col :span="24">
+        <div class="grid-content" style="height: 400px;text-align: center;position: relative;top: -130px;">
+          <div class="recommend-title">拥有一个小程序或仅是尝试一下新的想法</div>
+          <div class="recommend-describe">流线式网页布局设计方案，可视化图文内容编辑模式，它让网站制作和维护成为一件轻松惬意的事</div>
+          <div class="recommend-button">
+            <div>马上体验</div>
+          </div>
+        </div>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-    </el-row>
+
+    <div style="height: 200px;background-color: #545c64;">
+
+    </div>
     <div class="back-top" v-if="backTopStatus" @click="backTop">
       <el-tooltip effect="dark" content="回到顶部" placement="bottom" visible-arrow="false">
         <i class="el-icon-top"></i>
@@ -231,31 +542,19 @@
           '/static/images/home/computer/computer-5.jpg',
           '/static/images/home/computer/computer-6.jpg'
         ],
-        carouselImg2: [
-          '/static/images/home/hometown/hometown-1.jpg',
-          '/static/images/home/hometown/hometown-2.jpg',
-          '/static/images/home/hometown/hometown-3.jpg',
-          '/static/images/home/hometown/hometown-4.jpg'
-        ],
-        carouselImg3: [
-          '/static/images/home/sea/sea-1.jpg',
-          '/static/images/home/sea/sea-2.jpg',
-          '/static/images/home/sea/sea-3.jpg',
-          '/static/images/home/sea/sea-4.jpg'
-        ],
-        carouselImg4: [
-          '/static/images/home/metropolis/dusk/dusk-1.jpg',
-          '/static/images/home/metropolis/dusk/dusk-2.jpg',
-          '/static/images/home/metropolis/dusk/dusk-3.jpg',
-          '/static/images/home/metropolis/dusk/dusk-4.jpg',
-          '/static/images/home/metropolis/dusk/dusk-5.jpg'
-        ],
-        carouselImg5: [
-          '/static/images/home/metropolis/night/night-1.jpg',
-          '/static/images/home/metropolis/night/night-2.jpg',
-          '/static/images/home/metropolis/night/night-3.jpg',
-          '/static/images/home/metropolis/night/night-4.jpg',
-          '/static/images/home/metropolis/night/night-5.jpg'
+        teams: [
+          {
+            name: '周XX',
+            introduce: 'AppletSite是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
+            position: 'XX经理',
+            avatar: '/static/images/personal/default-avatar.jpeg'
+          },
+          {
+            name: '赵XX',
+            introduce: 'AppletSite是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
+            position: 'XX负责人',
+            avatar: '/static/images/personal/default-avatar.jpeg'
+          }
         ]
       }
     },
