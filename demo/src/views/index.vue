@@ -412,11 +412,11 @@
           <div class="server-describe">设计精美和易于修改是AppletSite的两大特点</div>
           <div class="server-introduce">
             <div class="introduce" style="color: #1296db;">
-              <div class="img"><img src="/static/images/icon/customer-service.png"></div>
+              <div class="img"><img src="/static/images/icon/qq.png"></div>
               <div class="text">利用企业QQ提供在线解答<br/>帮助企业快速准确解决问题和故障</div>
             </div>
-            <div class="introduce" style="color: #f808e2;">
-              <div class="img"><img src="/static/images/icon/hotline.png"></div>
+            <div class="introduce" style="color: #0729f2;">
+              <div class="img"><img src="/static/images/icon/customer-service.png"></div>
               <div class="text">由专业客服提供人工服务<br/>负责疑难问题和故障受理</div>
             </div>
             <div class="introduce" style="color: #269f43;">
