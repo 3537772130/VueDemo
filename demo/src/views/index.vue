@@ -1,389 +1,5 @@
 <style>
-  .el-col {
-    border-radius: 4px;
-  }
-
-  img:hover {
-    cursor: pointer;
-  }
-
-  .bg-purple-dark {
-    background: #545c64;
-  }
-
-  .bg-purple {
-    background: #d3dce6;
-  }
-
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-
-  .grid-content {
-    min-height: 36px;
-  }
-
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
-
-  .top-menu {
-    text-align: right;
-  }
-
-  .el-carousel__item h3 {
-    color: #475669;
-    font-size: 18px;
-    opacity: 0.75;
-
-    margin: 0;
-  }
-
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-  }
-
-  .back-top {
-    width: 46px;
-    height: 46px;
-    line-height: 46px;
-    border-radius: 23px;
-    background-color: #e5e9f2;
-    color: #FFFFFF;
-    font-size: 26px;
-    position: fixed;
-    right: 40px;
-    bottom: 100px;
-    z-index: 999;
-  }
-
-  .back-top:hover {
-    border: 1px #303133 solid;
-    background-color: #303133;
-    cursor: pointer;
-  }
-
-  .server-title {
-    font-size: 30px;
-    font-weight: bold;
-    font-family: '黑体';
-  }
-
-  .server-describe {
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    color: rgb(102, 102, 102);
-    text-align: center;
-  }
-
-  .server-introduce {
-    height: 360px;
-    line-height: 360px;
-    text-align: center;
-  }
-
-  .server-introduce > .introduce {
-    display: inline-block;
-    width: 260px;
-    height: 200px;
-    font-size: 16px;
-    margin: 0px 10px;
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-    top: 60px;
-    /*-moz-transition: -moz-transform 1s; !* Firefox 4 *!*/
-    /*-webkit-transition: -webkit-transform 1s; !* Safari and Chrome *!*/
-    /*-o-transition: -o-transform 1s; !* Opera *!*/
-  }
-
-  .server-introduce > .introduce:hover {
-    cursor: pointer;
-    background-color: #e6e6e6;
-    /*transform:rotate(360deg);*/
-    /*-moz-transform:rotate(360deg); !* Firefox 4 *!*/
-    /*-webkit-transform:rotate(360deg); !* Safari and Chrome *!*/
-    /*-o-transform:rotate(360deg); !* Opera *!*/
-    font-weight: bold;
-    margin: 20px;
-  }
-
-  .server-introduce > .introduce > .img {
-    height: 130px;
-    line-height: 130px;
-  }
-
-  .server-introduce > .introduce > .img > img {
-    width: 128px;
-    height: 128px;
-  }
-
-  .server-introduce > .introduce > .text {
-    margin-top: 20px;
-    height: 50px;
-    line-height: normal;
-  }
-
-  .advantage {
-    height: 800px;
-    display: block;
-    position: relative;
-  }
-
-  .advantage::before {
-    content: "";
-    background-image: url('../../static/images/background/force-potential.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 800px;
-    opacity: 0.5;
-    -webkit-filter: opacity(50%);
-    filter: opacity(50%);
-    width: 100%;
-    height: 800px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: -1;
-  }
-
-  .advantage-title {
-    font-size: 30px;
-    font-weight: bold;
-    font-family: '黑体';
-    opacity: 1;
-  }
-
-  .advantage-describe {
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    color: rgb(102, 102, 102);
-    text-align: center;
-    opacity: 1;
-  }
-
-  .advantage-introduce {
-    height: 360px;
-    line-height: 360px;
-    text-align: center;
-    opacity: 1;
-  }
-
-  .advantage-introduce > .introduce {
-    margin: auto;
-    display: inline-block;
-    width: 260px;
-    height: 300px;
-    padding-top: 80px;
-    margin: 10px;
-    font-size: 18px;
-    letter-spacing: 2px;
-    text-align: center;
-    background-color: #f5260b;
-    opacity: 0.5;
-    position: relative;
-    top: 80px;
-  }
-
-  .advantage-introduce > .introduce:hover {
-    cursor: pointer;
-    opacity: 0.8;
-    font-weight: bold;
-    height: 300px;
-    padding-top: 60px;
-    top: 40px;
-  }
-
-  .advantage-introduce > .introduce > .img {
-    margin: auto;
-    width: 120px;
-    height: 120px;
-    line-height: 120px;
-    border: 2px #FFFFFF solid;
-    border-radius: 60px;
-  }
-
-  .advantage-introduce > .introduce > .img > img {
-    width: 64px;
-    height: 64px;
-    position: relative;
-    top: 28px;
-  }
-
-  .advantage-introduce > .introduce > .text {
-    margin-top: 60px;
-    height: 50px;
-    line-height: normal;
-    color: #FFFFFF;
-    border-top: 2px #FFFFFF solid;
-    padding-top: 40px;
-  }
-
-  .product{
-    height: 900px;
-    display: block;
-    position: relative;
-  }
-
-  .product::before {
-    content: "";
-    background-image: url('../../static/images/home/business/business-affairs-1.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 900px;
-    opacity: 0.5;
-    -webkit-filter: opacity(50%);
-    filter: opacity(50%);
-    width: 100%;
-    height: 900px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: -1;
-  }
-
-  .product-title{
-    font-size: 30px;
-    font-weight: bold;
-    color: #000000;
-    letter-spacing: 2px;
-    margin-top: 220px;
-  }
-
-  .product-describe{
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    color: rgb(102, 102, 102);
-  }
-
-  .product-register{
-    height: 141px;
-    line-height: 216px;
-    text-align: center;
-    padding-top: 75px;
-  }
-
-  .product-register>div{
-    width: 180px;
-    height: 50px;
-    line-height: 50px;
-    font-size: 24px;
-    font-weight: bold;
-    border-radius: 25px;
-    color: #FFFFFF;
-    background-color: #f5260b;
-    opacity: 0.6;
-    margin: auto;
-  }
-
-  .product-register>div:hover{
-    cursor: pointer;
-    margin: auto;
-    width: 200px;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 30px;
-    font-size: 26px;
-    opacity: 0.8;
-  }
-
-  .product-img{
-    height: 350px;
-    vertical-align: bottom;
-  }
-
-  .product-img>img{
-    width: 964px;
-    height: 310px;
-    position: relative;
-    top: 40px;
-  }
-
-  .product-img>img:hover{
-    width: 1060px;
-    height: 341px;
-    top: 9px;
-  }
-
-  .team{
-    height: 650px;
-  }
-
-  .team-title {
-    font-size: 30px;
-    font-weight: bold;
-    font-family: '黑体';
-    position: relative;
-  }
-
-  .team-describe {
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    color: rgb(102, 102, 102);
-    text-align: center;
-  }
-  .team-introduce{
-    margin: auto;
-    margin-top: 60px;
-  }
-  .team-introduce-img{
-    width: 180px;
-    height: 180px;
-    border-radius: 90px;
-    position: relative;
-    top: 20px;
-  }
-
-  .recommend{
-    background-color: #e6e6e6;
-    height: 400px;
-  }
-
-  .recommend-title{
-    font-size: 30px;
-    letter-spacing: 2px;
-    text-align: center;
-    color: #000000;
-  }
-
-  .recommend-describe{
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    color: rgb(102, 102, 102);
-    margin-bottom: 40px;
-  }
-
-  .recommend-button{
-    margin: auto;
-    width: 180px;
-    height: 50px;
-    line-height: 50px;
-    font-size: 24px;
-    font-weight: bold;
-    border-radius: 25px;
-    color: #FFFFFF;
-    background-color: #f5260b;
-    opacity: 0.6;
-  }
-
-  .recommend-button:hover{
-    cursor: pointer;
-    margin: auto;
-    width: 200px;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 30px;
-    font-size: 26px;
-    opacity: 0.8;
-  }
+  @import "../../static/css/index-style.css";
 </style>
 <template>
   <div>
@@ -397,7 +13,7 @@
 
     <el-row style="padding-top: 20px;background-image: url('/static/images/background/timg.jpg');">
       <el-col :span="24">
-        <el-carousel :interval="5000" arrow="never" type="card" height="600px">
+        <el-carousel :interval="3000" arrow="never" type="card" height="600px">
           <el-carousel-item v-for="img in carouselImg1" :key="img">
             <img :src="img" style="width: 100%;height: 600px;">
           </el-carousel-item>
@@ -411,20 +27,20 @@
           <el-divider><span class="server-title">客户至上 , 我们致力于服务</span></el-divider>
           <div class="server-describe">设计精美和易于修改是AppletSite的两大特点</div>
           <div class="server-introduce">
-            <div class="introduce" style="color: #1296db;">
+            <div class="introduce">
               <div class="img"><img src="/static/images/icon/qq.png"></div>
               <div class="text">利用企业QQ提供在线解答<br/>帮助企业快速准确解决问题和故障</div>
             </div>
-            <div class="introduce" style="color: #0729f2;">
+            <div class="introduce">
               <div class="img"><img src="/static/images/icon/customer-service.png"></div>
               <div class="text">由专业客服提供人工服务<br/>负责疑难问题和故障受理</div>
             </div>
-            <div class="introduce" style="color: #269f43;">
+            <div class="introduce">
               <div class="img"><img src="/static/images/icon/long-range.png"></div>
               <div class="text">利用远程视频工具，提供协助<br/>帮助客户进行调试、解决故障</div>
             </div>
-            <div class="introduce" style="color: #e0620d;">
-              <div class="img"><img src="/static/images/icon/feedback.png"></div>
+            <div class="introduce">
+              <div class="img"><img src="/static/images/icon/handle.png"></div>
               <div class="text">由技术支持工程师<br/>负责问题解答、需求受理及故障受理</div>
             </div>
           </div>
@@ -503,7 +119,7 @@
       <el-col :span="24">
         <div class="grid-content" style="height: 400px;text-align: center;position: relative;top: -130px;">
           <div class="recommend-title">拥有一个小程序或仅是尝试一下新的想法</div>
-          <div class="recommend-describe">流线式网页布局设计方案，可视化图文内容编辑模式，它让网站制作和维护成为一件轻松惬意的事</div>
+          <div class="recommend-describe">流线式网页布局设计方案，可视化图文内容编辑模式，它让小程序制作和维护成为一件轻松惬意的事</div>
           <div class="recommend-button">
             <div>马上体验</div>
           </div>
@@ -511,7 +127,7 @@
       </el-col>
     </el-row>
 
-    <div style="height: 200px;background-color: #545c64;">
+    <div style="height: 220px;background-color: #545c64;">
 
     </div>
     <div class="back-top" v-if="backTopStatus" @click="backTop">

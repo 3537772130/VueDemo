@@ -81,8 +81,8 @@
 <template>
   <el-container :style="{height: bodyHeight}">
     <el-aside width="200px" style="background-color: rgb(84, 92, 100)">
-      <div style="width: 200px;height: 60px;display: inline-block;">
-        <img style="position: relative;top: -60px;" src="/api/image/getImage?text=applet site&color=16777215&fontFamily=华文隶书">
+      <div style="width: 200px;height: 63px;display: inline-block;">
+<!--        <img style="position: relative;top: -60px;" src="/api/image/getImage?text=applet site&color=16777215&fontFamily=华文隶书">-->
       </div>
       <el-menu
         :default-active="activeIndex"

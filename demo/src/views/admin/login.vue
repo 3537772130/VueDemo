@@ -67,7 +67,7 @@
                         v-model="ruleForm.userPass" show-password></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit('ruleForm')">立即登录</el-button>
+              <el-button type="primary" @click="onSubmit('ruleForm')" style="letter-spacing: 5px;">立即登录</el-button>
             </el-form-item>
           </el-form>
         </div>
