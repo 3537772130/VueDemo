@@ -21,12 +21,12 @@
       <el-menu-item index="4">立刻注册</el-menu-item>
       <el-submenu index="5" v-if="loginStatus" @click.native="handleSelect('5-1','5')">
         <template slot="title">
-          <el-avatar :size="50" :src="info.headPortrait" @error="errorHandler">
-            <img :src="info.headPortrait"/>
+          <el-avatar :size="50" :src="info.avatarUrl" @error="errorHandler">
+            <img :src="info.avatarUrl"/>
           </el-avatar>
         </template>
         <el-menu-item disabled>{{info.nickName}}</el-menu-item>
-        <el-menu-item index="5-1">{{info.userName}}</el-menu-item>
+        <el-menu-item index="5-1">{{info.mobile}}</el-menu-item>
         <el-menu-item index="5-3" @click.native="exitLogin()">注销登录</el-menu-item>
       </el-submenu>
     </el-menu>
@@ -118,9 +118,7 @@
             } else {
               this.$message.error(res.data.data)
             }
-            this.$nextTick(() => {
-              loading.close()
-            })
+            this.GLOBAL.exitLoad(this, loading, res.data)
           })
         })
       }

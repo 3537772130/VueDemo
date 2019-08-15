@@ -134,12 +134,12 @@
             </div>
             <div class="container-style">
               <div style="height: 50px;"></div>
-              <div class="text item"><label>账&nbsp;&nbsp;户&nbsp;&nbsp;名：</label>{{info.userName}}</div>
+              <div class="text item"><label>账&nbsp;&nbsp;户&nbsp;&nbsp;名：</label>{{info.mobile}}</div>
               <div class="text item"><label>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</label>{{info.nickName}}
               </div>
-              <div class="text item"><label>注册时间：</label>{{info.createTime}}</div>
+              <div class="text item"><label>注册时间：</label>{{info.createDate}}</div>
               <div class="photo-div">
-                <img :src="info.headPortrait" class="user-photo">
+                <img :src="info.avatarUrl" class="user-photo">
               </div>
             </div>
           </el-card>
@@ -148,16 +148,16 @@
               <el-tab-pane label="修改信息" name="up-info" style="height: 400px;">
                 <el-form :model="upInfo" :rules="infoRules" ref="upInfo" style="text-align: left; padding-top: 30px;">
                   <el-form-item label="账户" :label-width="formLabelWidth" class="form-info-div">
-                    <span>{{info.userName}}</span>
+                    <span>{{info.mobile}}</span>
                   </el-form-item>
                   <el-form-item label="昵称" prop="nickName" :label-width="formLabelWidth" class="form-info-div">
                     <el-input v-model="upInfo.nickName" name="nickName" maxlength="20" autocomplete="off"
                               placeholder="请输入昵称"
                               class="form-info-val"></el-input>
                   </el-form-item>
-                  <el-form-item label="性别" prop="sex" :label-width="formLabelWidth" class="form-info-div">
-                    <el-radio-group v-model="upInfo.sex" class="form-info-val">
-                      <el-radio v-for="sex in sexList" :key="sex.value" :label="sex.value">{{sex.name}}</el-radio>
+                  <el-form-item label="性别" prop="gender" :label-width="formLabelWidth" class="form-info-div">
+                    <el-radio-group v-model="upInfo.gender" class="form-info-val">
+                      <el-radio v-for="gender in genderList" :key="gender.value" :label="gender.value">{{gender.name}}</el-radio>
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item :label-width="formLabelWidth" class="form-info-div">
@@ -196,13 +196,13 @@
                 <div style="text-align: left; padding-top: 30px;padding-left: 50px;">
                   <el-upload
                     class="avatar-uploader"
-                    action="/api/user/uploadUserHeadPortrait"
-                    name="HeadPortrait"
+                    action="/api/user/uploadUserAvatar"
+                    name="avatar"
                     :headers="myHeader"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
-                    <img v-if="info.headPortrait" :src="info.headPortrait" class="avatar">
+                    <img v-if="info.avatarUrl" :src="info.avatarUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                   <span
@@ -244,7 +244,7 @@
     data() {
       return {
         info: this.$cookies.get('user_info'),
-        sexList: [
+        genderList: [
           {
             name: '男',
             value: '1'
@@ -256,7 +256,7 @@
         ],
         upInfo: {
           nickName: '',
-          sex: ''
+          gender: ''
         },
         passForm: {
           oldPass: '',
@@ -272,7 +272,7 @@
             {required: true, message: '请输入昵称', trigger: 'blur'},
             {min: 1, max: 20, message: '昵称长度过长', trigger: 'blur'}
           ],
-          sex: [
+          gender: [
             {required: true, message: '请选择性别', trigger: 'blur'}
           ]
         },
@@ -312,7 +312,7 @@
         this.$nextTick(() => {
           this.$refs['passForm'].resetFields()
           let info = this.$cookies.get('user_info')
-          info.sex = info.sex ? '1' : '0'
+          info.gender = info.gender ? '1' : '0'
           this.upInfo = info
           this.passForm = {}
         })
@@ -324,7 +324,7 @@
             this.$axios({
               url: '/api/user/updateUserInfo',
               method: 'post',
-              data: {nickName: this.upInfo.nickName, sex: this.upInfo.sex}
+              data: {nickName: this.upInfo.nickName, gender: this.upInfo.gender}
             }).then(res => {
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
@@ -356,7 +356,28 @@
               data: {oldPass: this.passForm.oldPass, newPass: this.passForm.newPass}
             }).then(res => {
               console.info('后台返回的数据', res.data)
-
+              if (res.data.code === '1'){
+                let that = this
+                this.$message({
+                  message: res.data.data,
+                  type: 'success',
+                  onClose: function () {
+                    that.$axios({
+                      url: '/api/exitLogin',
+                      method: 'post'
+                    }).then(re => {
+                      if (re.data.code === '1') {
+                        that.GLOBAL.exitLoad(that, loading, {'code': '0'})
+                      } else {
+                        that.$message.error(re.data.data)
+                      }
+                    })
+                  }
+                })
+              } else {
+                this.$message.error(res.data.data)
+                this.GLOBAL.exitLoad(this, loading, res.data)
+              }
             }).catch(error => {
               console.info('错误信息', error)
               this.GLOBAL.exitLoad(this, loading, '')
@@ -371,7 +392,7 @@
         console.info('后台返回的file', file)
         if (res.code === '1') {
           this.info = this.$cookies.get('user_info')
-          this.info.headPortrait = URL.createObjectURL(file.raw)
+          this.info.avatarUrl = URL.createObjectURL(file.raw)
           this.$cookies.set('user_info', this.info)
           this.$emit('updateInfo')
           this.$message({message: '上传成功', type: 'success'})

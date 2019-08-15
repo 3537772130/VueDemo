@@ -57,7 +57,7 @@
           that.$axios({
             url: '/api/mobileWhetherRegistered',
             method: 'post',
-            data: {userName: value}
+            data: {mobile: value}
           }).then(res => {
             // console.info('后台返回的数据', res.data)
             if (res.data.code != '1') {

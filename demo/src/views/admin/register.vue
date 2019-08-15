@@ -51,21 +51,21 @@
       <div class="c-title-div"><h1>基本信息填写</h1></div>
       <div class="c-form-div">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="用户名" prop="userName" :label-width="formLabelWidth" class="form-info-div">
-            <el-input type="number" v-model="ruleForm.userName" minlength="11" maxlength="11"
+          <el-form-item label="用户名" prop="mobile" :label-width="formLabelWidth" class="form-info-div">
+            <el-input type="number" v-model="ruleForm.mobile" minlength="11" maxlength="11"
                       placeholder="请输入手机号码" class="form-info-val"></el-input>
           </el-form-item>
           <el-form-item label="昵称" prop="nickName" :label-width="formLabelWidth" class="form-info-div">
             <el-input v-model="ruleForm.nickName" minlength="1" maxlength="20" placeholder="请输入昵称"
                       class="form-info-val"></el-input>
           </el-form-item>
-          <el-form-item label="性别" prop="sex" :label-width="formLabelWidth" class="form-info-div">
-            <el-radio-group v-model="ruleForm.sex" class="form-info-val">
-              <el-radio v-for="sex in sexList" :key="sex.value" :label="sex.value">{{sex.name}}</el-radio>
+          <el-form-item label="性别" prop="gender" :label-width="formLabelWidth" class="form-info-div">
+            <el-radio-group v-model="ruleForm.gender" class="form-info-val">
+              <el-radio v-for="gender in genderList" :key="gender.value" :label="gender.value">{{gender.name}}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="登录密码" prop="userPass" :label-width="formLabelWidth" class="form-info-div">
-            <el-input v-model="ruleForm.userPass" maxlength="20" type="password" placeholder="请输入登录密码"
+          <el-form-item label="登录密码" prop="password" :label-width="formLabelWidth" class="form-info-div">
+            <el-input v-model="ruleForm.password" maxlength="20" type="password" placeholder="请输入登录密码"
                       class="form-info-val"
                       show-password></el-input>
           </el-form-item>
@@ -95,7 +95,7 @@
     data() {
       return {
         formLabelWidth: '120px',
-        sexList: [
+        genderList: [
           {
             name: '男',
             value: '1'
@@ -106,14 +106,14 @@
           }
         ],
         ruleForm: {
-          userName: '',
+          mobile: '',
           nickName: '',
-          sex: '0',
-          userPass: '',
+          gender: '0',
+          password: '',
           confirmPass: ''
         },
         rules: {
-          userName: [
+          mobile: [
             {required: true, message: '请输入手机号码', trigger: 'blur'},
             {min: 11, max: 11, message: '长度为11个数字', trigger: 'blur'},
             {validator: this.GLOBAL.validate(this).mobileValidator, trigger: 'blur'}
@@ -122,10 +122,10 @@
             {required: true, message: '请输入昵称', trigger: 'blur'},
             {min: 1, max: 20, message: '昵称长度过长', trigger: 'blur'}
           ],
-          sex: [
+          gender: [
             {required: true, message: '请选择性别', trigger: 'change'}
           ],
-          userPass: [
+          password: [
             {required: true, message: '请输入新密码', trigger: 'blur'},
             {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
             {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'}
@@ -147,7 +147,7 @@
     },
     methods: {
       getPassword() {
-        return this.ruleForm.userPass
+        return this.ruleForm.password
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {

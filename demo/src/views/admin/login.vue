@@ -58,13 +58,13 @@
       <div class="login-div">
         <div class="form-div">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="login-form">
-            <el-form-item prop="userName">
+            <el-form-item prop="mobile">
               <el-input class="input-div" placeholder="请输入账户名" prefix-icon="el-icon-user"
-                        v-model="ruleForm.userName"></el-input>
+                        v-model="ruleForm.mobile"></el-input>
             </el-form-item>
-            <el-form-item prop="userName">
+            <el-form-item prop="password">
               <el-input type="password" class="input-div" placeholder="请输入密码" prefix-icon="el-icon-lock"
-                        v-model="ruleForm.userPass" show-password></el-input>
+                        v-model="ruleForm.password" show-password></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit('ruleForm')" style="letter-spacing: 5px;">立即登录</el-button>
@@ -94,14 +94,14 @@
           'background-size': 'cover',
         },
         ruleForm: {
-          userName: '17601301913',
-          userPass: '123456'
+          mobile: '17601301913',
+          password: '123456'
         },
         rules: {
-          userName: [
+          mobile: [
             {required: true, message: '请输入账户名', trigger: 'blur'}
           ],
-          userPass: [
+          password: [
             {required: true, message: '请输入密码', trigger: 'blur'},
             {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'}
           ]
@@ -126,8 +126,8 @@
               console.info('后台返回的数据', res.data)
               if (res.data.code === '1') {
                 let info = res.data.data
-                if (info.headPortrait === null || info.headPortrait === ''){
-                  info.headPortrait = '/static/images/personal/default-avatar.jpeg'
+                if (info.avatarUrl === null || info.avatarUrl === ''){
+                  info.avatarUrl = '/static/images/personal/default-avatar.jpeg'
                 }
                 this.$cookies.set('user_info', info, 3600)
                 this.$router.push({path: '/main-info'})
