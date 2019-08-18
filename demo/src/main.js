@@ -4,28 +4,28 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from 'store'
-import elementUI from 'element-ui'
+import ElementUI from 'element-ui'
 import echarts from 'echarts'
 import axios from 'axios'
-import vueCookies from 'vue-cookies'
-import vueJsDialog from "vuejs-dialog"
+import VueCookies from 'vue-cookies'
+import VueJsDialog from 'vuejs-dialog'
 import global_ from '@/components/tool/global'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'lib-flexible'
 
-Vue.use(elementUI, {size: 'small', zIndex: 3000})
-Vue.use(vueCookies)
-Vue.use(vueJsDialog)
+Vue.use(ElementUI, {size: 'small', zIndex: 3000})
+Vue.use(VueCookies)
+Vue.use(VueJsDialog)
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
-Vue.prototype.GLOBAL = global_
+Vue.prototype.$global = global_
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前,格式化参数，增加token
   let data = config.data
   let params = new URLSearchParams()
-  for (var key in config.data) {
+  for (let key in config.data) {
     params.append(key, data[key])
   }
   // params.append("tokenStr", getTimes())

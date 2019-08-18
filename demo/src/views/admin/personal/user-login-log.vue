@@ -107,7 +107,7 @@
     },
     created() {
       this.onSubmit()
-      this.GLOBAL.selectRegionList(this, '', '1')
+      this.$global.selectRegionList(this, '', '1')
     },
     mounted() {
     },
@@ -130,10 +130,10 @@
           } else if (res.data.code === "-1") {
             this.$message.error(res.data.data)
           }
-          this.GLOBAL.exitLoad(this, null, res.data)
+          this.$global.exitLoad(this, null, res.data)
         }).catch(error => {
           console.info('错误信息', error)
-          this.GLOBAL.exitLoad(this, null, '')
+          this.$global.exitLoad(this, null, '')
         })
       },
       selectList() {
@@ -153,7 +153,7 @@
           let obj = this.provList.find((item)=> {
             return item.areaName === region;
           })
-          this.GLOBAL.selectRegionList(this, obj.id, '2')
+          this.$global.selectRegionList(this, obj.id, '2')
         }
       },
       selectCity() {
@@ -163,7 +163,7 @@
           let obj = this.cityList.find((item)=> {
             return item.areaName === city;
           })
-          this.GLOBAL.selectRegionList(this, obj.id, '3')
+          this.$global.selectRegionList(this, obj.id, '3')
         }
       }
     }

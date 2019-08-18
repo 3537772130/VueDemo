@@ -55,7 +55,7 @@
           callback(new Error('用户名格式不正确!'))
         } else {
           that.$axios({
-            url: '/api/mobileWhetherRegistered',
+            url: '/api/user/checkMobilRegistered',
             method: 'post',
             data: {mobile: value}
           }).then(res => {

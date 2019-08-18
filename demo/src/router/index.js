@@ -14,10 +14,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/Index' // 默认路径
-    },
-    {
-      path: '/index',
       name: 'index',
       component: Index
     },

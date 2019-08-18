@@ -291,7 +291,7 @@
             {required: true, message: '请输入确认密码', trigger: 'blur'},
             {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
             {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'},
-            {validator: this.GLOBAL.validate(this).confirmPassValidator, trigger: 'blur'}
+            {validator: this.$global.validate(this).confirmPassValidator, trigger: 'blur'}
           ]
         },
         myHeader: {
@@ -336,10 +336,10 @@
               } else if (res.data.code === '-1') {
                 this.$message.error(res.data.data)
               }
-              this.GLOBAL.exitLoad(this, loading, res.data)
+              this.$global.exitLoad(this, loading, res.data)
             }).catch(error => {
               console.info('错误信息', error)
-              this.GLOBAL.exitLoad(this, loading, '')
+              this.$global.exitLoad(this, loading, '')
             })
           } else {
             this.$message({message: '信息提交失败', type: 'warning'})
@@ -367,7 +367,7 @@
                       method: 'post'
                     }).then(re => {
                       if (re.data.code === '1') {
-                        that.GLOBAL.exitLoad(that, loading, {'code': '0'})
+                        that.$global.exitLoad(that, loading, {'code': '0'})
                       } else {
                         that.$message.error(re.data.data)
                       }
@@ -376,11 +376,11 @@
                 })
               } else {
                 this.$message.error(res.data.data)
-                this.GLOBAL.exitLoad(this, loading, res.data)
+                this.$global.exitLoad(this, loading, res.data)
               }
             }).catch(error => {
               console.info('错误信息', error)
-              this.GLOBAL.exitLoad(this, loading, '')
+              this.$global.exitLoad(this, loading, '')
             })
           } else {
             this.$message({message: '信息提交失败', type: 'warning'})
@@ -400,7 +400,7 @@
           this.$message.error(res.data)
         }
         let loading = Loading.service({fullscreen: true, text: '正在上传'})
-        this.GLOBAL.exitLoad(this, loading, res.data)
+        this.$global.exitLoad(this, loading, res.data)
       },
       beforeAvatarUpload(file) {
         let loading = Loading.service({fullscreen: true, text: '正在上传'})

@@ -81,7 +81,7 @@
         }
       },
       checkLogin() {
-        this.loginStatus = this.GLOBAL.checkLogin(this)
+        this.loginStatus = this.$global.checkLogin(this)
         if (!this.loginStatus) {
           this.menuWidth = {
             'display': 'inline-block',
@@ -108,7 +108,7 @@
         }).then(() => {
           let loading = Loading.service({fullscreen: true, text: '正在注销'})
           this.$axios({
-            url: '/api/exitLogin',
+            url: '/api/user/exitLogin',
             method: 'post'
           }).then(res => {
             console.info('后台返回的数据', res.data)
@@ -118,7 +118,7 @@
             } else {
               this.$message.error(res.data.data)
             }
-            this.GLOBAL.exitLoad(this, loading, res.data)
+            this.$global.exitLoad(this, loading, res.data)
           })
         })
       }

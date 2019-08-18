@@ -119,7 +119,7 @@
           if (valid) {
             let loading = Loading.service({fullscreen: true, text: '正在登录'})
             this.$axios({
-              url: '/api/doLogin',
+              url: '/api/user/doLogin',
               method: 'post',
               data: this.ruleForm
             }).then(res => {
@@ -134,10 +134,10 @@
               } else if (res.data.code === "-1") {
                 this.$message.error(res.data.data)
               }
-              this.GLOBAL.exitLoad(this, loading, res.data)
+              this.$global.exitLoad(this, loading, res.data)
             }).catch(error => {
               console.info('错误信息', error)
-              this.GLOBAL.exitLoad(this, loading, "")
+              this.$global.exitLoad(this, loading, "")
             })
           } else {
             this.$message({message: '表单校验失败!', type: 'warning'})

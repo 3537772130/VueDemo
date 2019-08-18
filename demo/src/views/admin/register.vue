@@ -116,7 +116,7 @@
           mobile: [
             {required: true, message: '请输入手机号码', trigger: 'blur'},
             {min: 11, max: 11, message: '长度为11个数字', trigger: 'blur'},
-            {validator: this.GLOBAL.validate(this).mobileValidator, trigger: 'blur'}
+            {validator: this.$global.validate(this).mobileValidator, trigger: 'blur'}
           ],
           nickName: [
             {required: true, message: '请输入昵称', trigger: 'blur'},
@@ -134,7 +134,7 @@
             {required: true, message: '请输入确认密码', trigger: 'blur'},
             {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
             {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'},
-            {validator: this.GLOBAL.validate(this).confirmPassValidator, trigger: 'blur'}
+            {validator: this.$global.validate(this).confirmPassValidator, trigger: 'blur'}
           ]
         }
       }
@@ -154,7 +154,7 @@
           if (valid) {
             let loading = Loading.service({fullscreen: true, text: '正在提交'})
             this.$axios({
-              url: '/api/doRegister',
+              url: '/api/user/doRegister',
               method: 'post',
               data: this.ruleForm
             }).then(res => {
@@ -171,10 +171,10 @@
               } else if (res.data.code === '-1') {
                 this.$message.error(res.data.data)
               }
-              this.GLOBAL.exitLoad(this, loading, res.data)
+              this.$global.exitLoad(this, loading, res.data)
             }).catch(error => {
               console.info('错误信息', error)
-              this.GLOBAL.exitLoad(this, loading, '')
+              this.$global.exitLoad(this, loading, '')
             })
           } else {
             this.$message({

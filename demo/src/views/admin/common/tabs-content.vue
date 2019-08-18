@@ -71,7 +71,7 @@
         this.mainShow = 'none'
         let menuLists = this.editableTabs
         let ifBe = true
-        for (var i = 0; i < menuLists.length; i++) {
+        for (let i = 0; i < menuLists.length; i++) {
           if (menuLists[i].name === menuIndex) {
             ifBe = false
             break
