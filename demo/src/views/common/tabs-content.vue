@@ -33,18 +33,27 @@
     <el-tab-pane class="tab-div-content" v-for="item in editableTabs" :key="item.name"
                  :label="item.title" :name="item.name" :style="{'height': tabPaneHeight + 'px','overflow-y': 'scroll'}"
                  closable>
-      <div v-if="item.name != '1-1'">{{item.content}}</div>
       <div v-if="item.name === '1-1'" class="tab-div-content-page">
         <userLoginLog></userLoginLog>
+      </div>
+      <div v-if="item.name === '1-2'" class="tab-div-content-page">
+        <appletList></appletList>
       </div>
     </el-tab-pane>
   </el-tabs>
 </template>
 <script>
-  import userInfo from '@/views/admin/personal/user-info.vue'
-  import userLoginLog from '@/views/admin/personal/user-login-log.vue'
+  import userInfo from '@/views/personal/user-info.vue'
+  import userLoginLog from '@/views/personal/user-login-log.vue'
+  import appletList from '@/views/applet/applet-list.vue'
 
   export default {
+    name: 'tabs-content',
+    components: {
+      'userInfo': userInfo,
+      'userLoginLog': userLoginLog,
+      'appletList': appletList
+    },
     data() {
       return {
         tabPaneHeight: `${document.documentElement.clientHeight - 125}`,
@@ -54,10 +63,6 @@
         tabIndex: 0,
         parentMenuIndex: ''
       }
-    },
-    components: {
-      'userInfo': userInfo,
-      'userLoginLog': userLoginLog
     },
     created() {
 

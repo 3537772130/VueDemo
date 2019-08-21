@@ -50,7 +50,7 @@
           </div>
         </el-form>
       </div>
-      <div style="height: 640px;">
+      <div>
         <el-table
           :data="tableData"
           stripe
@@ -65,15 +65,15 @@
           <el-table-column prop="isp" label="运营商" width="180"></el-table-column>
           <el-table-column prop="loginTime" label="登录时间"></el-table-column>
         </el-table>
-      </div>
-      <div style="text-align: right;">
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page.sync="formInline.page"
-          :page-size="formInline.pageSize"
-          layout="total, prev, pager, next, jumper"
-          :total="total">
-        </el-pagination>
+        <div style="text-align: right;margin-top: 10px;">
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page.sync="formInline.page"
+            :page-size="formInline.pageSize"
+            layout="total, prev, pager, next, jumper"
+            :total="total">
+          </el-pagination>
+        </div>
       </div>
     </el-main>
   </el-container>

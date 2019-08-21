@@ -21,8 +21,8 @@
   </div>
 </template>
 <script type="text/javascript">
-  import headerMenu from '@/views/admin/common/header-menu.vue'
-  import china from '../../../static/js/echarts/china.js'
+  import headerMenu from '@/views/common/header-menu.vue'
+  import china from '../../static/js/echarts/china.js'
 
   export default {
     name: 'echarts',

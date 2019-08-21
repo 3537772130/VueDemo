@@ -73,7 +73,7 @@
   </div>
 </template>
 <script type="text/javascript">
-  import headerMenu from '@/views/admin/common/header-menu.vue'
+  import headerMenu from '@/views/common/header-menu.vue'
 
   export default {
     name: 'test',

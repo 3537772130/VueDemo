@@ -111,8 +111,8 @@
   </el-container>
 </template>
 <script>
-  import headerMenu from '@/views/admin/common/header-menu.vue'
-  import tabsContent from '@/views/admin/common/tabs-content.vue'
+  import headerMenu from '@/views/common/header-menu.vue'
+  import tabsContent from '@/views/common/tabs-content.vue'
 
   export default {
     name: 'main-info',
@@ -137,7 +137,7 @@
               },
               {
                 index: '1-2',
-                title: '导航1-2'
+                title: '小程序列表'
               },
               {
                 index: '1-3',

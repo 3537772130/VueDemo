@@ -84,7 +84,7 @@
 </template>
 
 <script>
-  import headerMenu from '@/views/admin/common/header-menu.vue'
+  import headerMenu from '@/views/common/header-menu.vue'
   import {Loading} from 'element-ui'
 
   export default {
@@ -115,25 +115,23 @@
         rules: {
           mobile: [
             {required: true, message: '请输入手机号码', trigger: 'blur'},
-            {min: 11, max: 11, message: '长度为11个数字', trigger: 'blur'},
+            {type: 'string', min: 11, max: 11, message: '长度为11个数字', trigger: 'blur'},
             {validator: this.$global.validate(this).mobileValidator, trigger: 'blur'}
           ],
           nickName: [
             {required: true, message: '请输入昵称', trigger: 'blur'},
-            {min: 1, max: 20, message: '昵称长度过长', trigger: 'blur'}
+            {type: 'string', min: 1, max: 20, message: '昵称长度为1-20个字符', trigger: 'blur'}
           ],
           gender: [
             {required: true, message: '请选择性别', trigger: 'change'}
           ],
           password: [
             {required: true, message: '请输入新密码', trigger: 'blur'},
-            {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
-            {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'}
+            {type: 'string', min: 6,max: 20,  message: '密码长度为6-20个字符', trigger: 'blur'}
           ],
           confirmPass: [
             {required: true, message: '请输入确认密码', trigger: 'blur'},
-            {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
-            {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'},
+            {type: 'string', min: 6, max: 20, message: '确认密码长度为6-20个字符', trigger: 'blur'},
             {validator: this.$global.validate(this).confirmPassValidator, trigger: 'blur'}
           ]
         }

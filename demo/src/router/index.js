@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/index'
-import Login from '@/views/admin/login'
-import Main from '@/views/admin/main-info'
-import userInfo from '@/views/admin/personal/user-info'
-import Register from '@/views/admin/register'
-import Test from '@/views/admin/test'
-import Echarts from '@/views/admin/echarts'
+import Login from '@/views/login'
+import Main from '@/views/main-info'
+import userInfo from '@/views/personal/user-info'
+import Register from '@/views/register'
+import Test from '@/views/test'
+import Echarts from '@/views/echarts'
 
 Vue.use(Router)
 
