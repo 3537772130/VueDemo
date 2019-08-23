@@ -1,4 +1,7 @@
 <style type="text/css">
+  .el-menu--horizontal>.el-submenu{
+    float: right;
+  }
 </style>
 <template>
   <div>
@@ -58,7 +61,7 @@
         console.log(key, keyPath)
         switch (key) {
           case "1":
-            this.$router.push({path: '/index'})
+            this.$router.push({path: '/'})
             break
           case "2":
             this.$router.push({path: '/test'})

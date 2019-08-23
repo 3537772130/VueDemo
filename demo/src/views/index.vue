@@ -14,7 +14,7 @@
     <el-row style="padding-top: 20px;background-image: url('/static/images/background/timg.jpg');">
       <el-col :span="24">
         <el-carousel :interval="3000" arrow="never" type="card" height="600px">
-          <el-carousel-item v-for="img in carouselImg1" :key="img">
+          <el-carousel-item v-for="(img, index) in carouselImg1" :key="index">
             <img :src="img" style="width: 100%;height: 600px;">
           </el-carousel-item>
         </el-carousel>
@@ -92,9 +92,9 @@
           <el-divider><span class="team-title">原创团队</span></el-divider>
           <div class="team-describe">一路携手，同舟共雨，砥砺前行</div>
           <div class="team-introduce">
-            <el-carousel indicator-position="outside" interval="5000" arrow="never" height="280"
+            <el-carousel indicator-position="outside" :interval="5000" arrow="never" height="280"
                          style="width: 900px;margin: auto;text-align: left;background-color: #FFFFFF;">
-              <el-carousel-item v-for="team in teams" :key="team" style="background-color: #FFFFFF;">
+              <el-carousel-item v-for="(team, index) in teams" :key="index" style="background-color: #FFFFFF;">
                 <div style="width: 240px;height: 280px;display: inline-block;text-align: center;">
                   <img class="team-introduce-img" :src="team.avatar">
                 </div>
@@ -175,7 +175,6 @@
       }
     },
     created() {
-
     },
     mounted() {
       window.addEventListener('scroll', this.scrollTop)

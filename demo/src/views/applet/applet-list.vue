@@ -51,7 +51,7 @@
           </el-pagination>
         </div>
       </div>
-      <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :modal-append-to-body="false">
+      <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :modal-append-to-body="false" :close-on-click-modal="false">
         <appletInfo ref="appletInfo" v-on:loadApplet="loadApplet"></appletInfo>
       </el-dialog>
     </el-main>

@@ -29,7 +29,7 @@
             <div class="grid-content" style="margin-right: 10px;">
               <el-divider><span>故乡的原风景</span></el-divider>
               <el-carousel :interval="3000" arrow="never" height="500px">
-                <el-carousel-item v-for="img in carouselImg2" :key="img">
+                <el-carousel-item v-for="(img, index) in carouselImg2" :key="index">
                   <el-image :src="img.src" style="width: 100%;height: 500px;" :title="img.title" :preview-src-list="carouselImg2"></el-image>
                 </el-carousel-item>
               </el-carousel>
@@ -39,7 +39,7 @@
             <div class="grid-content" style="margin-left: 10px;">
               <el-divider><span>憧憬的海岸</span></el-divider>
               <el-carousel :interval="3000" arrow="never" height="500px">
-                <el-carousel-item v-for="img in carouselImg3" :key="img">
+                <el-carousel-item v-for="(img, index) in carouselImg3" :key="index">
                   <img :src="img" style="width: 100%;height: 500px;">
                 </el-carousel-item>
               </el-carousel>
@@ -51,7 +51,7 @@
             <div class="grid-content" style="margin-right: 10px;">
               <el-divider content-position="left"><span>华灯初上</span></el-divider>
               <el-carousel :interval="3000" arrow="never" height="500px">
-                <el-carousel-item v-for="img in carouselImg4" :key="img">
+                <el-carousel-item v-for="(img, index) in carouselImg4" :key="index">
                   <img :src="img" style="width: 100%;height: 500px;">
                 </el-carousel-item>
               </el-carousel>
@@ -61,7 +61,7 @@
             <div class="grid-content" style="margin-left: 10px;">
               <el-divider content-position="right"><span>夜色微凉</span></el-divider>
               <el-carousel :interval="3000" arrow="never" height="500px">
-                <el-carousel-item v-for="img in carouselImg5" :key="img">
+                <el-carousel-item v-for="(img, index) in carouselImg5" :key="index">
                   <img :src="img" style="width: 100%;height: 500px;">
                 </el-carousel-item>
               </el-carousel>
@@ -82,7 +82,7 @@
     },
     data() {
       return {
-        loading: true,
+        loading: false,
         formInline: {},
         value: [],
         options: [],
@@ -127,16 +127,19 @@
       this.selectRegion()
     },
     mounted() {
-      this.$refs.headerMenu.setMenuIndex("2")
+      this.$refs.headerMenu.setMenuIndex('2')
     },
     methods: {
       selectRegion() {
-        this.GLOBAL.selectRegionJson(this)
+        this.$global.selectRegionJson(this)
         this.loading = false
       },
       handleChange(res){
         console.info('选择的信息是：', res)
-      },
+        for(let i = 0;i < res.length;i++){
+          console.info('选择的信息res[' + i + ']：', res[i])
+        }
+      }
     }
   }
 </script>

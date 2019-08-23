@@ -5,13 +5,8 @@
 </template>
 
 <script>
-  import Index from '@/views/index'
-
   export default {
     name: 'App',
-    components: {
-      'Index': Index
-    },
     data () {
       return {}
     }
@@ -30,5 +25,17 @@
   * {
     margin: 0;
     padding: 0;
+  }
+
+  /* 谷歌 */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+  /* 火狐 */
+  input{
+    -moz-appearance:textfield;
   }
 </style>

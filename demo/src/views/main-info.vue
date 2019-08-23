@@ -77,6 +77,14 @@
     position: relative;
     top: 4px;
   }
+
+  .el-submenu__title {
+    text-align: left;
+  }
+
+  .el-submenu .el-menu-item {
+    text-align: left;
+  }
 </style>
 <template>
   <el-container :style="{height: bodyHeight}">
