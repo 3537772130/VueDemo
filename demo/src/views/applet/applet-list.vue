@@ -1,4 +1,11 @@
 <style type="text/css">
+  .applet-list-dialog .el-dialog {
+    width: 850px;
+  }
+
+  .applet-list-dialog .el-dialog > .el-dialog__body {
+    padding: 0px 20px;
+  }
 </style>
 <template>
   <el-container>
@@ -32,14 +39,47 @@
           :data="tableData"
           stripe
           style="width: 100%">
-          <el-table-column type="index" :index="indexMethod" label="序号" width="80"></el-table-column>
-          <el-table-column prop="appletLogo" label="小程序LOGO" width="180"></el-table-column>
-          <el-table-column prop="appletName" label="小程序名称" width="180"></el-table-column>
-          <el-table-column prop="appletSimple" label="小程序简称" width="180"></el-table-column>
-          <el-table-column prop="addressDetails" label="详细地址" width="180"></el-table-column>
-          <el-table-column prop="ifRetail" label="经营类型" width="180"></el-table-column>
-          <el-table-column prop="ifSelling" label="经营状态" width="180"></el-table-column>
-          <el-table-column prop="updateTime" label="更新日期"></el-table-column>
+          <el-table-column align="center" type="index" :index="indexMethod" label="序号" width="80"></el-table-column>
+          <el-table-column align="center" prop="appletLogo" label="小程序LOGO" width="180">
+            <template slot-scope="scope">
+              <el-image :src="'api\\' + scope.row.appletLogo"
+                        style="width: 100px; height: 100px; border-radius: 50px"></el-image>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="appletName" label="小程序名称" width="220" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column align="center" prop="appletSimple" label="小程序简称" width="120"
+                           :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column align="center" prop="province" label="所属地域" width="220" :show-overflow-tooltip="true">
+            <template slot-scope="scope">
+              <span>{{scope.row.province +','+ scope.row.city +','+ scope.row.county}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="ifRetail" label="经营类型" width="180">
+            <template slot-scope="scope">
+              <span v-if="scope.row.ifRetail">批发</span>
+              <span v-if="!scope.row.ifRetail">零售</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="ifSelling" label="经营状态" width="180">
+            <template slot-scope="scope">
+              <span v-if="scope.row.ifSelling" style="color: #67C23A;">正在营业</span>
+              <span v-if="!scope.row.ifSelling" style="color: #E6A23C;">暂停营业</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="updateTime" label="更新日期"></el-table-column>
+          <el-table-column align="center" prop="status" label="审核状态" width="180">
+            <template slot-scope="scope">
+              <span v-if="scope.row.status == -1" style="color: #f5260b;">未通过</span>
+              <span v-if="scope.row.status == 0">待审核</span>
+              <span v-if="scope.row.status == 1" style="color: #67C23A;">已通过</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="id" label="操作">
+            <template slot-scope="scope">
+              <el-button type="warning" v-if="scope.row.status == -1">修改</el-button>
+              <el-button type="warning" v-if="scope.row.status == 1">编辑</el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div style="text-align: right;margin-top: 10px;">
           <el-pagination
@@ -51,7 +91,8 @@
           </el-pagination>
         </div>
       </div>
-      <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :modal-append-to-body="false" :close-on-click-modal="false">
+      <el-dialog class="applet-list-dialog" :title="dialogTitle" :visible.sync="dialogFormVisible"
+                 :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <appletInfo ref="appletInfo" v-on:loadApplet="loadApplet"></appletInfo>
       </el-dialog>
     </el-main>
@@ -72,7 +113,9 @@
         total: 0,
         formInline: {
           appletName: '',
-          ifSelling: ''
+          ifSelling: '',
+          page: 1,
+          pageSize: 5
         },
         dialogTitle: '提交小程序信息',
         dialogFormVisible: false
@@ -116,15 +159,18 @@
         this.formInline.page = val
         this.onSubmit()
       },
-      updateInfo(id){
+      updateInfo(id) {
         this.dialogFormVisible = true
-        if (id && id === '0'){
+        if (id && id === '0') {
           this.dialogTitle = '提交小程序信息'
         } else {
           this.dialogTitle = '修改小程序信息'
         }
         this.$cookies.set('applet_id', id)
         this.$refs.appletInfo.loadApplet(id)
+      },
+      loadApplet() {
+        this.selectList()
       }
     }
   }

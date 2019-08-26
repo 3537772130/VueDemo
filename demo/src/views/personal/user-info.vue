@@ -117,6 +117,10 @@
     width: 400px;
     height: 250px;
   }
+
+  .user-info-dialog .el-dialog {
+    width: 500px;
+  }
 </style>
 <template>
   <div>
@@ -143,7 +147,7 @@
               </div>
             </div>
           </el-card>
-          <el-dialog :visible.sync="dialogFormVisible">
+          <el-dialog class="user-info-dialog" :visible.sync="dialogFormVisible" :modal-append-to-body="false" :close-on-click-modal="false">
             <el-tabs v-model="editableTabsValue" type="border-card">
               <el-tab-pane label="修改信息" name="up-info" style="height: 400px;">
                 <el-form :model="upInfo" :rules="infoRules" ref="upInfo" style="text-align: left; padding-top: 30px;">
