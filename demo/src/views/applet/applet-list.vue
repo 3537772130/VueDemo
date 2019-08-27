@@ -70,7 +70,7 @@
           <el-table-column align="center" prop="status" label="审核状态" width="180">
             <template slot-scope="scope">
               <span v-if="scope.row.status == -1" style="color: #f5260b;">未通过</span>
-              <span v-if="scope.row.status == 0">待审核</span>
+              <span v-if="scope.row.status == 0" style="color: #E6A23C;">待审核</span>
               <span v-if="scope.row.status == 1" style="color: #67C23A;">已通过</span>
             </template>
           </el-table-column>
