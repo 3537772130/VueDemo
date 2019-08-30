@@ -3,11 +3,11 @@
     width: 190px;
   }
 
-  .applet-list-dialog .el-dialog {
-    width: 650px;
+  .applet-audit-dialog .el-dialog {
+    width: 850px;
   }
 
-  .applet-list-dialog .el-dialog > .el-dialog__body {
+  .applet-audit-dialog .el-dialog > .el-dialog__body {
     padding: 0px 20px;
   }
 </style>
@@ -30,7 +30,7 @@
           <el-button type="primary" @click="selectList">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="success" @click="updateInfo('0')">申请</el-button>
+          <el-button type="success" @click="updateInfo('0','')">申请</el-button>
         </el-form-item>
         <div style="display: none;">
           <el-input v-model="formInline.page" type="hidden"></el-input>
@@ -46,9 +46,9 @@
           </template>
         </el-table-column>
         <el-table-column align="center" prop="appletName" label="小程序名称" width="180"></el-table-column>
-        <el-table-column align="center" prop="appletSimple" label="小程序简称" width="160"></el-table-column>
+        <el-table-column align="center" prop="appletSimple" label="小程序简称" width="140"></el-table-column>
         <el-table-column align="center" prop="telephone" label="联系电话" width="120"></el-table-column>
-        <el-table-column align="center" prop="province" label="所属地域" width="180" >
+        <el-table-column align="center" prop="province" label="所属地域" width="220" >
           <template slot-scope="scope">
             <span>{{scope.row.province + scope.row.city + scope.row.county}}</span>
           </template>
@@ -59,16 +59,20 @@
             <span v-if="!scope.row.ifRetail">零售</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="updateTime" label="更新日期" width="120"></el-table-column>
-        <el-table-column align="center" prop="status" label="状态" width="80">
+        <el-table-column align="center" prop="status" label="审核状态" width="80">
           <template slot-scope="scope">
-            <span v-if="scope.row.status == -1" style="color: #f5260b;">禁用</span>
-            <span v-if="scope.row.status == 1" style="color: #67C23A;">正常</span>
+            <el-link :underline="false" type="danger" v-if="scope.row.auditResult == -1">未通过</el-link>
+            <el-link :underline="false" type="warning" v-if="scope.row.auditResult == 0">待审核</el-link>
+            <el-link :underline="false" type="primary" v-if="scope.row.auditResult == 1">初审通过</el-link>
+            <el-link :underline="false" type="success" v-if="scope.row.auditResult == 2">终审通过</el-link>
           </template>
         </el-table-column>
+        <el-table-column align="center" prop="auditRemark" label="备注" width="240"></el-table-column>
+        <el-table-column align="center" prop="auditTime" label="更新日期" width="140"></el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="warning" v-if="scope.row.status == 1" plain @click="loadAppletDetails(scope.row.id)">详情</el-button>
+            <el-button type="warning" v-if="scope.row.auditResult == -1" plain @click="updateInfo(scope.row.id, scope.row.appletName)">修改</el-button>
+            <el-button type="warning" v-if="scope.row.auditResult == 1" plain>详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -81,20 +85,20 @@
           :total="total">
         </el-pagination>
       </div>
-      <el-dialog class="applet-list-dialog" :title="dialogTitle" :visible.sync="showInfo"
+      <el-dialog class="applet-audit-dialog" :title="dialogTitle" :visible.sync="showApply"
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
-        <appletDetails ref="appletDetails" v-on:loadApplet="loadApplet"></appletDetails>
+        <appletApply ref="appletApply" v-on:loadApplet="loadApplet"></appletApply>
       </el-dialog>
     </el-main>
   </el-container>
 </template>
 <script type="text/javascript">
-  import appletDetails from '@/views/applet/applet-details.vue'
+  import appletApply from '@/views/applet/applet-apply.vue'
 
   export default {
     name: 'applet-list',
     components: {
-      'appletDetails': appletDetails
+      'appletApply': appletApply
     },
     data() {
       return {
@@ -109,7 +113,7 @@
           pageSize: 5
         },
         dialogTitle: '提交小程序信息',
-        showInfo: false,
+        showApply: false,
         timestamp: ''
       }
     },
@@ -126,7 +130,7 @@
       onSubmit() {
         this.loading = true
         this.$axios({
-          url: '/api/user/applet/queryAppletToPage',
+          url: '/api/user/applet/queryAppletAuditToPage',
           method: 'post',
           data: this.formInline
         }).then(res => {
@@ -153,18 +157,21 @@
         this.formInline.page = val
         this.onSubmit()
       },
-      loadAppletDetails(id) {
-        this.showInfo = true
+      updateInfo(id, name) {
+        this.showApply = true
         if (id && id === '0') {
-          this.dialogTitle = '提交小程序信息'
+          this.dialogTitle = '填写小程序申请信息'
         } else {
-          this.dialogTitle = '修改小程序信息'
+          this.dialogTitle = name + ' - 修改信息'
         }
-        this.$cookies.set('applet_id', id)
-        this.$refs.appletDetails.loadApplet(id)
+        try{
+          this.$refs.appletApply.loadApplet(id)
+        }catch (e) {
+          this.$cookies.set('applet_id', id)
+        }
       },
       loadApplet() {
-        this.showInfo = false
+        this.showApply = false
         this.selectList()
       }
     }

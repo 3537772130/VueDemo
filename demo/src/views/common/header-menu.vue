@@ -30,7 +30,7 @@
         </template>
         <el-menu-item disabled>{{info.nickName}}</el-menu-item>
         <el-menu-item index="5-1">{{info.mobile}}</el-menu-item>
-        <el-menu-item index="5-3" @click.native="exitLogin()">注销登录</el-menu-item>
+        <el-menu-item index="5-2">注销登录</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>

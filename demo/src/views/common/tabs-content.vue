@@ -27,7 +27,7 @@
 </style>
 <template>
   <el-tabs v-model="editableTabsValue" type="border-card" @tab-click="clickTab" @tab-remove="removeTab">
-    <el-tab-pane label="个人主页" name="0" :style="{height: tabPaneHeight + 'px',display: mainShow}">
+    <el-tab-pane label="个人主页" name="m-1" :style="{height: tabPaneHeight + 'px',display: mainShow}">
       <userInfo v-on:updateInfo="updateInfo"></userInfo>
     </el-tab-pane>
     <el-tab-pane class="tab-div-content" v-for="item in editableTabs" :key="item.name"
@@ -36,7 +36,10 @@
       <div v-if="item.name === '1-1'" class="tab-div-content-page">
         <userLoginLog></userLoginLog>
       </div>
-      <div v-if="item.name === '1-2'" class="tab-div-content-page">
+      <div v-if="item.name === '2-1'" class="tab-div-content-page">
+        <appletAuditList></appletAuditList>
+      </div>
+      <div v-if="item.name === '2-2'" class="tab-div-content-page">
         <appletList></appletList>
       </div>
     </el-tab-pane>
@@ -46,26 +49,28 @@
   import userInfo from '@/views/personal/user-info.vue'
   import userLoginLog from '@/views/personal/user-login-log.vue'
   import appletList from '@/views/applet/applet-list.vue'
+  import appletAuditList from '@/views/applet/applet-audit-list.vue'
 
   export default {
     name: 'tabs-content',
     components: {
       'userInfo': userInfo,
       'userLoginLog': userLoginLog,
-      'appletList': appletList
+      'appletList': appletList,
+      'appletAuditList': appletAuditList
     },
     data() {
       return {
         tabPaneHeight: `${document.documentElement.clientHeight - 125}`,
         mainShow: 'block',
-        editableTabsValue: '2',
+        editableTabsValue: 'm-1',
         editableTabs: [],
         tabIndex: 0,
         parentMenuIndex: ''
       }
     },
     created() {
-
+      this.$cookies.set("tabPaneHeight", this.tabPaneHeight)
     },
     method() {
 
@@ -85,8 +90,7 @@
         if (ifBe) {
           this.editableTabs.push({
             title: title,
-            name: menuIndex,
-            content: 'New Tab ' + title
+            name: menuIndex
           })
         }
         this.editableTabsValue = menuIndex

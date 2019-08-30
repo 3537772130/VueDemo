@@ -52,6 +52,10 @@
     color: #1E90FF;
   }
 
+  .el-submenu__title, .el-menu-item, .el-submenu__title .el-icon-arrow-down{
+    color: #FFFFFF;
+  }
+
   .el-menu-item-group__title {
     display: none;
   }
@@ -136,70 +140,42 @@
         menuList: [
           {
             index: 'm-1',
-            title: '菜单一',
+            title: '个人管理',
             icon: 'el-icon-platform-eleme',
             items: [
               {
                 index: '1-1',
                 title: '登录日志'
-              },
-              {
-                index: '1-2',
-                title: '小程序列表'
-              },
-              {
-                index: '1-3',
-                title: '导航1-3'
-              },
-              {
-                index: '1-4',
-                title: '导航1-4'
               }
             ]
           },
           {
             index: 'm-2',
-            title: '菜单二',
+            title: '小程序管理',
             icon: 'el-icon-menu',
             items: [
               {
                 index: '2-1',
-                title: '导航2-1'
+                title: '小程序申请列表'
               },
               {
                 index: '2-2',
-                title: '导航2-2'
-              },
-              {
-                index: '2-3',
-                title: '导航2-3'
-              },
-              {
-                index: '2-4',
-                title: '导航2-4'
+                title: '小程序管理列表'
               }
             ]
           },
           {
             index: 'm-3',
-            title: '菜单三',
+            title: '商品管理',
             icon: 'el-icon-setting',
             items: [
               {
                 index: '3-1',
-                title: '导航3-1'
+                title: '商品类型列表'
               },
               {
                 index: '3-2',
-                title: '导航3-2'
-              },
-              {
-                index: '3-3',
-                title: '导航3-3'
-              },
-              {
-                index: '3-4',
-                title: '导航3-4'
+                title: '商品列表'
               }
             ]
           }
@@ -226,7 +202,11 @@
     methods: {
       updateInfo(index) {
         if (index) {
-          this.activeIndex = index
+          if (index === '0'){
+            this.activeIndex = this.activeIndex === '0' ? '':'0';
+          } else {
+            this.activeIndex = index
+          }
         } else {
           this.$refs.headerMenu.updateInfo()
         }

@@ -26,7 +26,7 @@
     display: block;
   }
 
-  .form-page{
+  .form-page {
     height: 390px;
   }
 
@@ -34,7 +34,7 @@
     width: 290px;
   }
 
-  .el-form-item__label {
+  .applet-form .el-form-item__label {
     width: 110px;
   }
 </style>
@@ -44,11 +44,11 @@
       <div style="width: 100%;float: left;clear: left;margin: auto;">
         <el-steps :active="active" simple finish-status="success" align-center="true" style="margin-bottom: 50px;">
           <el-step title="基础信息" icon="el-icon-edit"></el-step>
-          <el-step title="营业信息" icon="el-icon-upload"></el-step>
-          <el-step title="管理信息" icon="el-icon-picture"></el-step>
-          <el-step title="推广码" icon="el-icon-picture"></el-step>
+          <el-step title="营业信息" icon="el-icon-s-shop"></el-step>
+          <el-step title="管理信息" icon="el-icon-user"></el-step>
+          <el-step title="推广码" icon="el-icon-magic-stick"></el-step>
         </el-steps>
-        <el-form :inline="true" :model="appletForm" :rules="rules" ref="appletForm" class="demo-form-inline"
+        <el-form :inline="true" :model="appletForm" :rules="rules" ref="appletForm" class="demo-form-inline applet-form"
                  style="width: 600px; height: 490px; margin: auto;text-align: center;">
           <div class="form-page" v-if="active === 0">
             <el-form-item label="小程序LOGO" prop="appletLogo" style="height: 140px;">
@@ -139,8 +139,10 @@
             </el-form-item>
           </div>
           <div style="text-align: center;margin: 20px 0px;">
-            <el-button type="primary" @click="back('appletForm')" class="applet-info-input" v-if="active != 0">上一步</el-button>
-            <el-button type="success" @click="next('appletForm')" class="applet-info-input" v-if="active != 3">下一步</el-button>
+            <el-button type="primary" @click="back('appletForm')" class="applet-info-input" v-if="active != 0">上一步
+            </el-button>
+            <el-button type="success" @click="next('appletForm')" class="applet-info-input" v-if="active != 3">下一步
+            </el-button>
             <el-button type="success" @click="onSubmit('appletForm')" class="applet-info-input" v-if="active === 3">提交
             </el-button>
           </div>
@@ -246,7 +248,7 @@
         if (appletId) {
           this.loading = true
           this.$axios({
-            url: '/api/user/applet/selectAppletInfo',
+            url: '/api/user/applet/queryAppletInfo',
             method: 'post',
             data: {id: appletId}
           }).then(res => {
@@ -260,6 +262,13 @@
               this.appletForm.ifRetail = this.appletForm.ifRetail ? '1' : '0'
               delete this.appletForm.userId
               delete this.appletForm.updateTime
+              delete this.appletForm.ifSelling
+              delete this.appletForm.lat
+              delete this.appletForm.lon
+              delete this.appletForm.status
+              delete this.appletForm.appletCode
+              delete this.appletForm.addressSimple
+              delete this.appletForm.addressDetails
             }
             this.$global.exitLoad(this, null, res.data)
           }).catch(error => {
@@ -272,7 +281,8 @@
         this.appletForm.province = res[0]
         this.appletForm.city = res[1]
         this.appletForm.county = res[2]
-        this.$refs['appletForm'].validateField('county', (valid) => {})
+        this.$refs['appletForm'].validateField('county', (valid) => {
+        })
       },
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
@@ -383,7 +393,8 @@
         }
         let loading = Loading.service({fullscreen: true, text: '正在上传'})
         this.$global.exitLoad(this, loading, res.data)
-        this.$refs['appletForm'].validateField('appletLogo', (valid) => {})
+        this.$refs['appletForm'].validateField('appletLogo', (valid) => {
+        })
       },
       handleLicenseSuccess(res, file) {
         if (res.code === '1') {
@@ -393,22 +404,23 @@
         }
         let loading = Loading.service({fullscreen: true, text: '正在上传'})
         this.$global.exitLoad(this, loading, res.data)
-        this.$refs['appletForm'].validateField('licenseSrc', (valid) => {})
+        this.$refs['appletForm'].validateField('licenseSrc', (valid) => {
+        })
       },
       beforePicUpload(file) {
         let loading = Loading.service({fullscreen: true, text: '正在上传'})
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
+        const isLt2M = file.size / 1024 / 1024 < 3
         if (!isJPG) {
-          this.$message.error('上传头像图片格式错误!');
+          this.$message.error('上传头像图片格式错误!')
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('上传头像图片大小不能超过 3MB!')
         }
         if (!isJPG || !isLt2M) {
           loading.close()
         }
-        return isJPG && isLt2M;
+        return isJPG && isLt2M
       }
     }
   }

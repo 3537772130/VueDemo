@@ -38,4 +38,16 @@
   input{
     -moz-appearance:textfield;
   }
+
+  .el-form-item__label {
+    width: 80px;
+  }
+
+  .el-table__header tr, .el-table__header th {
+    background-color: #fafafa;
+  }
+
+  .demo-image__preview .el-image-viewer__close > i {
+    color: #FFFFFF;
+  }
 </style>

@@ -408,18 +408,18 @@
       },
       beforeAvatarUpload(file) {
         let loading = Loading.service({fullscreen: true, text: '正在上传'})
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
+        const isLt2M = file.size / 1024 / 1024 < 3
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('上传头像图片格式错误!')
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('上传头像图片大小不能超过 3MB!')
         }
         if (!isJPG || !isLt2M) {
           loading.close()
         }
-        return isJPG && isLt2M;
+        return isJPG && isLt2M
       },
       selectActivity(){
         this.$axios({

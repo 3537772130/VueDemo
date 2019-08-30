@@ -2,9 +2,8 @@
 </style>
 <template>
   <el-container>
-    <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding: 20px;">
-      <div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding-top: 20px;">
+        <el-form id="log-form" :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="省份">
             <el-select v-model="formInline.region" placeholder="选择省份" @change="selectProvince" style="width: 200px;">
               <el-option label="全部" value=''></el-option>
@@ -49,12 +48,7 @@
             <el-input v-model="formInline.pageSize" type="hidden"></el-input>
           </div>
         </el-form>
-      </div>
-      <div>
-        <el-table
-          :data="tableData"
-          stripe
-          style="width: 100%">
+        <el-table :data="tableData" :height="tableHeight" stripe style="width: 100%">
           <el-table-column type="index" :index="indexMethod" label="序号" width="80"></el-table-column>
           <el-table-column prop="ipAddress" label="IP地址" width="180"></el-table-column>
           <el-table-column prop="country" label="国家" width="180"></el-table-column>
@@ -74,7 +68,6 @@
             :total="total">
           </el-pagination>
         </div>
-      </div>
     </el-main>
   </el-container>
 </template>
@@ -86,6 +79,7 @@
     data() {
       return {
         loading: true,
+        tableHeight: 50,
         currentPage: 1,
         total: 0,
         formInline: {
@@ -97,7 +91,7 @@
           startDate: '',
           endDate: '',
           page: 1,
-          pageSize: 15
+          pageSize: 20
         },
         provList: [],
         cityList: [],
@@ -124,6 +118,7 @@
           data: this.formInline
         }).then(res => {
           console.info('后台返回的数据', res.data)
+          this.$global.setTableHeight(this, 'log-form')
           if (res.data.code === '1') {
             this.tableData = res.data.data.dataSource
             this.total = res.data.data.totalCount
