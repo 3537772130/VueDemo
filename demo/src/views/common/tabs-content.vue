@@ -28,7 +28,7 @@
 <template>
   <el-tabs v-model="editableTabsValue" type="border-card" @tab-click="clickTab" @tab-remove="removeTab">
     <el-tab-pane label="个人主页" name="m-1" :style="{height: tabPaneHeight + 'px',display: mainShow}">
-      <userInfo v-on:updateInfo="updateInfo"></userInfo>
+      <userHome v-on:updateInfo="updateInfo"></userHome>
     </el-tab-pane>
     <el-tab-pane class="tab-div-content" v-for="item in editableTabs" :key="item.name"
                  :label="item.title" :name="item.name" :style="{'height': tabPaneHeight + 'px','overflow-y': 'scroll'}"
@@ -37,7 +37,7 @@
         <userLoginLog></userLoginLog>
       </div>
       <div v-if="item.name === '2-1'" class="tab-div-content-page">
-        <appletAuditList></appletAuditList>
+        <appletApplyList></appletApplyList>
       </div>
       <div v-if="item.name === '2-2'" class="tab-div-content-page">
         <appletList></appletList>
@@ -46,18 +46,18 @@
   </el-tabs>
 </template>
 <script>
-  import userInfo from '@/views/personal/user-info.vue'
-  import userLoginLog from '@/views/personal/user-login-log.vue'
+  import userHome from '@/views/user/user-home.vue'
+  import userLoginLog from '@/views/user/user-login-log.vue'
   import appletList from '@/views/applet/applet-list.vue'
-  import appletAuditList from '@/views/applet/applet-audit-list.vue'
+  import appletApplyList from '@/views/applet/applet-apply-list.vue'
 
   export default {
     name: 'tabs-content',
     components: {
-      'userInfo': userInfo,
+      'userHome': userHome,
       'userLoginLog': userLoginLog,
       'appletList': appletList,
-      'appletAuditList': appletAuditList
+      'appletApplyList': appletApplyList
     },
     data() {
       return {

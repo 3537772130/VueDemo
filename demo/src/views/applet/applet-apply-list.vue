@@ -4,7 +4,7 @@
   }
 
   .applet-audit-dialog .el-dialog {
-    width: 850px;
+    width: 750px;
   }
 
   .applet-audit-dialog .el-dialog > .el-dialog__body {

@@ -52,8 +52,7 @@
       <div class="c-form-div">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="用户名" prop="mobile" :label-width="formLabelWidth" class="form-info-div">
-            <el-input type="number" v-model="ruleForm.mobile" minlength="11" maxlength="11"
-                      placeholder="请输入手机号码" class="form-info-val"></el-input>
+            <el-input type="number" v-model="ruleForm.mobile" placeholder="请输入手机号码" class="form-info-val"></el-input>
           </el-form-item>
           <el-form-item label="昵称" prop="nickName" :label-width="formLabelWidth" class="form-info-div">
             <el-input v-model="ruleForm.nickName" minlength="1" maxlength="20" placeholder="请输入昵称"
@@ -73,6 +72,10 @@
             <el-input v-model="ruleForm.confirmPass" maxlength="20" type="password" placeholder="请输入确认密码"
                       class="form-info-val"
                       show-password></el-input>
+          </el-form-item>
+          <el-form-item label="推广码" prop="extensionCode" :label-width="formLabelWidth" class="form-info-div">
+            <el-input type="number" v-model="ruleForm.extensionCode" maxlength="20" placeholder="非必填"
+                      class="form-info-val"></el-input>
           </el-form-item>
           <el-form-item :label-width="formLabelWidth" class="form-info-div">
             <el-button class="sub-but" type="primary" @click="submitForm('ruleForm')">立即注册</el-button>
@@ -110,12 +113,13 @@
           nickName: '',
           gender: '0',
           password: '',
-          confirmPass: ''
+          confirmPass: '',
+          extensionCode: ''
         },
         rules: {
           mobile: [
             {required: true, message: '请输入手机号码', trigger: 'blur'},
-            {type: 'string', min: 11, max: 11, message: '长度为11个数字', trigger: 'blur'},
+            {type: 'string', max: 11, message: '长度为11个数字', trigger: 'blur'},
             {validator: this.$global.validate(this).mobileValidator, trigger: 'blur'}
           ],
           nickName: [

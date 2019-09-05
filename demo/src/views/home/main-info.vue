@@ -49,7 +49,7 @@
   }
 
   .el-submenu__title, .el-menu-item, .el-submenu__title i {
-    color: #1E90FF;
+    color: #FFFFFF;
   }
 
   .el-submenu__title, .el-menu-item, .el-submenu__title .el-icon-arrow-down{

@@ -127,7 +127,7 @@
               if (res.data.code === '1') {
                 let info = res.data.data
                 if (info.avatarUrl === null || info.avatarUrl === ''){
-                  info.avatarUrl = '/static/images/personal/default-avatar.jpeg'
+                  info.avatarUrl = '/static/images/user/default-avatar.jpeg'
                 }
                 this.$cookies.set('user_info', info, 3600)
                 this.$router.push({path: '/main-info'})

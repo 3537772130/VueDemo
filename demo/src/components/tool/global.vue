@@ -5,7 +5,8 @@
    * @returns {boolean}
    */
   let checkLogin = function (that) {
-    if (that.$cookies.get('user_info') === '' || that.$cookies.get('user_info') === null) {
+    let userInfo = that.$cookies.get('user_info')
+    if (userInfo === 'null' || userInfo === null) {
       return false
     }
     return true

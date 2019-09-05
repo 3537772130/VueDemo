@@ -7,7 +7,7 @@
 <script>
   export default {
     name: 'App',
-    data () {
+    data() {
       return {}
     }
   }
@@ -34,9 +34,10 @@
     appearance: none;
     margin: 0;
   }
+
   /* 火狐 */
-  input{
-    -moz-appearance:textfield;
+  input {
+    -moz-appearance: textfield;
   }
 
   .el-form-item__label {
@@ -49,5 +50,9 @@
 
   .demo-image__preview .el-image-viewer__close > i {
     color: #FFFFFF;
+  }
+
+  .el-dialog > .el-dialog__body {
+    padding: 0px 20px 20px 20px;
   }
 </style>

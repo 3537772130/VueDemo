@@ -46,7 +46,6 @@
           <el-step title="基础信息" icon="el-icon-edit"></el-step>
           <el-step title="营业信息" icon="el-icon-s-shop"></el-step>
           <el-step title="管理信息" icon="el-icon-user"></el-step>
-          <el-step title="推广码" icon="el-icon-magic-stick"></el-step>
         </el-steps>
         <el-form :inline="true" :model="appletForm" :rules="rules" ref="appletForm" class="demo-form-inline applet-form"
                  style="width: 600px; height: 490px; margin: auto;text-align: center;">
@@ -127,23 +126,12 @@
                         resize="none" rows="5" placeholder="请输入SECRET" class="applet-info-input"></el-input>
             </el-form-item>
           </div>
-          <div class="form-page" v-if="active === 3">
-            <el-form-item label="推广码" prop="recommenderId">
-              <el-select v-model="appletForm.recommenderId" filterable class="applet-info-input">
-                <el-option label="请选择" value=''></el-option>
-                <el-option v-for="(item, index) in recommenders" :key="index" :label="item.code" :value='item.id'>
-                  <span style="float: left">{{ item.code }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.name }}</span>
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
           <div style="text-align: center;margin: 20px 0px;">
             <el-button type="primary" @click="back('appletForm')" class="applet-info-input" v-if="active != 0">上一步
             </el-button>
-            <el-button type="success" @click="next('appletForm')" class="applet-info-input" v-if="active != 3">下一步
+            <el-button type="success" @click="next('appletForm')" class="applet-info-input" v-if="active != 2">下一步
             </el-button>
-            <el-button type="success" @click="onSubmit('appletForm')" class="applet-info-input" v-if="active === 3">提交
+            <el-button type="success" @click="onSubmit('appletForm')" class="applet-info-input" v-if="active === 2">提交
             </el-button>
           </div>
         </el-form>
@@ -162,7 +150,6 @@
         active: 0,
         region: [],
         regions: [],
-        recommenders: [],
         appletForm: {
           appletLogo: '',
           appletName: '',
@@ -177,8 +164,7 @@
           managerAccount: '',
           managerPassword: '',
           appId: '',
-          appSecret: '',
-          recommenderId: ''
+          appSecret: ''
         },
         myHeader: {
           'X-Requested-With': 'XMLHttpRequest'
@@ -255,7 +241,6 @@
             console.info('后台返回的数据', res.data)
             this.$cookies.remove('applet_id')
             this.regions = JSON.parse(res.data.data.regions)
-            this.recommenders = res.data.data.recommenders
             if (res.data.code === '1') {
               this.appletForm = res.data.data.applet
               this.region = [this.appletForm.province, this.appletForm.city, this.appletForm.county]
@@ -359,7 +344,7 @@
           default:
             break
         }
-        if (bool && this.active < 3) {
+        if (bool && this.active < 2) {
           this.active++
         }
       },
