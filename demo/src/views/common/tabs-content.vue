@@ -42,6 +42,12 @@
       <div v-if="item.name === '2-2'" class="tab-div-content-page">
         <appletList></appletList>
       </div>
+      <div v-if="item.name === '3-1'" class="tab-div-content-page">
+        <goodsTypeList></goodsTypeList>
+      </div>
+      <div v-if="item.name === '3-2'" class="tab-div-content-page">
+        <goodsInfoList></goodsInfoList>
+      </div>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -50,6 +56,8 @@
   import userLoginLog from '@/views/user/user-login-log.vue'
   import appletList from '@/views/applet/applet-list.vue'
   import appletApplyList from '@/views/applet/applet-apply-list.vue'
+  import goodsInfoList from '@/views/goods/goods-info-list.vue'
+  import goodsTypeList from '@/views/goods/type/goods-type-list.vue'
 
   export default {
     name: 'tabs-content',
@@ -57,7 +65,9 @@
       'userHome': userHome,
       'userLoginLog': userLoginLog,
       'appletList': appletList,
-      'appletApplyList': appletApplyList
+      'appletApplyList': appletApplyList,
+      'goodsInfoList': goodsInfoList,
+      'goodsTypeList': goodsTypeList
     },
     data() {
       return {

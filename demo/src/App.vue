@@ -55,4 +55,8 @@
   .el-dialog > .el-dialog__body {
     padding: 0px 20px 20px 20px;
   }
+
+  form{
+    text-align: left;
+  }
 </style>

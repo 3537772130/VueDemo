@@ -141,7 +141,7 @@
           {
             index: 'm-1',
             title: '个人管理',
-            icon: 'el-icon-platform-eleme',
+            icon: 'el-icon-user-solid',
             items: [
               {
                 index: '1-1',
@@ -167,7 +167,7 @@
           {
             index: 'm-3',
             title: '商品管理',
-            icon: 'el-icon-setting',
+            icon: 'el-icon-s-goods',
             items: [
               {
                 index: '3-1',

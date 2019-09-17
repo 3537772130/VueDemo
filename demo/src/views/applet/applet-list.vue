@@ -4,7 +4,7 @@
   }
 
   .applet-list-dialog .el-dialog {
-    width: 650px;
+    width: 680px;
   }
 
   .applet-list-dialog .el-dialog > .el-dialog__body {
@@ -16,10 +16,10 @@
     <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding-top: 20px;">
       <el-form id="applet-form" :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="名称">
-          <el-input v-model="formInline.appletName" placeholder="输入小程序名称" class="applet-list-input"></el-input>
+          <el-input v-model="formInline.appletName" placeholder="请输入小程序名称" class="applet-list-input"></el-input>
         </el-form-item>
         <el-form-item label="审核状态">
-          <el-select v-model="formInline.status" placeholder="选择经营状态" class="applet-list-input">
+          <el-select v-model="formInline.status" placeholder="请选择经营状态" class="applet-list-input">
             <el-option label="全部" value=''></el-option>
             <el-option label="未通过" value="-1"></el-option>
             <el-option label="待审核" value="0"></el-option>
@@ -62,8 +62,8 @@
         <el-table-column align="center" prop="updateTime" label="更新日期" width="120"></el-table-column>
         <el-table-column align="center" prop="status" label="状态" width="80">
           <template slot-scope="scope">
-            <span v-if="scope.row.status == -1" style="color: #f5260b;">禁用</span>
-            <span v-if="scope.row.status == 1" style="color: #67C23A;">正常</span>
+            <el-link :underline="false" type="danger" v-if="scope.row.status == -1">禁用</el-link>
+            <el-link :underline="false" type="success" v-if="scope.row.status == 1">正常</el-link>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">

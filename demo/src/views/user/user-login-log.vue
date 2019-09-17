@@ -1,9 +1,11 @@
 <style type="text/css">
+  .user-log-form{
+  }
 </style>
 <template>
   <el-container>
     <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding-top: 20px;">
-        <el-form id="log-form" :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form id="log-form" :inline="true" :model="formInline" class="user-log-form">
           <el-form-item label="省份">
             <el-select v-model="formInline.region" placeholder="选择省份" @change="selectProvince" style="width: 200px;">
               <el-option label="全部" value=''></el-option>
