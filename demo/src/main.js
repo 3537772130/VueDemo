@@ -16,10 +16,14 @@ import 'lib-flexible'
 Vue.use(ElementUI, {size: 'small', zIndex: 3000})
 Vue.use(VueCookies)
 Vue.use(VueJsDialog)
+Vue.filter('addZero',function(value){
+  return value.toFixed(2)
+})
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
 Vue.prototype.$global = global_
+
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前,格式化参数，增加token

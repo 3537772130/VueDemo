@@ -7,13 +7,25 @@
     width: 680px;
   }
 
-  .goods-info-dialog .el-dialog {
-    width: 480px;
-  }
-
   .applet-list-dialog .el-dialog > .el-dialog__body {
     padding: 0px 20px;
   }
+
+  .goods-info-dialog .el-dialog {
+    width: 480px;
+  }
+  .goods-info-dialog .el-dialog > .el-dialog__body {
+    padding: 0px 20px;
+  }
+
+  .goods-file-dialog .el-dialog {
+    width: 750px;
+  }
+  .goods-file-dialog .el-dialog > .el-dialog__body {
+    padding: 0px 20px;
+  }
+
+
 </style>
 <template>
   <el-container>
@@ -56,8 +68,16 @@
         </el-table-column>
         <el-table-column align="center" prop="goodsName" label="商品名称" width="180"></el-table-column>
         <el-table-column align="center" prop="typeName" label="商品类型" width="120"></el-table-column>
-        <el-table-column align="center" prop="minPrice" label="最低价格" width="120"></el-table-column>
-        <el-table-column align="center" prop="maxPrice" label="最高价格" width="120" ></el-table-column>
+        <el-table-column align="center" prop="minPrice" label="最低价格" width="120">
+          <template slot-scope="scope">
+            <span>{{scope.row.minPrice|addZero}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="maxPrice" label="最高价格" width="120" >
+          <template slot-scope="scope">
+            <span>{{scope.row.maxPrice|addZero}}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="updateTime" label="更新时间" width="160"></el-table-column>
         <el-table-column align="center" prop="goodsStatus" label="商品状态" width="80">
           <template slot-scope="scope">
@@ -86,7 +106,7 @@
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <goodsInfo ref="goodsInfo" v-on:refreshList="refreshList"></goodsInfo>
       </el-dialog>
-      <el-dialog class="applet-list-dialog" :title="fileTitle" :visible.sync="showFile"
+      <el-dialog class="goods-file-dialog" :title="fileTitle" :visible.sync="showFile"
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <goodsFileList ref="goodsFileList" v-on:loadGoodsFile="loadGoodsFile"></goodsFileList>
       </el-dialog>
@@ -202,11 +222,13 @@
         this.showFile = true
         this.fileTitle = name + ' - 文件列表'
         this.$cookies.set('goods_id', id)
+        this.$refs.goodsFileList.loadGoodsFile(id)
       },
       loadGoodsSpecs(id, name) {
         this.showSpecs = true
         this.fileTitle = name + ' - 规格列表'
         this.$cookies.set('goods_id', id)
+        this.$refs.goodsSpecsList.loadGoodsInfo(id)
       },
       refreshList(){
         this.showInfo = false

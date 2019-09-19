@@ -46,8 +46,8 @@
             <div class="goods-info-input" style="display: inline-block;text-align: left;">
               <el-upload
                 class="cover-src-uploader"
-                action="/api/user/goods/uploadGoodsTypeLogo"
-                name="coverSrc"
+                action="/api/user/goods/uploadGoodsCover"
+                name="cover"
                 :headers="myHeader"
                 :show-file-list="false"
                 :on-success="handleLogoSuccess"
@@ -135,8 +135,9 @@
             goodsId = null
             if (res.data.code === '1') {
               this.goods = res.data.data.goods
-              this.goods.typeStatus = this.goods.typeStatus ? '1' : '0'
+              this.goods.status = this.goods.status ? '1' : '0'
               delete this.goods.userId
+              delete this.goods.updateTime
             }
             this.typeList = res.data.data.typeList
             this.timestamp = '?' + Date.parse(new Date())
@@ -152,7 +153,7 @@
           if (valid) {
             let loading = Loading.service({fullscreen: true, text: '加载中'})
             this.$axios({
-              url: '/api/user/goods/updateGoodsType',
+              url: '/api/user/goods/updateGoodsInfo',
               method: 'post',
               data: this.goods
             }).then(res => {
@@ -173,7 +174,7 @@
       },
       handleLogoSuccess(res, file) {
         if (res.code === '1') {
-          this.goods.typeLogo = res.data
+          this.goods.coverSrc = res.data
         } else {
           this.$message.error(res.data)
         }
