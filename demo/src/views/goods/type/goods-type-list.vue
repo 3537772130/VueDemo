@@ -1,5 +1,5 @@
 <style type="text/css">
-  .applet-list-input{
+  .applet-list-input {
     width: 190px;
   }
 
@@ -10,6 +10,7 @@
   .goods-type-dialog .el-dialog > .el-dialog__body {
     padding: 0px 20px;
   }
+
 </style>
 <template>
   <el-container>
@@ -51,6 +52,16 @@
             <el-link :underline="false" type="success" v-if="scope.row.typeStatus == 1">正常</el-link>
           </template>
         </el-table-column>
+        <el-table-column align="center" prop="typeIndex" label="排序" width="180">
+          <template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" content="上移" placement="top">
+              <i class="el-icon-caret-top sort-direction" @click="shiftSort(scope.row.id, 'top')"></i>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="下移" placement="top">
+              <i class="el-icon-caret-bottom sort-direction" @click="shiftSort(scope.row.id, 'bot')"></i>
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
             <el-button type="warning" plain @click="loadGoodsType(scope.row.id)">修改</el-button>
@@ -74,85 +85,102 @@
   </el-container>
 </template>
 <script type="text/javascript">
-  import goodsType from '@/views/goods/type/goods-type.vue'
+    import goodsType from '@/views/goods/type/goods-type.vue'
 
-  export default {
-    name: 'goods-type-list',
-    components: {
-      'goodsType': goodsType
-    },
-    data() {
-      return {
-        loading: true,
-        tableHeight: 50,
-        currentPage: 1,
-        total: 0,
-        typeForm: {
-          typeName: '',
-          typeStatus: '',
-          page: 1,
-          pageSize: 5
+    export default {
+        name: 'goods-type-list',
+        components: {
+            'goodsType': goodsType
         },
-        typeList: [],
-        infoTitle: '',
-        showInfo: false,
-        timestamp: ''
-      }
-    },
-    created() {
-      this.onSubmit()
-    },
-    mounted() {
-    },
-    methods: {
-      indexMethod(index) {
-        let count = (parseInt(this.typeForm.page) - 1) * parseInt(this.typeForm.pageSize)
-        return count + (parseInt(index) + 1)
-      },
-      onSubmit() {
-        this.loading = true
-        this.$axios({
-          url: '/api/user/goods/queryTypePage',
-          method: 'post',
-          data: this.typeForm
-        }).then(res => {
-          console.info('后台返回的数据', res.data)
-          this.$global.setTableHeight(this, 'goods-type-form')
-          if (res.data.code === '1') {
-            this.tableData = res.data.data.dataSource
-            this.total = res.data.data.totalCount
-          } else if (res.data.code === "-1") {
-            this.$message.error(res.data.data)
-          }
-          this.timestamp = '?' + Date.parse(new Date())
-          this.$global.exitLoad(this, null, res.data)
-        }).catch(error => {
-          console.info('错误信息', error)
-          this.$global.exitLoad(this, null, '')
-        })
-      },
-      selectList() {
-        this.typeForm.page = 1
-        this.onSubmit()
-      },
-      handleCurrentChange(val) {
-        this.typeForm.page = val
-        this.onSubmit()
-      },
-      loadGoodsType(id) {
-        this.showInfo = true
-        if (id && id === '0') {
-          this.infoTitle = '添加类型信息'
-        } else {
-          this.infoTitle = '修改类型信息'
+        data() {
+            return {
+                loading: true,
+                tableHeight: 50,
+                currentPage: 1,
+                total: 0,
+                typeForm: {
+                    typeName: '',
+                    typeStatus: '',
+                    page: 1,
+                    pageSize: 10
+                },
+                infoTitle: '',
+                showInfo: false,
+                timestamp: ''
+            }
+        },
+        created() {
+            this.onSubmit()
+        },
+        mounted() {
+        },
+        methods: {
+            indexMethod(index) {
+                let count = (parseInt(this.typeForm.page) - 1) * parseInt(this.typeForm.pageSize)
+                return count + (parseInt(index) + 1)
+            },
+            onSubmit() {
+                this.loading = true
+                this.$axios({
+                    url: '/api/user/goods/queryTypePage',
+                    method: 'post',
+                    data: this.typeForm
+                }).then(res => {
+                    console.info('后台返回的数据', res.data)
+                    this.$global.setTableHeight(this, 'goods-type-form')
+                    if (res.data.code === '1') {
+                        this.tableData = res.data.data.dataSource
+                        this.total = res.data.data.totalCount
+                    } else if (res.data.code === "-1") {
+                        this.$message.error(res.data.data)
+                    }
+                    this.timestamp = '?' + Date.parse(new Date())
+                    this.$global.exitLoad(this, null, res.data)
+                }).catch(error => {
+                    console.info('错误信息', error)
+                    this.$global.exitLoad(this, null, '')
+                })
+            },
+            selectList() {
+                this.typeForm.page = 1
+                this.onSubmit()
+            },
+            handleCurrentChange(val) {
+                this.typeForm.page = val
+                this.onSubmit()
+            },
+            loadGoodsType(id) {
+                this.showInfo = true
+                if (id && id === '0') {
+                    this.infoTitle = '添加类型信息'
+                } else {
+                    this.infoTitle = '修改类型信息'
+                }
+                this.$cookies.set('goods_type_id', id)
+                this.$refs.goodsType.loadGoodsType(id)
+            },
+            refreshList() {
+                this.showInfo = false
+                this.onSubmit()
+            },
+            shiftSort(id, sort) {
+                this.loading = true
+                this.$axios({
+                    url: '/api/user/goods/updateGoodsTypeIndex',
+                    method: 'post',
+                    data: {typeId: id, sort: sort}
+                }).then(res => {
+                    if (res.data.code === '1') {
+                        this.onSubmit()
+                    } else if (res.data.code === "-1") {
+                        this.$message.error(res.data.data)
+                        this.$global.exitLoad(this, null, res.data)
+                    }
+                }).catch(error => {
+                    console.info('错误信息', error)
+                    this.$global.exitLoad(this, null, '')
+                })
+            }
         }
-        this.$cookies.set('goods_type_id', id)
-        this.$refs.goodsType.loadGoodsType(id)
-      },
-      refreshList(){
-        this.showInfo = false
-        this.onSubmit()
-      }
     }
-  }
 </script>
