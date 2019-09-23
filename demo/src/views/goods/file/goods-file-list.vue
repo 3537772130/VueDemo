@@ -138,6 +138,7 @@
               break
             }
           }
+          this.$message.success('上传成功')
         } else {
           this.$message.error(res.data)
         }

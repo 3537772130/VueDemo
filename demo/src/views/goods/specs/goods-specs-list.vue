@@ -15,7 +15,7 @@
 <template>
   <el-container>
     <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding-top: 20px;">
-      <el-form id="goods-type-form" :inline="true" :model="specsForm" class="demo-form-inline">
+      <el-form id="goods-specs-form" :inline="true" :model="specsForm" class="demo-form-inline">
         <el-form-item label="商品规格">
           <el-input v-model="specsForm.specsText" placeholder="请输入商品规格" class="goods-specs-input"></el-input>
         </el-form-item>
@@ -168,7 +168,7 @@
                     data: this.specsForm
                 }).then(res => {
                     console.info('后台返回的数据', res.data)
-                    this.$global.setTableHeight(this, 'goods-type-form')
+                    this.$global.setAppendTableHeight(this, 'goods-specs-form')
                     if (res.data.code === '1') {
                         this.tableData = res.data.data.dataSource
                         this.total = res.data.data.totalCount
@@ -192,10 +192,11 @@
             },
             loadGoodsSpecs(id) {
                 this.showInfo = true
+                let goodsName = this.$cookies.get('goods_name');
                 if (id && id === '0') {
-                    this.infoTitle = '添加类型信息'
+                    this.infoTitle = goodsName + ' - 添加规格信息'
                 } else {
-                    this.infoTitle = '修改类型信息'
+                    this.infoTitle = goodsName + ' - 修改规格信息'
                 }
                 this.$cookies.set('specs_id', id)
                 this.$cookies.set('goods_id', this.specsForm.goodsId)
@@ -208,9 +209,9 @@
             shiftSort(id, sort) {
                 this.loading = true
                 this.$axios({
-                    url: '/api/user/goods/updateGoodsTypeIndex',
+                    url: '/api/user/goods/updateGoodsSpecsIndex',
                     method: 'post',
-                    data: {typeId: id, sort: sort}
+                    data: {specsId: id, goodsId: this.specsForm.goodsId, sort: sort}
                 }).then(res => {
                     if (res.data.code === '1') {
                         this.onSubmit()

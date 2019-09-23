@@ -50,9 +50,9 @@
                 :headers="myHeader"
                 :on-success="handleLogoSuccess"
                 :show-file-list="false"
-                action="/api/user/goods/uploadGoodsTypeLogo"
+                action="/api/user/goods/uploadGoodsImage"
                 class="type-logo-uploader"
-                name="typeLogo">
+                name="image">
                 <img :src="typeForm.typeLogo + timestamp" class="type-logo" v-if="typeForm.typeLogo">
                 <i class="el-icon-plus type-logo-uploader-icon" v-else></i>
               </el-upload>
@@ -161,6 +161,7 @@
             handleLogoSuccess(res, file) {
                 if (res.code === '1') {
                     this.typeForm.typeLogo = res.data
+                  this.$message.success('上传成功，等待提交')
                 } else {
                     this.$message.error(res.data)
                 }

@@ -47,6 +47,7 @@
         </el-table-column>
         <el-table-column align="center" prop="appletName" label="小程序名称" width="180"></el-table-column>
         <el-table-column align="center" prop="appletSimple" label="小程序简称" width="140"></el-table-column>
+        <el-table-column align="center" prop="typeName" label="服务类型" width="120"></el-table-column>
         <el-table-column align="center" prop="telephone" label="联系电话" width="120"></el-table-column>
         <el-table-column align="center" prop="province" label="所属地域" width="220" >
           <template slot-scope="scope">

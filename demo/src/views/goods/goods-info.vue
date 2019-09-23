@@ -46,8 +46,8 @@
             <div class="goods-info-input" style="display: inline-block;text-align: left;">
               <el-upload
                 class="cover-src-uploader"
-                action="/api/user/goods/uploadGoodsCover"
-                name="cover"
+                action="/api/user/goods/uploadGoodsImage"
+                name="image"
                 :headers="myHeader"
                 :show-file-list="false"
                 :on-success="handleLogoSuccess"
@@ -174,6 +174,7 @@
             handleLogoSuccess(res, file) {
                 if (res.code === '1') {
                     this.goods.coverSrc = res.data
+                  this.$message.success('上传成功，等待提交')
                 } else {
                     this.$message.error(res.data)
                 }

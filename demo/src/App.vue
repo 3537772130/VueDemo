@@ -61,7 +61,6 @@
   }
 
   .sort-direction {
-    width: 25px;
     font-size: 18px;
     color: #303133;
     position: relative;
@@ -71,5 +70,6 @@
   .sort-direction:hover {
     cursor: pointer;
     color: #3a8ee6;
+    font-size: 22px;
   }
 </style>

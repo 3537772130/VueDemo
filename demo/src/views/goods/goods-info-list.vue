@@ -258,6 +258,7 @@
                 this.showSpecs = true
                 this.specsTitle = name + ' - 规格列表'
                 this.$cookies.set('goods_id', id)
+                this.$cookies.set("goods_name", name)
                 this.$refs.goodsSpecsList.loadGoodsPage(id)
             },
             refreshList() {

@@ -48,12 +48,12 @@
               <el-upload
                 :before-upload="beforePicUpload"
                 :headers="myHeader"
-                :on-success="handleLogoSuccess"
+                :on-success="handleSpecsSrcSuccess"
                 :show-file-list="false"
-                action="/api/user/goods/uploadGoodsSpecsSrc"
+                action="/api/user/goods/uploadGoodsImage"
                 class="specs-src-uploader"
-                name="typeLogo">
-                <img :src="specsForm.typeLogo + timestamp" class="specs-src" v-if="specsForm.typeLogo">
+                name="image">
+                <img :src="specsForm.specsSrc + timestamp" class="specs-src" v-if="specsForm.specsSrc">
                 <i class="el-icon-plus specs-src-uploader-icon" v-else></i>
               </el-upload>
             </div>
@@ -64,9 +64,10 @@
                       v-model="specsForm.specsText"></el-input>
           </el-form-item>
           <el-form-item label="出售价格" prop="sellPrice" v-if="showSellPrice">
-            <MumberInput ref="sell-price" class="goods-specs-input" placeholder="请输入出售价格"
-                         v-model="specsForm.sellPrice" :precision="2"
+            <MumberInput ref="MumberInput" class="goods-specs-input" placeholder="请输入出售价格"
+                         v-model="sellPrice" :precision="2"
                          @input="computePrice()" @blur="blurPrice()"></MumberInput>
+            <el-input v-model.number="specsForm.sellPrice" style="display: none;"></el-input>
           </el-form-item>
           <el-form-item label="商品折扣" prop="discount">
             <el-input class="goods-specs-input" placeholder="请输入商品折扣"
@@ -85,7 +86,7 @@
               <span style="color: #cdcdcd;"> = (出售价格&times;商品折扣&divide;100)</span>
             </div>
           </el-form-item>
-          <el-form-item label="规则状态" prop="specsStatus">
+          <el-form-item label="规格状态" prop="specsStatus">
             <el-select class="goods-specs-input" v-model="specsForm.specsStatus">
               <el-option label="正常" value='1'></el-option>
               <el-option label="禁用" value='0'></el-option>
@@ -113,6 +114,7 @@
             return {
                 loading: false,
                 showSellPrice: false,
+              sellPrice: 0,
                 specsForm: {
                     specsSrc: '',
                     specsText: '',
@@ -164,6 +166,7 @@
                     }).then(res => {
                         if (res.data.code === '1') {
                             this.specsForm = res.data.data
+                          this.sellPrice = this.specsForm.sellPrice
                             this.specsForm.specsStatus = this.specsForm.specsStatus ? '1' : '0'
                             delete this.specsForm.userId
                             delete this.specsForm.typeIndex
@@ -205,9 +208,10 @@
                     }
                 })
             },
-            handleLogoSuccess(res, file) {
+            handleSpecsSrcSuccess(res, file) {
                 if (res.code === '1') {
-                    this.specsForm.typeLogo = res.data
+                    this.specsForm.specsSrc = res.data
+                  this.$message.success('上传成功，等待提交')
                 } else {
                     this.$message.error(res.data)
                 }
@@ -230,10 +234,13 @@
                 return isJPG && isLt2M
             },
             computePrice() {
-              this.specsForm.actualPrice = (this.specsForm.sellPrice * this.specsForm.discount / 100).toFixed(2)
+              this.specsForm.sellPrice = this.sellPrice
+              this.specsForm.actualPrice = this.specsForm.sellPrice * this.specsForm.discount / 100
+              this.$refs.MumberInput.init(this.specsForm.sellPrice);
             },
             blurPrice() {
                 this.specsForm.sellPrice = this.specsForm.sellPrice > 99999.99 ? 99999.99 : this.specsForm.sellPrice
+              this.$refs.MumberInput.init(this.specsForm.sellPrice);
             }
         }
     }
