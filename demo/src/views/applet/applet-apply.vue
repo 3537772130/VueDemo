@@ -60,7 +60,7 @@
                   :show-file-list="false"
                   :on-success="handleLogoSuccess"
                   :before-upload="beforePicUpload">
-                  <img v-if="appletForm.appletLogo" :src="appletForm.appletLogo" class="avatar">
+                  <img v-if="appletForm.appletLogo" :src="appletForm.appletLogo + timestamp" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -74,6 +74,12 @@
             </el-form-item>
             <el-form-item label="联系电话" prop="telephone">
               <el-input v-model="appletForm.telephone" placeholder="请输入联系电话" class="applet-info-input"></el-input>
+            </el-form-item>
+            <el-form-item label="服务类型" prop="appletTypeId">
+              <el-select v-model="appletForm.appletTypeId" placeholder="请选择服务类型" class="applet-info-input" @change="updateType">
+                <el-option label="请选择" value=''></el-option>
+                <el-option v-for="(item, index) in typeList" :key="index" :label="item.typeName" :value='item.id'></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="经营类型" prop="ifRetail">
               <el-select v-model="appletForm.ifRetail" placeholder="请选择经营类型" class="applet-info-input">
@@ -93,7 +99,7 @@
                   :show-file-list="false"
                   :on-success="handleLicenseSuccess"
                   :before-upload="beforePicUpload">
-                  <img v-if="appletForm.licenseSrc" :src="appletForm.licenseSrc" class="avatar">
+                  <img v-if="appletForm.licenseSrc" :src="appletForm.licenseSrc + timestamp" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -148,12 +154,15 @@
       return {
         loading: false,
         active: 0,
+        typeList: [],
         region: [],
         regions: [],
+        timestamp: '',
         appletForm: {
           appletLogo: '',
           appletName: '',
           appletSimple: '',
+          appletTypeId: '',
           ifRetail: '0',
           licenseSrc: '',
           licenseCode: '',
@@ -186,8 +195,11 @@
             {required: true, message: '请输入联系电话', trigger: 'blur'},
             {type: 'string', min: 1, max: 20, message: '联系电话长度为1-20个字符', trigger: 'blur'}
           ],
+          appletTypeId: [
+            {required: true, message: '请选择服务类型', trigger: 'blur'},
+          ],
           ifRetail: [
-            {required: true, message: '请选择营业类型', trigger: 'blur'},
+            {required: true, message: '请选择营业类型', trigger: 'blur'}
           ],
           licenseSrc: [
             {required: true, message: '请上传图片', trigger: 'blur'},
@@ -241,9 +253,11 @@
             console.info('后台返回的数据', res.data)
             this.$cookies.remove('applet_id')
             this.regions = JSON.parse(res.data.data.regions)
+            this.typeList = res.data.data.typeList
             if (res.data.code === '1') {
               this.appletForm = res.data.data.applet
               this.region = [this.appletForm.province, this.appletForm.city, this.appletForm.county]
+              this.appletForm.appletTypeId = this.appletForm.typeId
               this.appletForm.ifRetail = this.appletForm.ifRetail ? '1' : '0'
               delete this.appletForm.userId
               delete this.appletForm.updateTime
@@ -254,7 +268,9 @@
               delete this.appletForm.appletCode
               delete this.appletForm.addressSimple
               delete this.appletForm.addressDetails
+              delete this.appletForm.typeId
             }
+            this.timestamp = '?' + Date.parse(new Date())
             this.$global.exitLoad(this, null, res.data)
           }).catch(error => {
             console.info('错误信息', error)
@@ -309,6 +325,9 @@
             this.$refs[formName].validateField('telephone', (valid) => {
               bool = bool && valid.length <= 0
             })
+            this.$refs[formName].validateField('appletTypeId', (valid) => {
+              bool = bool && valid.length <= 0
+            })
             this.$refs[formName].validateField('ifRetail', (valid) => {
               bool = bool && valid.length <= 0
             })
@@ -356,6 +375,7 @@
             this.$refs[formName].clearValidate("businessScope")
             this.$refs[formName].clearValidate("telephone")
             this.$refs[formName].clearValidate("county")
+            this.$refs[formName].clearValidate("appletTypeId")
             break
           case 2:
             this.$refs[formName].clearValidate("managerAccount")
@@ -373,6 +393,7 @@
       handleLogoSuccess(res, file) {
         if (res.code === '1') {
           this.appletForm.appletLogo = res.data
+          this.timestamp = '?' + Date.parse(new Date())
         } else {
           this.$message.error(res.data)
         }
@@ -384,6 +405,7 @@
       handleLicenseSuccess(res, file) {
         if (res.code === '1') {
           this.appletForm.licenseSrc = res.data
+          this.timestamp = '?' + Date.parse(new Date())
         } else {
           this.$message.error(res.data)
         }
@@ -406,6 +428,10 @@
           loading.close()
         }
         return isJPG && isLt2M
+      },
+      updateType(){
+        this.appletForm.appletSimple += 'TEST_1'
+        this.appletForm.appletSimple = this.appletForm.appletSimple.replace('TEST_1', '')
       }
     }
   }

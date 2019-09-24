@@ -65,6 +65,9 @@
             <el-form-item label="联系电话" prop="telephone">
               <div class="applet-info-input">{{appletForm.telephone}}</div>
             </el-form-item>
+            <el-form-item label="服务类型" prop="ifRetail">
+              <div class="applet-info-input">{{appletForm.typeName}}</div>
+            </el-form-item>
             <el-form-item label="经营类型" prop="ifRetail">
               <div class="applet-info-input">{{appletForm.ifRetail ? '批发':'零售'}}</div>
             </el-form-item>
