@@ -75,8 +75,8 @@
             <el-form-item label="联系电话" prop="telephone">
               <el-input v-model="appletForm.telephone" placeholder="请输入联系电话" class="applet-info-input"></el-input>
             </el-form-item>
-            <el-form-item label="服务类型" prop="appletTypeId">
-              <el-select v-model="appletForm.appletTypeId" placeholder="请选择服务类型" class="applet-info-input" @change="updateType">
+            <el-form-item label="服务类型" prop="typeId">
+              <el-select v-model="appletForm.typeId" placeholder="请选择服务类型" class="applet-info-input" @change="updateType">
                 <el-option label="请选择" value=''></el-option>
                 <el-option v-for="(item, index) in typeList" :key="index" :label="item.typeName" :value='item.id'></el-option>
               </el-select>
@@ -162,7 +162,7 @@
           appletLogo: '',
           appletName: '',
           appletSimple: '',
-          appletTypeId: '',
+          typeId: '',
           ifRetail: '0',
           licenseSrc: '',
           licenseCode: '',
@@ -195,7 +195,7 @@
             {required: true, message: '请输入联系电话', trigger: 'blur'},
             {type: 'string', min: 1, max: 20, message: '联系电话长度为1-20个字符', trigger: 'blur'}
           ],
-          appletTypeId: [
+          typeId: [
             {required: true, message: '请选择服务类型', trigger: 'blur'},
           ],
           ifRetail: [
@@ -257,7 +257,7 @@
             if (res.data.code === '1') {
               this.appletForm = res.data.data.applet
               this.region = [this.appletForm.province, this.appletForm.city, this.appletForm.county]
-              this.appletForm.appletTypeId = this.appletForm.typeId
+              this.appletForm.typeId = this.appletForm.typeId
               this.appletForm.ifRetail = this.appletForm.ifRetail ? '1' : '0'
               delete this.appletForm.userId
               delete this.appletForm.updateTime
@@ -325,7 +325,7 @@
             this.$refs[formName].validateField('telephone', (valid) => {
               bool = bool && valid.length <= 0
             })
-            this.$refs[formName].validateField('appletTypeId', (valid) => {
+            this.$refs[formName].validateField('typeId', (valid) => {
               bool = bool && valid.length <= 0
             })
             this.$refs[formName].validateField('ifRetail', (valid) => {
@@ -375,7 +375,7 @@
             this.$refs[formName].clearValidate("businessScope")
             this.$refs[formName].clearValidate("telephone")
             this.$refs[formName].clearValidate("county")
-            this.$refs[formName].clearValidate("appletTypeId")
+            this.$refs[formName].clearValidate("typeId")
             break
           case 2:
             this.$refs[formName].clearValidate("managerAccount")
