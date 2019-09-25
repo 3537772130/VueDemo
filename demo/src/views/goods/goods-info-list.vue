@@ -40,10 +40,10 @@
           <el-input v-model="goods.name" placeholder="请输入商品名称" class="applet-list-input"></el-input>
         </el-form-item>
         <el-form-item label="商品状态">
-          <el-select v-model="goods.status" class="applet-list-input">
+          <el-select v-model="goods.goodsStatus" class="applet-list-input">
             <el-option label="全部" value=''></el-option>
-            <el-option label="禁用" value="0"></el-option>
-            <el-option label="正常" value="1"></el-option>
+            <el-option label="未发布" value="0"></el-option>
+            <el-option label="已发布" value="1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -159,7 +159,7 @@
                 goods: {
                     name: '',
                     typeId: '',
-                    status: '',
+                    goodsStatus: '',
                     page: 1,
                     pageSize: 10
                 },
