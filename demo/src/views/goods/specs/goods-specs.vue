@@ -134,7 +134,7 @@
                     ],
                     sellPrice: [
                         {required: true, message: '出售价格不能为空', trigger: 'blur'},
-                        {type: 'number', min: 0, max: 99999.99, message: '出售价格为0.00-99999.99', trigger: 'blur'}
+                        {type: 'number', min: 0.01, max: 99999.99, message: '出售价格为0.00-99999.99', trigger: 'blur'}
                     ],
                     discount: [
                         {required: true, message: '商品折扣不能为空', trigger: 'blur'},

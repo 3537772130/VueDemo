@@ -65,7 +65,7 @@
         <el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60"></el-table-column>
         <el-table-column align="center" prop="coverSrc" label="商品封面" width="120">
           <template slot-scope="scope">
-            <el-image :src="'api\\' + scope.row.coverSrc + timestamp"
+            <el-image :src="scope.row.coverSrc + timestamp"
                       style="width: 80px; height: 80px;"></el-image>
           </template>
         </el-table-column>

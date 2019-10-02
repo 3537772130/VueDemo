@@ -41,7 +41,7 @@
         <el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60"></el-table-column>
         <el-table-column align="center" prop="specsSrc" label="规格图片" width="120">
           <template slot-scope="scope">
-            <el-image :src="'api\\' + scope.row.specsSrc + timestamp"
+            <el-image :src="scope.row.specsSrc + timestamp"
                       style="width: 30px; height: 30px;"></el-image>
           </template>
         </el-table-column>

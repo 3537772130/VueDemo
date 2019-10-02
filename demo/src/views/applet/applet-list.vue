@@ -41,7 +41,7 @@
         <el-table-column align="center" type="index" :index="indexMethod" label="序号" width="80"></el-table-column>
         <el-table-column align="center" prop="appletLogo" label="小程序LOGO" width="120">
           <template slot-scope="scope">
-            <el-image :src="'api\\' + scope.row.appletLogo + timestamp"
+            <el-image :src="scope.row.appletLogo + timestamp"
                       style="width: 100px; height: 100px; border-radius: 50px"></el-image>
           </template>
         </el-table-column>

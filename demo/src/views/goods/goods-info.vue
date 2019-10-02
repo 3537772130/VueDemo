@@ -174,7 +174,7 @@
             handleLogoSuccess(res, file) {
                 if (res.code === '1') {
                     this.goods.coverSrc = res.data
-                  this.$message.success('上传成功，等待提交')
+                    this.$message.success('上传成功，等待提交')
                 } else {
                     this.$message.error(res.data)
                 }

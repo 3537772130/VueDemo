@@ -123,188 +123,188 @@
 </template>
 
 <script type="text/javascript">
-  import {Loading} from 'element-ui'
+    import {Loading} from 'element-ui'
 
-  export default {
-    name: 'user-info',
-    data() {
-      return {
-        info: {},
-        showTabs: 'up-info',
-        loading: false,
-        format: 'yyyy年MM月dd日',
-        valueFormat: 'yyyy-MM-dd',
-        genderList: [
-          {
-            name: '男',
-            value: '1'
-          },
-          {
-            name: '女',
-            value: '0'
-          }
-        ],
-        upInfo: {
-          nickName: '',
-          gender: '',
-          birthday: '',
-          email: ''
+    export default {
+        name: 'user-info',
+        data() {
+            return {
+                info: {},
+                showTabs: 'up-info',
+                loading: false,
+                format: 'yyyy年MM月dd日',
+                valueFormat: 'yyyy-MM-dd',
+                genderList: [
+                    {
+                        name: '男',
+                        value: '1'
+                    },
+                    {
+                        name: '女',
+                        value: '0'
+                    }
+                ],
+                upInfo: {
+                    nickName: '',
+                    gender: '',
+                    birthday: '',
+                    email: ''
+                },
+                passForm: {
+                    oldPass: '',
+                    newPass: '',
+                    confirmPass: ''
+                },
+                formLabelWidth: '120px',
+                infoRules: {
+                    nickName: [
+                        {required: true, message: '请输入昵称', trigger: 'blur'},
+                        {min: 1, max: 20, message: '昵称长度过长', trigger: 'blur'}
+                    ],
+                    gender: [
+                        {required: true, message: '请选择性别', trigger: 'blur'}
+                    ]
+                },
+                passRules: {
+                    oldPass: [
+                        {required: true, message: '请输入原密码', trigger: 'blur'},
+                        {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
+                        {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'}
+                    ],
+                    newPass: [
+                        {required: true, message: '请输入新密码', trigger: 'blur'},
+                        {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
+                        {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'}
+                    ],
+                    confirmPass: [
+                        {required: true, message: '请输入确认密码', trigger: 'blur'},
+                        {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
+                        {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'},
+                        {validator: this.$global.validate(this).confirmPassValidator, trigger: 'blur'}
+                    ]
+                },
+                myHeader: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }
         },
-        passForm: {
-          oldPass: '',
-          newPass: '',
-          confirmPass: ''
+        created() {
+            this.info = this.$cookies.get('user_info')
+            this.upInfo.nickName = this.info.nickName
+            this.upInfo.gender = this.info.gender ? '1' : '0'
+            this.upInfo.birthday = this.info.birthday
+            this.upInfo.email = this.info.email
         },
-        formLabelWidth: '120px',
-        infoRules: {
-          nickName: [
-            {required: true, message: '请输入昵称', trigger: 'blur'},
-            {min: 1, max: 20, message: '昵称长度过长', trigger: 'blur'}
-          ],
-          gender: [
-            {required: true, message: '请选择性别', trigger: 'blur'}
-          ]
-        },
-        passRules: {
-          oldPass: [
-            {required: true, message: '请输入原密码', trigger: 'blur'},
-            {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
-            {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'}
-          ],
-          newPass: [
-            {required: true, message: '请输入新密码', trigger: 'blur'},
-            {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
-            {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'}
-          ],
-          confirmPass: [
-            {required: true, message: '请输入确认密码', trigger: 'blur'},
-            {type: 'string', min: 6, message: '密码长度至少6位', trigger: 'blur'},
-            {type: 'string', max: 20, message: '密码长度最多20位', trigger: 'blur'},
-            {validator: this.$global.validate(this).confirmPassValidator, trigger: 'blur'}
-          ]
-        },
-        myHeader: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      }
-    },
-    created() {
-      this.info = this.$cookies.get('user_info')
-      this.upInfo.nickName = this.info.nickName
-      this.upInfo.gender = this.info.gender ? '1' : '0'
-      this.upInfo.birthday = this.info.birthday
-      this.upInfo.email = this.info.email
-    },
-    mounted() {
+        mounted() {
 
-    },
-    methods: {
-      loadUserInfo() {
+        },
+        methods: {
+            loadUserInfo() {
 
-      },
-      getPassword() {
-        return this.passForm.newPass
-      },
-      onSubmitInfo(name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            let loading = Loading.service({fullscreen: true, text: '正在提交'})
-            this.$axios({
-              url: '/api/user/updateUserInfo',
-              method: 'post',
-              data: this.upInfo
-            }).then(res => {
-              console.info('后台返回的数据', res.data)
-              if (res.data.code === '1') {
-                let info = res.data.data
-                this.info = info
-                this.$cookies.set('user_info', info)
-                this.$emit('updateInfo')
-                this.$message({message: '修改信息成功', type: 'success'})
-              } else if (res.data.code === '-1') {
-                this.$message.error(res.data.data)
-              }
-              this.$global.exitLoad(this, loading, res.data)
-            }).catch(error => {
-              console.info('错误信息', error)
-              this.$global.exitLoad(this, loading, '')
-            })
-          } else {
-            this.$message({message: '信息提交失败', type: 'warning'})
-          }
-        })
-      },
-      onSubmitPass(name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            let loading = Loading.service({fullscreen: true, text: '正在提交'})
-            this.$axios({
-              url: '/api/user/updateUserInfoByPassword',
-              method: 'post',
-              data: {oldPass: this.passForm.oldPass, newPass: this.passForm.newPass}
-            }).then(res => {
-              console.info('后台返回的数据', res.data)
-              if (res.data.code === '1') {
-                let that = this
-                this.$message({
-                  message: res.data.data,
-                  type: 'success',
-                  onClose: function () {
-                    that.$axios({
-                      url: '/api/exitLogin',
-                      method: 'post'
-                    }).then(re => {
-                      if (re.data.code === '1') {
-                        that.$global.exitLoad(that, loading, {'code': '0'})
-                      } else {
-                        that.$message.error(re.data.data)
-                      }
-                    })
-                  }
+            },
+            getPassword() {
+                return this.passForm.newPass
+            },
+            onSubmitInfo(name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        let loading = Loading.service({fullscreen: true, text: '正在提交'})
+                        this.$axios({
+                            url: '/api/user/updateUserInfo',
+                            method: 'post',
+                            data: this.upInfo
+                        }).then(res => {
+                            console.info('后台返回的数据', res.data)
+                            if (res.data.code === '1') {
+                                let info = res.data.data
+                                this.info = info
+                                this.$cookies.set('user_info', info)
+                                this.$emit('updateInfo')
+                                this.$message({message: '修改信息成功', type: 'success'})
+                            } else if (res.data.code === '-1') {
+                                this.$message.error(res.data.data)
+                            }
+                            this.$global.exitLoad(this, loading, res.data)
+                        }).catch(error => {
+                            console.info('错误信息', error)
+                            this.$global.exitLoad(this, loading, '')
+                        })
+                    } else {
+                        this.$message({message: '信息提交失败', type: 'warning'})
+                    }
                 })
-              } else {
-                this.$message.error(res.data.data)
+            },
+            onSubmitPass(name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        let loading = Loading.service({fullscreen: true, text: '正在提交'})
+                        this.$axios({
+                            url: '/api/user/updateUserInfoByPassword',
+                            method: 'post',
+                            data: {oldPass: this.passForm.oldPass, newPass: this.passForm.newPass}
+                        }).then(res => {
+                            console.info('后台返回的数据', res.data)
+                            if (res.data.code === '1') {
+                                let that = this
+                                this.$message({
+                                    message: res.data.data,
+                                    type: 'success',
+                                    onClose: function () {
+                                        that.$axios({
+                                            url: '/api/exitLogin',
+                                            method: 'post'
+                                        }).then(re => {
+                                            if (re.data.code === '1') {
+                                                that.$global.exitLoad(that, loading, {'code': '0'})
+                                            } else {
+                                                that.$message.error(re.data.data)
+                                            }
+                                        })
+                                    }
+                                })
+                            } else {
+                                this.$message.error(res.data.data)
+                                this.$global.exitLoad(this, loading, res.data)
+                            }
+                        }).catch(error => {
+                            console.info('错误信息', error)
+                            this.$global.exitLoad(this, loading, '')
+                        })
+                    } else {
+                        this.$message({message: '信息提交失败', type: 'warning'})
+                    }
+                })
+            },
+            handleAvatarSuccess(res, file) {
+                console.info('后台返回的res', res)
+                console.info('后台返回的file', file)
+                if (res.code === '1') {
+                    this.info = this.$cookies.get('user_info')
+                    this.info.avatarUrl = URL.createObjectURL(file.raw)
+                    this.$cookies.set('user_info', this.info)
+                    this.$emit('updateInfo')
+                    this.$message({message: '上传成功', type: 'success'})
+                } else {
+                    this.$message.error(res.data)
+                }
+                let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 this.$global.exitLoad(this, loading, res.data)
-              }
-            }).catch(error => {
-              console.info('错误信息', error)
-              this.$global.exitLoad(this, loading, '')
-            })
-          } else {
-            this.$message({message: '信息提交失败', type: 'warning'})
-          }
-        })
-      },
-      handleAvatarSuccess(res, file) {
-        console.info('后台返回的res', res)
-        console.info('后台返回的file', file)
-        if (res.code === '1') {
-          this.info = this.$cookies.get('user_info')
-          this.info.avatarUrl = URL.createObjectURL(file.raw)
-          this.$cookies.set('user_info', this.info)
-          this.$emit('updateInfo')
-          this.$message({message: '上传成功', type: 'success'})
-        } else {
-          this.$message.error(res.data)
+            },
+            beforeAvatarUpload(file) {
+                let loading = Loading.service({fullscreen: true, text: '正在上传'})
+                const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
+                const isLt2M = file.size / 1024 / 1024 < 3
+                if (!isJPG) {
+                    this.$message.error('上传头像图片格式错误!')
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 3MB!')
+                }
+                if (!isJPG || !isLt2M) {
+                    loading.close()
+                }
+                return isJPG && isLt2M
+            }
         }
-        let loading = Loading.service({fullscreen: true, text: '正在上传'})
-        this.$global.exitLoad(this, loading, res.data)
-      },
-      beforeAvatarUpload(file) {
-        let loading = Loading.service({fullscreen: true, text: '正在上传'})
-        const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-        const isLt2M = file.size / 1024 / 1024 < 3
-        if (!isJPG) {
-          this.$message.error('上传头像图片格式错误!')
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 3MB!')
-        }
-        if (!isJPG || !isLt2M) {
-          loading.close()
-        }
-        return isJPG && isLt2M
-      }
     }
-  }
 </script>

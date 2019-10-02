@@ -76,9 +76,11 @@
               <el-input v-model="appletForm.telephone" placeholder="请输入联系电话" class="applet-info-input"></el-input>
             </el-form-item>
             <el-form-item label="服务类型" prop="typeId">
-              <el-select v-model="appletForm.typeId" placeholder="请选择服务类型" class="applet-info-input" @change="updateType">
+              <el-select v-model="appletForm.typeId" placeholder="请选择服务类型" class="applet-info-input"
+                         @change="updateType">
                 <el-option label="请选择" value=''></el-option>
-                <el-option v-for="(item, index) in typeList" :key="index" :label="item.typeName" :value='item.id'></el-option>
+                <el-option v-for="(item, index) in typeList" :key="index" :label="item.typeName"
+                           :value='item.id'></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="经营类型" prop="ifRetail">
@@ -146,293 +148,291 @@
   </el-container>
 </template>
 <script type="text/javascript">
-  import {Loading} from 'element-ui'
+    import {Loading} from 'element-ui'
 
-  export default {
-    name: 'applet-info',
-    data() {
-      return {
-        loading: false,
-        active: 0,
-        typeList: [],
-        region: [],
-        regions: [],
-        timestamp: '',
-        appletForm: {
-          appletLogo: '',
-          appletName: '',
-          appletSimple: '',
-          typeId: '',
-          ifRetail: '0',
-          licenseSrc: '',
-          licenseCode: '',
-          businessScope: '',
-          province: '',
-          city: '',
-          county: '',
-          managerAccount: '',
-          managerPassword: '',
-          appId: '',
-          appSecret: ''
-        },
-        myHeader: {
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        rules: {
-          appletLogo: [
-            {required: true, message: '请上传图片', trigger: 'blur'},
-            {type: 'string', min: 1, max: 100, message: '长度为1-100个字符', trigger: 'blur'}
-          ],
-          appletName: [
-            {required: true, message: '请输入小程序名称', trigger: 'blur'},
-            {type: 'string', min: 1, max: 50, message: '小程序名称长度为1-50个字符', trigger: 'blur'}
-          ],
-          appletSimple: [
-            {required: true, message: '请输入小程序简称', trigger: 'blur'},
-            {type: 'string', min: 1, max: 20, message: '小程序简称长度为1-20个字符', trigger: 'blur'}
-          ],
-          telephone: [
-            {required: true, message: '请输入联系电话', trigger: 'blur'},
-            {type: 'string', min: 1, max: 20, message: '联系电话长度为1-20个字符', trigger: 'blur'}
-          ],
-          typeId: [
-            {required: true, message: '请选择服务类型', trigger: 'blur'},
-          ],
-          ifRetail: [
-            {required: true, message: '请选择营业类型', trigger: 'blur'}
-          ],
-          licenseSrc: [
-            {required: true, message: '请上传图片', trigger: 'blur'},
-            {type: 'string', min: 1, max: 100, message: '长度为1-100个字符', trigger: 'blur'}
-          ],
-          licenseCode: [
-            {required: true, message: '请输入执照代码', trigger: 'blur'},
-            {type: 'string', min: 1, max: 30, message: '执照代码长度为1-30个字符', trigger: 'blur'}
-          ],
-          businessScope: [
-            {required: true, message: '请输入营业范围', trigger: 'blur'},
-            {type: 'string', min: 1, max: 150, message: '营业范围长度为1-150个字符', trigger: 'blur'}
-          ],
-          county: [
-            {required: true, message: '请选择所在地域', trigger: 'blur'}
-          ],
-          managerAccount: [
-            {required: true, message: '请输入管理账号', trigger: 'blur'},
-            {type: 'string', min: 1, max: 50, message: '管理账号长度为1-50个字符', trigger: 'blur'}
-          ],
-          managerPassword: [
-            {required: true, message: '请输入管理密码', trigger: 'blur'},
-            {type: 'string', min: 1, max: 50, message: '管理密码长度为1-50个字符', trigger: 'blur'}
-          ],
-          appId: [
-            {required: true, message: '请输入APPID', trigger: 'blur'},
-            {type: 'string', min: 1, max: 30, message: 'APPID长度为1-30个字符', trigger: 'blur'}
-          ],
-          appSecret: [
-            {required: true, message: '请输入SECRET', trigger: 'blur'},
-            {type: 'string', min: 1, max: 150, message: 'SECRET长度为1-150个字符', trigger: 'blur'}
-          ]
-        }
-      }
-    },
-    created() {
-      this.loadApplet(this.$cookies.get('applet_id'))
-    },
-    mounted() {
-    },
-    methods: {
-      loadApplet(appletId) {
-        this.active = 0
-        if (appletId) {
-          this.loading = true
-          this.$axios({
-            url: '/api/user/applet/queryAppletInfo',
-            method: 'post',
-            data: {id: appletId}
-          }).then(res => {
-            console.info('后台返回的数据', res.data)
-            this.$cookies.remove('applet_id')
-            this.regions = JSON.parse(res.data.data.regions)
-            this.typeList = res.data.data.typeList
-            if (res.data.code === '1') {
-              this.appletForm = res.data.data.applet
-              this.region = [this.appletForm.province, this.appletForm.city, this.appletForm.county]
-              this.appletForm.typeId = this.appletForm.typeId
-              this.appletForm.ifRetail = this.appletForm.ifRetail ? '1' : '0'
-              delete this.appletForm.userId
-              delete this.appletForm.updateTime
-              delete this.appletForm.ifSelling
-              delete this.appletForm.lat
-              delete this.appletForm.lon
-              delete this.appletForm.status
-              delete this.appletForm.appletCode
-              delete this.appletForm.addressSimple
-              delete this.appletForm.addressDetails
-              delete this.appletForm.typeId
-            }
-            this.timestamp = '?' + Date.parse(new Date())
-            this.$global.exitLoad(this, null, res.data)
-          }).catch(error => {
-            console.info('错误信息', error)
-            this.$global.exitLoad(this, null, '')
-          })
-        }
-      },
-      handleChange(res) {
-        this.appletForm.province = res[0]
-        this.appletForm.city = res[1]
-        this.appletForm.county = res[2]
-        this.$refs['appletForm'].validateField('county', (valid) => {
-        })
-      },
-      onSubmit(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            let loading = Loading.service({fullscreen: true, text: '加载中'})
-            this.$axios({
-              url: '/api/user/applet/saveAppletInfo',
-              method: 'post',
-              data: this.appletForm
-            }).then(res => {
-              console.info('后台返回的数据', res.data)
-              let that = this
-              res.data.code === '1' ? this.$message.success({
-                message: res.data.data, duration: 1000, onClose: function () {
-                  that.$emit('loadApplet')
+    export default {
+        name: 'applet-info',
+        data() {
+            return {
+                loading: false,
+                active: 0,
+                typeList: [],
+                region: [],
+                regions: [],
+                timestamp: '',
+                appletForm: {
+                    appletLogo: '',
+                    appletName: '',
+                    appletSimple: '',
+                    typeId: '',
+                    ifRetail: '0',
+                    licenseSrc: '',
+                    licenseCode: '',
+                    businessScope: '',
+                    province: '',
+                    city: '',
+                    county: '',
+                    managerAccount: '',
+                    managerPassword: '',
+                    appId: '',
+                    appSecret: ''
+                },
+                myHeader: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                rules: {
+                    appletLogo: [
+                        {required: true, message: '请上传图片', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 100, message: '长度为1-100个字符', trigger: 'blur'}
+                    ],
+                    appletName: [
+                        {required: true, message: '请输入小程序名称', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 50, message: '小程序名称长度为1-50个字符', trigger: 'blur'}
+                    ],
+                    appletSimple: [
+                        {required: true, message: '请输入小程序简称', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 20, message: '小程序简称长度为1-20个字符', trigger: 'blur'}
+                    ],
+                    telephone: [
+                        {required: true, message: '请输入联系电话', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 20, message: '联系电话长度为1-20个字符', trigger: 'blur'}
+                    ],
+                    typeId: [
+                        {required: true, message: '请选择服务类型', trigger: 'blur'},
+                    ],
+                    ifRetail: [
+                        {required: true, message: '请选择营业类型', trigger: 'blur'}
+                    ],
+                    licenseSrc: [
+                        {required: true, message: '请上传图片', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 100, message: '长度为1-100个字符', trigger: 'blur'}
+                    ],
+                    licenseCode: [
+                        {required: true, message: '请输入执照代码', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 30, message: '执照代码长度为1-30个字符', trigger: 'blur'}
+                    ],
+                    businessScope: [
+                        {required: true, message: '请输入营业范围', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 150, message: '营业范围长度为1-150个字符', trigger: 'blur'}
+                    ],
+                    county: [
+                        {required: true, message: '请选择所在地域', trigger: 'blur'}
+                    ],
+                    managerAccount: [
+                        {required: true, message: '请输入管理账号', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 50, message: '管理账号长度为1-50个字符', trigger: 'blur'}
+                    ],
+                    managerPassword: [
+                        {required: true, message: '请输入管理密码', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 50, message: '管理密码长度为1-50个字符', trigger: 'blur'}
+                    ],
+                    appId: [
+                        {required: true, message: '请输入APPID', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 30, message: 'APPID长度为1-30个字符', trigger: 'blur'}
+                    ],
+                    appSecret: [
+                        {required: true, message: '请输入SECRET', trigger: 'blur'},
+                        {type: 'string', min: 1, max: 150, message: 'SECRET长度为1-150个字符', trigger: 'blur'}
+                    ]
                 }
-              }) : this.$message.error(res.data.data)
-              this.$global.exitLoad(this, loading, res.data)
-            }).catch(error => {
-              console.info('错误信息', error)
-              this.$global.exitLoad(this, loading, '')
-            })
-          }
-        })
-      },
-      next(formName) {
-        let bool = true
-        switch (this.active) {
-          case 0:
-            this.$refs[formName].validateField('appletLogo', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('appletName', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('appletSimple', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('telephone', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('typeId', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('ifRetail', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            break
-          case 1:
-            this.$refs[formName].validateField('licenseSrc', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('licenseCode', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('businessScope', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('county', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            break
-          case 2:
-            this.$refs[formName].validateField('managerAccount', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('managerPassword', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('appId', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            this.$refs[formName].validateField('appSecret', (valid) => {
-              bool = bool && valid.length <= 0
-            })
-            break
-          default:
-            break
+            }
+        },
+        created() {
+            this.loadApplet(this.$cookies.get('applet_id'))
+        },
+        mounted() {
+        },
+        methods: {
+            loadApplet(appletId) {
+                this.active = 0
+                if (appletId) {
+                    this.loading = true
+                    this.$axios({
+                        url: '/api/user/applet/queryAppletInfo',
+                        method: 'post',
+                        data: {id: appletId}
+                    }).then(res => {
+                        console.info('后台返回的数据', res.data)
+                        this.$cookies.remove('applet_id')
+                        this.regions = JSON.parse(res.data.data.regions)
+                        this.typeList = res.data.data.typeList
+                        if (res.data.code === '1') {
+                            this.appletForm = res.data.data.applet
+                            this.region = [this.appletForm.province, this.appletForm.city, this.appletForm.county]
+                            this.appletForm.ifRetail = this.appletForm.ifRetail ? '1' : '0'
+                            delete this.appletForm.userId
+                            delete this.appletForm.updateTime
+                            delete this.appletForm.ifSelling
+                            delete this.appletForm.lat
+                            delete this.appletForm.lon
+                            delete this.appletForm.status
+                            delete this.appletForm.appletCode
+                            delete this.appletForm.addressSimple
+                            delete this.appletForm.addressDetails
+                        }
+                        this.timestamp = '?' + Date.parse(new Date())
+                        this.$global.exitLoad(this, null, res.data)
+                    }).catch(error => {
+                        console.info('错误信息', error)
+                        this.$global.exitLoad(this, null, '')
+                    })
+                }
+            },
+            handleChange(res) {
+                this.appletForm.province = res[0]
+                this.appletForm.city = res[1]
+                this.appletForm.county = res[2]
+                this.$refs['appletForm'].validateField('county', (valid) => {
+                })
+            },
+            onSubmit(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        let loading = Loading.service({fullscreen: true, text: '加载中'})
+                        this.$axios({
+                            url: '/api/user/applet/saveAppletInfo',
+                            method: 'post',
+                            data: this.appletForm
+                        }).then(res => {
+                            console.info('后台返回的数据', res.data)
+                            let that = this
+                            res.data.code === '1' ? this.$message.success({
+                                message: res.data.data, duration: 1000, onClose: function () {
+                                    that.$emit('loadApplet')
+                                }
+                            }) : this.$message.error(res.data.data)
+                            this.$global.exitLoad(this, loading, res.data)
+                        }).catch(error => {
+                            console.info('错误信息', error)
+                            this.$global.exitLoad(this, loading, '')
+                        })
+                    }
+                })
+            },
+            next(formName) {
+                let bool = true
+                switch (this.active) {
+                    case 0:
+                        this.$refs[formName].validateField('appletLogo', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('appletName', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('appletSimple', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('telephone', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('typeId', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('ifRetail', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        break
+                    case 1:
+                        this.$refs[formName].validateField('licenseSrc', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('licenseCode', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('businessScope', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('county', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        break
+                    case 2:
+                        this.$refs[formName].validateField('managerAccount', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('managerPassword', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('appId', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        this.$refs[formName].validateField('appSecret', (valid) => {
+                            bool = bool && valid.length <= 0
+                        })
+                        break
+                    default:
+                        break
+                }
+                if (bool && this.active < 2) {
+                    this.active++
+                }
+            },
+            back(formName) {
+                switch (this.active) {
+                    case 1:
+                        this.$refs[formName].clearValidate("licenseSrc")
+                        this.$refs[formName].clearValidate("licenseCode")
+                        this.$refs[formName].clearValidate("businessScope")
+                        this.$refs[formName].clearValidate("telephone")
+                        this.$refs[formName].clearValidate("county")
+                        this.$refs[formName].clearValidate("typeId")
+                        break
+                    case 2:
+                        this.$refs[formName].clearValidate("managerAccount")
+                        this.$refs[formName].clearValidate("managerPassword")
+                        this.$refs[formName].clearValidate("appId")
+                        this.$refs[formName].clearValidate("appSecret")
+                        break
+                    default:
+                        break
+                }
+                if (this.active > 0) {
+                    this.active--
+                }
+            },
+            handleLogoSuccess(res, file) {
+                if (res.code === '1') {
+                    this.appletForm.appletLogo = res.data
+                    this.timestamp = '?' + Date.parse(new Date())
+                } else {
+                    this.$message.error(res.data)
+                }
+                let loading = Loading.service({fullscreen: true, text: '正在上传'})
+                this.$global.exitLoad(this, loading, res.data)
+                this.$refs['appletForm'].validateField('appletLogo', (valid) => {
+                })
+            },
+            handleLicenseSuccess(res, file) {
+                if (res.code === '1') {
+                    this.appletForm.licenseSrc = res.data
+                    this.timestamp = '?' + Date.parse(new Date())
+                } else {
+                    this.$message.error(res.data)
+                }
+                let loading = Loading.service({fullscreen: true, text: '正在上传'})
+                this.$global.exitLoad(this, loading, res.data)
+                this.$refs['appletForm'].validateField('licenseSrc', (valid) => {
+                })
+            },
+            beforePicUpload(file) {
+                let loading = Loading.service({fullscreen: true, text: '正在上传'})
+                const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
+                const isLt2M = file.size / 1024 / 1024 < 3
+                if (!isJPG) {
+                    this.$message.error('上传头像图片格式错误!')
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 3MB!')
+                }
+                if (!isJPG || !isLt2M) {
+                    loading.close()
+                }
+                return isJPG && isLt2M
+            },
+            updateType() {
+                this.appletForm.appletSimple += 'TEST_1'
+                this.appletForm.appletSimple = this.appletForm.appletSimple.replace('TEST_1', '')
+            }
         }
-        if (bool && this.active < 2) {
-          this.active++
-        }
-      },
-      back(formName) {
-        switch (this.active) {
-          case 1:
-            this.$refs[formName].clearValidate("licenseSrc")
-            this.$refs[formName].clearValidate("licenseCode")
-            this.$refs[formName].clearValidate("businessScope")
-            this.$refs[formName].clearValidate("telephone")
-            this.$refs[formName].clearValidate("county")
-            this.$refs[formName].clearValidate("typeId")
-            break
-          case 2:
-            this.$refs[formName].clearValidate("managerAccount")
-            this.$refs[formName].clearValidate("managerPassword")
-            this.$refs[formName].clearValidate("appId")
-            this.$refs[formName].clearValidate("appSecret")
-            break
-          default:
-            break
-        }
-        if (this.active > 0) {
-          this.active--
-        }
-      },
-      handleLogoSuccess(res, file) {
-        if (res.code === '1') {
-          this.appletForm.appletLogo = res.data
-          this.timestamp = '?' + Date.parse(new Date())
-        } else {
-          this.$message.error(res.data)
-        }
-        let loading = Loading.service({fullscreen: true, text: '正在上传'})
-        this.$global.exitLoad(this, loading, res.data)
-        this.$refs['appletForm'].validateField('appletLogo', (valid) => {
-        })
-      },
-      handleLicenseSuccess(res, file) {
-        if (res.code === '1') {
-          this.appletForm.licenseSrc = res.data
-          this.timestamp = '?' + Date.parse(new Date())
-        } else {
-          this.$message.error(res.data)
-        }
-        let loading = Loading.service({fullscreen: true, text: '正在上传'})
-        this.$global.exitLoad(this, loading, res.data)
-        this.$refs['appletForm'].validateField('licenseSrc', (valid) => {
-        })
-      },
-      beforePicUpload(file) {
-        let loading = Loading.service({fullscreen: true, text: '正在上传'})
-        const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-        const isLt2M = file.size / 1024 / 1024 < 3
-        if (!isJPG) {
-          this.$message.error('上传头像图片格式错误!')
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 3MB!')
-        }
-        if (!isJPG || !isLt2M) {
-          loading.close()
-        }
-        return isJPG && isLt2M
-      },
-      updateType(){
-        this.appletForm.appletSimple += 'TEST_1'
-        this.appletForm.appletSimple = this.appletForm.appletSimple.replace('TEST_1', '')
-      }
     }
-  }
 </script>
