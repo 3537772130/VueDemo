@@ -64,9 +64,9 @@
                       v-model="specsForm.specsText"></el-input>
           </el-form-item>
           <el-form-item label="出售价格" prop="sellPrice" v-if="showSellPrice">
-            <MumberInput ref="MumberInput" class="goods-specs-input" placeholder="请输入出售价格"
+            <NumberInput ref="NumberInput" class="goods-specs-input" placeholder="请输入出售价格"
                          v-model="sellPrice" :precision="2"
-                         @input="computePrice()" @blur="blurPrice()"></MumberInput>
+                         @input="computePrice()" @blur="blurPrice()"></NumberInput>
             <el-input v-model.number="specsForm.sellPrice" style="display: none;"></el-input>
           </el-form-item>
           <el-form-item label="商品折扣" prop="discount">
@@ -79,8 +79,8 @@
                       v-model="specsForm.discountDescribe"></el-input>
           </el-form-item>
           <el-form-item label="实际价格" prop="actualPrice">
-<!--            <MumberInput class="goods-specs-input" placeholder="请输入实际价格"-->
-<!--                         v-model="specsForm.actualPrice" :precision="2"></MumberInput>-->
+<!--            <NumberInput class="goods-specs-input" placeholder="请输入实际价格"-->
+<!--                         v-model="specsForm.actualPrice" :precision="2"></NumberInput>-->
             <div class="goods-specs-input" style="text-align: left;">
               <span style="width: 80px;display: inline-block;text-align: center; border-bottom: 1px #cdcdcd solid;">{{specsForm.actualPrice|addZero}}</span>
               <span style="color: #cdcdcd;"> = (出售价格&times;商品折扣&divide;100)</span>
@@ -103,12 +103,12 @@
 </template>
 <script type="text/javascript">
     import {Loading} from 'element-ui'
-    import MumberInput from '@/components/plugin/numberInput.vue'
+    import NumberInput from '@/components/plugin/number-input.vue'
 
     export default {
         name: 'goods-specs',
         components: {
-            'MumberInput': MumberInput
+            'NumberInput': NumberInput
         },
         data() {
             return {
@@ -236,11 +236,11 @@
             computePrice() {
               this.specsForm.sellPrice = this.sellPrice
               this.specsForm.actualPrice = this.specsForm.sellPrice * this.specsForm.discount / 100
-              this.$refs.MumberInput.init(this.specsForm.sellPrice);
+              this.$refs.NumberInput.init(this.specsForm.sellPrice);
             },
             blurPrice() {
                 this.specsForm.sellPrice = this.specsForm.sellPrice > 99999.99 ? 99999.99 : this.specsForm.sellPrice
-              this.$refs.MumberInput.init(this.specsForm.sellPrice);
+              this.$refs.NumberInput.init(this.specsForm.sellPrice);
             }
         }
     }
