@@ -1,16 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5b6101c0-e8bd-494c-a8b7-18c9f70b9f7c" name="Default Changelist" comment="更新项目图片存储地址">
-      <change afterPath="$PROJECT_DIR$/demo/static/images/icon/add.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/static/images/icon/shopping.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/static/images/icon/trumpet.png" afterDir="false" />
+    <list default="true" id="7ce7f56a-754c-4562-b697-15068936bd92" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/terminal.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vuedemo.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/demo/config/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/components/plugin/numberInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/components/plugin/number-input.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/views/goods/specs/goods-specs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/views/goods/specs/goods-specs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.babelrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.eslintignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.eslintrc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.postcssrc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/build/build.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/build/check-versions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/build/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/build/utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/build/vue-loader.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/build/webpack.base.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/build/webpack.dev.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/build/webpack.prod.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/config/dev.env.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/config/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/config/prod.env.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/config/test.env.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/assets/default-avatar.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/components/plugin/number-input.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/components/tool/global.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/router/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/applet/applet-apply-list.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/applet/applet-apply.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/applet/applet-details.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/applet/applet-list.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/common/header-menu.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/common/tabs-content.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/goods/file/goods-file-list.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/goods/goods-info-list.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/goods/goods-info.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/goods/specs/goods-specs-list.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/goods/specs/goods-specs.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/goods/type/goods-type-list.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/goods/type/goods-type.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/home/echarts.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/home/login.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/home/main-info.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/home/register.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/home/test.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/index.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/user/user-home.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/user/user-info.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/views/user/user-login-log.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/css/index-style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/background/force-potential.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/background/timg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/business/business-affairs-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/business/business-affairs-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/computer/computer-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/computer/computer-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/computer/computer-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/computer/computer-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/computer/computer-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/computer/computer-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/hometown/hometown-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/hometown/hometown-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/hometown/hometown-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/hometown/hometown-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/dusk/dusk-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/dusk/dusk-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/dusk/dusk-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/dusk/dusk-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/dusk/dusk-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/night/night-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/night/night-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/night/night-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/night/night-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/metropolis/night/night-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-15.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea-dusk/sea-dusk-9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea/sea-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea/sea-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea/sea-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/home/sea/sea-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/add.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/computer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/customer-service.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/editor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/handle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/long-range.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/mobile-phone.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/qq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/shopping.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/icon/trumpet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/images/user/default-avatar.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/js/echarts/china.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/static/js/echarts/coord-map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/test/e2e/custom-assertions/elementCount.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/test/e2e/nightwatch.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/test/e2e/runner.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/test/e2e/specs/test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/test/unit/.eslintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/test/unit/jest.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/test/unit/setup.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/test/unit/specs/HelloWorld.spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuedemo.iml" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,29 +137,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1PWNS3xv4rI30nkVYosH50AhTuL" />
+  <component name="ProjectId" id="1UPloIiGSxPK4MnnRjDQmVBXUvB" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/demo/static/images/icon" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2019.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\project\vuedemo\demo\static\images\icon" />
-      <recent name="D:\project\vuedemo\demo\src\components" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -57,76 +162,18 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="vue" type="js.build_tools.npm">
-      <package-json value="$PROJECT_DIR$/demo/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="dev" />
-      </scripts>
-      <node-interpreter value="node" />
-      <package-manager value="npm" />
-      <envs />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5b6101c0-e8bd-494c-a8b7-18c9f70b9f7c" name="Default Changelist" comment="" />
-      <created>1565882876747</created>
+      <changelist id="7ce7f56a-754c-4562-b697-15068936bd92" name="Default Changelist" comment="" />
+      <created>1575266284464</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1565882876747</updated>
-      <workItem from="1565882878107" duration="1046000" />
-      <workItem from="1565985892585" duration="21672000" />
-      <workItem from="1566148541641" duration="94000" />
-      <workItem from="1569083203857" duration="32720000" />
-      <workItem from="1569237385644" duration="753000" />
-      <workItem from="1569324731550" duration="99000" />
-      <workItem from="1569338573033" duration="262000" />
-      <workItem from="1569831179377" duration="4636000" />
-      <workItem from="1569850610214" duration="7201000" />
-      <workItem from="1570001984543" duration="2121000" />
-      <workItem from="1570030384020" duration="1138000" />
-      <workItem from="1570050088716" duration="900000" />
-      <workItem from="1570053914546" duration="1235000" />
-      <workItem from="1570109525333" duration="1365000" />
-      <workItem from="1570177790876" duration="667000" />
-      <workItem from="1570204231080" duration="381000" />
-      <workItem from="1570508811474" duration="1153000" />
-      <workItem from="1571206417902" duration="4204000" />
-      <workItem from="1571369005928" duration="66000" />
-      <workItem from="1571369094106" duration="43000" />
-      <workItem from="1571379755905" duration="1460000" />
-      <workItem from="1573554877745" duration="1140000" />
-      <workItem from="1574258576222" duration="1004000" />
-      <workItem from="1574261004228" duration="483000" />
+      <updated>1575266284464</updated>
+      <workItem from="1575266285821" duration="1873000" />
     </task>
-    <task id="LOCAL-00001" summary="更新">
-      <created>1566148604357</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1566148604357</updated>
-    </task>
-    <task id="LOCAL-00002" summary="商品列表">
-      <created>1569134618710</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1569134618710</updated>
-    </task>
-    <task id="LOCAL-00003" summary="更新项目图片存储地址">
-      <created>1570006489521</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1570006489522</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,34 +184,10 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="更新" />
-    <MESSAGE value="商品列表" />
-    <MESSAGE value="更新项目图片存储地址" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新项目图片存储地址" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
