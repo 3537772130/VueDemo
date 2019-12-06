@@ -16,6 +16,12 @@
   <el-container>
     <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding-top: 20px;">
       <el-form id="goods-type-form" :inline="true" :model="typeForm" class="demo-form-inline">
+        <el-form-item label="小程序">
+          <el-select v-model="typeForm.appletId" class="applet-list-input">
+            <el-option label="全部" value=''></el-option>
+            <el-option v-for="(item, index) in appletList" :key="index" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="类型名称">
           <el-input v-model="typeForm.typeName" placeholder="请输入类型名称" class="applet-list-input"></el-input>
         </el-form-item>
@@ -46,6 +52,7 @@
           </template>
         </el-table-column>
         <el-table-column align="center" prop="typeName" label="类型名称" width="180"></el-table-column>
+        <el-table-column align="center" prop="appletName" label="小程序名称" width="260"></el-table-column>
         <el-table-column align="center" prop="typeStatus" label="类型状态" width="80">
           <template slot-scope="scope">
             <el-link :underline="false" type="danger" v-if="scope.row.typeStatus == 0">禁用</el-link>
@@ -92,13 +99,15 @@
         components: {
             'goodsType': goodsType
         },
-        data() {
+        data () {
             return {
                 loading: true,
+                appletList: [],
                 tableHeight: 50,
                 currentPage: 1,
                 total: 0,
                 typeForm: {
+                    appletId: '',
                     typeName: '',
                     typeStatus: '',
                     page: 1,
@@ -109,17 +118,28 @@
                 timestamp: ''
             }
         },
-        created() {
-            this.onSubmit()
+        created () {
+            this.$axios({
+                url: '/api/user/goods/queryAppletToMap',
+                method: 'post'
+            }).then(res => {
+                if (res.data.code === '1') {
+                    this.appletList = res.data.data
+                    this.onSubmit()
+                }
+            }).catch(error => {
+                console.info('错误信息', error)
+                this.$global.exitLoad(this, null, '')
+            })
         },
-        mounted() {
+        mounted () {
         },
         methods: {
-            indexMethod(index) {
+            indexMethod (index) {
                 let count = (parseInt(this.typeForm.page) - 1) * parseInt(this.typeForm.pageSize)
                 return count + (parseInt(index) + 1)
             },
-            onSubmit() {
+            onSubmit () {
                 this.loading = true
                 this.$axios({
                     url: '/api/user/goods/queryTypePage',
@@ -131,7 +151,7 @@
                     if (res.data.code === '1') {
                         this.tableData = res.data.data.dataSource
                         this.total = res.data.data.totalCount
-                    } else if (res.data.code === "-1") {
+                    } else if (res.data.code === '-1') {
                         this.$message.error(res.data.data)
                     }
                     this.timestamp = '?' + Date.parse(new Date())
@@ -141,15 +161,15 @@
                     this.$global.exitLoad(this, null, '')
                 })
             },
-            selectList() {
+            selectList () {
                 this.typeForm.page = 1
                 this.onSubmit()
             },
-            handleCurrentChange(val) {
+            handleCurrentChange (val) {
                 this.typeForm.page = val
                 this.onSubmit()
             },
-            loadGoodsType(id) {
+            loadGoodsType (id) {
                 this.showInfo = true
                 if (id && id === '0') {
                     this.infoTitle = '添加类型信息'
@@ -159,11 +179,11 @@
                 this.$cookies.set('goods_type_id', id)
                 this.$refs.goodsType.loadGoodsType(id)
             },
-            refreshList() {
+            refreshList () {
                 this.showInfo = false
                 this.onSubmit()
             },
-            shiftSort(id, sort) {
+            shiftSort (id, sort) {
                 this.loading = true
                 this.$axios({
                     url: '/api/user/goods/updateGoodsTypeIndex',
@@ -172,7 +192,7 @@
                 }).then(res => {
                     if (res.data.code === '1') {
                         this.onSubmit()
-                    } else if (res.data.code === "-1") {
+                    } else if (res.data.code === '-1') {
                         this.$message.error(res.data.data)
                         this.$global.exitLoad(this, null, res.data)
                     }

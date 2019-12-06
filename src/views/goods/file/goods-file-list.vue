@@ -94,7 +94,7 @@
 
     export default {
         name: 'goods-file-list',
-        data() {
+        data () {
             return {
                 loading: false,
                 fileList: [],
@@ -104,14 +104,14 @@
                 }
             }
         },
-        created() {
+        created () {
             let goodsId = this.$cookies.get('goods_id')
             this.loadGoodsFile(goodsId)
         },
-        mounted() {
+        mounted () {
         },
         methods: {
-            loadGoodsFile(id) {
+            loadGoodsFile (id) {
                 if (id) {
                     this.loading = true
                     this.$axios({
@@ -131,7 +131,7 @@
                     })
                 }
             },
-            handleFileSuccess(res, file) {
+            handleFileSuccess (res, file) {
                 if (res.code === '1') {
                     for (let i = 0; i < this.fileList.length; i++) {
                         if (this.fileList[i].id === res.data.id) {
@@ -148,37 +148,37 @@
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 this.$global.exitLoad(this, loading, res.data)
             },
-            beforeImageUpload(file) {
+            beforeImageUpload (file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-                const isLt2M = file.size / 1024 / 1024 < 3
+                const isLt2M = file.size / 1024 / 1024 < 5
                 if (!isJPG) {
-                    this.$message.error('上传头像图片格式错误!')
+                    this.$message.error('上传图片格式错误!')
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 3MB!')
+                    this.$message.error('上传图片大小不能超过 5MB!')
                 }
                 if (!isJPG || !isLt2M) {
                     loading.close()
                 }
                 return isJPG && isLt2M
             },
-            beforeVideoUpload(file) {
+            beforeVideoUpload (file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-                const isLt2M = file.size / 1024 / 1024 < 3
+                const isLt2M = file.size / 1024 / 1024 < 10
                 if (!isJPG) {
-                    this.$message.error('上传头像图片格式错误!')
+                    this.$message.error('上传视频格式错误!')
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 3MB!')
+                    this.$message.error('上传视频大小不能超过 10MB!')
                 }
                 if (!isJPG || !isLt2M) {
                     loading.close()
                 }
                 return isJPG && isLt2M
             },
-            deleteGoodsFile(index) {
+            deleteGoodsFile (index) {
                 let file = this.fileList[(index - 1)]
                 if (file.fileStatus) {
                     let loading = Loading.service({fullscreen: true, text: '正在删除'})

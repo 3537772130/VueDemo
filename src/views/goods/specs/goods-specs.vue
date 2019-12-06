@@ -73,14 +73,14 @@
             <el-input class="goods-specs-input" placeholder="请输入商品折扣"
                       v-model.number="specsForm.discount" @input="computePrice()"></el-input>
           </el-form-item>
-          <el-form-item label="折扣描述" prop="discountDescribe">
+          <el-form-item label="描述" prop="discountDescribe">
             <el-input type="textarea" :show-word-limit="true" maxlength="220" resize="none" rows="5"
-                      class="goods-specs-input" placeholder="请输入折扣描述"
+                      class="goods-specs-input" placeholder="请输入描述"
                       v-model="specsForm.discountDescribe"></el-input>
           </el-form-item>
           <el-form-item label="实际价格" prop="actualPrice">
-<!--            <NumberInput class="goods-specs-input" placeholder="请输入实际价格"-->
-<!--                         v-model="specsForm.actualPrice" :precision="2"></NumberInput>-->
+            <!--            <NumberInput class="goods-specs-input" placeholder="请输入实际价格"-->
+            <!--                         v-model="specsForm.actualPrice" :precision="2"></NumberInput>-->
             <div class="goods-specs-input" style="text-align: left;">
               <span style="width: 80px;display: inline-block;text-align: center; border-bottom: 1px #cdcdcd solid;">{{specsForm.actualPrice|addZero}}</span>
               <span style="color: #cdcdcd;"> = (出售价格&times;商品折扣&divide;100)</span>
@@ -110,11 +110,11 @@
         components: {
             'NumberInput': NumberInput
         },
-        data() {
+        data () {
             return {
                 loading: false,
                 showSellPrice: false,
-              sellPrice: 0,
+                sellPrice: 0,
                 specsForm: {
                     specsSrc: '',
                     specsText: '',
@@ -146,16 +146,16 @@
                 }
             }
         },
-        created() {
+        created () {
             let specsId = this.$cookies.get('specs_id')
             let goodsId = this.$cookies.get('goods_id')
             this.loadGoodsSpecs(specsId, goodsId)
         },
-        mounted() {
+        mounted () {
 
         },
         methods: {
-            loadGoodsSpecs(specsId, goodsId) {
+            loadGoodsSpecs (specsId, goodsId) {
                 if (specsId) {
                     this.loading = true
                     this.specsForm.goodsId = goodsId
@@ -166,7 +166,7 @@
                     }).then(res => {
                         if (res.data.code === '1') {
                             this.specsForm = res.data.data
-                          this.sellPrice = this.specsForm.sellPrice
+                            this.sellPrice = this.specsForm.sellPrice
                             this.specsForm.specsStatus = this.specsForm.specsStatus ? '1' : '0'
                             delete this.specsForm.userId
                             delete this.specsForm.typeIndex
@@ -177,14 +177,14 @@
                         this.timestamp = '?' + Date.parse(new Date())
                         this.$global.exitLoad(this, null, res.data)
                         this.showSellPrice = true
-                        this.$cookies.set("goods_price", this.specsForm.sellPrice)
+                        this.$cookies.set('goods_price', this.specsForm.sellPrice)
                     }).catch(error => {
                         console.info('错误信息', error)
                         this.$global.exitLoad(this, null, '')
                     })
                 }
             },
-            onSubmit() {
+            onSubmit () {
                 this.$refs['specsForm'].validate((valid) => {
                     if (valid) {
                         let loading = Loading.service({fullscreen: true, text: '加载中'})
@@ -208,39 +208,39 @@
                     }
                 })
             },
-            handleSpecsSrcSuccess(res, file) {
+            handleSpecsSrcSuccess (res, file) {
                 if (res.code === '1') {
                     this.specsForm.specsSrc = res.data
-                  this.$message.success('上传成功，等待提交')
+                    this.$message.success('上传成功，等待提交')
                 } else {
                     this.$message.error(res.data)
                 }
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 this.$global.exitLoad(this, loading, res.data)
             },
-            beforePicUpload(file) {
+            beforePicUpload (file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-                const isLt2M = file.size / 1024 / 1024 < 3
+                const isLt2M = file.size / 1024 / 1024 < 5
                 if (!isJPG) {
-                    this.$message.error('上传头像图片格式错误!')
+                    this.$message.error('上传图片格式错误!')
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 3MB!')
+                    this.$message.error('上传图片大小不能超过 5MB!')
                 }
                 if (!isJPG || !isLt2M) {
                     loading.close()
                 }
                 return isJPG && isLt2M
             },
-            computePrice() {
-              this.specsForm.sellPrice = this.sellPrice
-              this.specsForm.actualPrice = this.specsForm.sellPrice * this.specsForm.discount / 100
-              this.$refs.NumberInput.init(this.specsForm.sellPrice);
+            computePrice () {
+                this.specsForm.sellPrice = this.sellPrice
+                this.specsForm.actualPrice = this.specsForm.sellPrice * this.specsForm.discount / 100
+                this.$refs.NumberInput.init(this.specsForm.sellPrice)
             },
-            blurPrice() {
+            blurPrice () {
                 this.specsForm.sellPrice = this.specsForm.sellPrice > 99999.99 ? 99999.99 : this.specsForm.sellPrice
-              this.$refs.NumberInput.init(this.specsForm.sellPrice);
+                this.$refs.NumberInput.init(this.specsForm.sellPrice)
             }
         }
     }

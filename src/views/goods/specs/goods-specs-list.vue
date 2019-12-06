@@ -57,7 +57,7 @@
           </template>
         </el-table-column>
         <el-table-column align="center" prop="discount" label="商品折扣" width="80"></el-table-column>
-        <el-table-column align="center" prop="discountDescribe" label="折扣描述" :show-overflow-tooltip="true" width="120"></el-table-column>
+        <el-table-column align="center" prop="discountDescribe" label="描述" :show-overflow-tooltip="true" width="120"></el-table-column>
         <el-table-column align="center" prop="specsStatus" label="类型状态" width="80">
           <template slot-scope="scope">
             <el-link :underline="false" type="danger" v-if="scope.row.specsStatus == 0">禁用</el-link>

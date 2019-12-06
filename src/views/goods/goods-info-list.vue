@@ -31,13 +31,26 @@
     padding: 0px 20px;
   }
 
+  .no-drop:hover {
+    cursor: no-drop;
+  }
+
 </style>
 <template>
   <el-container>
     <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding-top: 20px;">
       <el-form id="goods-list-form" :inline="true" :model="goods" class="demo-form-inline">
+        <el-form-item label="小程序">
+          <el-select v-if="appletList.length > 0" v-model="appletId" class="applet-list-input" @change="loadInfo">
+            <el-option v-for="(item, index) in appletList" :key="index" :label="item.name"
+                       :value="item.id"></el-option>
+          </el-select>
+          <el-select v-else v-model="appletId" class="applet-list-input">
+            <el-option label="全部" value=''></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="商品名称">
-          <el-input v-model="goods.name" placeholder="请输入商品名称" class="applet-list-input"></el-input>
+          <el-input v-model="goods.goodsName" placeholder="请输入商品名称" class="applet-list-input"></el-input>
         </el-form-item>
         <el-form-item label="商品状态">
           <el-select v-model="goods.goodsStatus" class="applet-list-input">
@@ -100,16 +113,17 @@
         </el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="warning" plain @click="loadGoodsInfo(scope.row.id)">修改</el-button>
-            <el-button type="warning" plain
+            <el-button type="primary" plain
                        @click="updateStatus(scope.row.id, scope.row.goodsName, scope.row.goodsStatus)"
                        v-if="scope.row.goodsStatus">下架
             </el-button>
             <el-button type="primary" plain
                        @click="updateStatus(scope.row.id, scope.row.goodsName, scope.row.goodsStatus)"
-                       v-if="!scope.row.goodsStatus">发布
+                       v-else>发布
             </el-button>
-            <el-button type="primary" plain @click="loadGoodsFile(scope.row.id, scope.row.goodsName)">文件</el-button>
+            <el-button type="primary" plain @click="loadGoodsInfo(scope.row.id)">修改</el-button>
+            <el-button type="primary" plain @click="loadGoodsFile(scope.row.id, scope.row.goodsName)">文件
+            </el-button>
             <el-button type="primary" plain @click="loadGoodsSpecs(scope.row.id, scope.row.goodsName)">规格</el-button>
           </template>
         </el-table-column>
@@ -150,14 +164,16 @@
             'goodsFileList': goodsFileList,
             'goodsSpecsList': goodsSpecsList
         },
-        data() {
+        data () {
             return {
                 loading: true,
                 tableHeight: 50,
+                appletId: '',
+                appletList: [],
                 currentPage: 1,
                 total: 0,
                 goods: {
-                    name: '',
+                    goodsName: '',
                     typeId: '',
                     goodsStatus: '',
                     page: 1,
@@ -174,18 +190,30 @@
                 activeName: ''
             }
         },
-        created() {
-            this.loadInfo()
+        created () {
+            this.$axios({
+                url: '/api/user/goods/queryAppletToMap',
+                method: 'post'
+            }).then(res => {
+                if (res.data.code === '1') {
+                    this.appletList = res.data.data
+                    this.appletId = this.appletList[0].id
+                    this.loadInfo()
+                }
+            }).catch(error => {
+                console.info('错误信息', error)
+                this.$global.exitLoad(this, null, '')
+            })
         },
-        mounted() {
+        mounted () {
         },
         methods: {
-            loadInfo() {
+            loadInfo () {
                 this.loading = true
                 this.$axios({
                     url: '/api/user/goods/queryTypeList',
                     method: 'post',
-                    data: this.goods
+                    data: {appletId: this.appletId}
                 }).then(res => {
                     if (res.data.code === '1') {
                         this.typeList = res.data.data
@@ -198,11 +226,11 @@
                     this.$global.exitLoad(this, null, '')
                 })
             },
-            indexMethod(index) {
+            indexMethod (index) {
                 let count = (parseInt(this.goods.page) - 1) * parseInt(this.goods.pageSize)
                 return count + (parseInt(index) + 1)
             },
-            onSubmit() {
+            onSubmit () {
                 this.loading = true
                 this.tableData = {}
                 this.$axios({
@@ -215,7 +243,7 @@
                     if (res.data.code === '1') {
                         this.tableData = res.data.data.dataSource
                         this.total = res.data.data.totalCount
-                    } else if (res.data.code === "-1") {
+                    } else if (res.data.code === '-1') {
                         this.$message.error(res.data.data)
                     }
                     this.timestamp = '?' + Date.parse(new Date())
@@ -225,19 +253,19 @@
                     this.$global.exitLoad(this, null, '')
                 })
             },
-            selectList() {
+            selectList () {
                 this.goods.page = 1
                 this.onSubmit()
             },
-            handleClick(tab, event) {
+            handleClick (tab, event) {
                 this.goods.typeId = tab.name.replace('name_', '')
                 this.onSubmit()
             },
-            handleCurrentChange(val) {
+            handleCurrentChange (val) {
                 this.goods.page = val
                 this.onSubmit()
             },
-            loadGoodsInfo(id) {
+            loadGoodsInfo (id) {
                 this.showInfo = true
                 if (id && id === '0') {
                     this.infoTitle = '添加商品信息'
@@ -248,24 +276,24 @@
                 this.$cookies.set('goods_type_id', this.goods.typeId)
                 this.$refs.goodsInfo.loadGoodsInfo(id, this.goods.typeId)
             },
-            loadGoodsFile(id, name) {
+            loadGoodsFile (id, name) {
                 this.showFile = true
                 this.fileTitle = name + ' - 文件列表'
                 this.$cookies.set('goods_id', id)
                 this.$refs.goodsFileList.loadGoodsFile(id)
             },
-            loadGoodsSpecs(id, name) {
+            loadGoodsSpecs (id, name) {
                 this.showSpecs = true
                 this.specsTitle = name + ' - 规格列表'
                 this.$cookies.set('goods_id', id)
-                this.$cookies.set("goods_name", name)
+                this.$cookies.set('goods_name', name)
                 this.$refs.goodsSpecsList.loadGoodsPage(id)
             },
-            refreshList() {
+            refreshList () {
                 this.showInfo = false
                 this.onSubmit()
             },
-            shiftSort(id, sort) {
+            shiftSort (id, sort) {
                 this.loading = true
                 this.$axios({
                     url: '/api/user/goods/updateGoodsIndex',
@@ -274,7 +302,7 @@
                 }).then(res => {
                     if (res.data.code === '1') {
                         this.onSubmit()
-                    } else if (res.data.code === "-1") {
+                    } else if (res.data.code === '-1') {
                         this.$message.error(res.data.data)
                         this.$global.exitLoad(this, null, res.data)
                     }
@@ -283,7 +311,7 @@
                     this.$global.exitLoad(this, null, '')
                 })
             },
-            updateStatus(id, name, status) {
+            updateStatus (id, name, status) {
                 let text = ''
                 if (status) {
                     text = '下架'

@@ -83,7 +83,7 @@
 
     export default {
         name: 'applet-info',
-        data() {
+        data () {
             return {
                 loading: false,
                 typeList: [],
@@ -111,15 +111,15 @@
                 }
             }
         },
-        created() {
+        created () {
             let goodsId = this.$cookies.get('goods_id')
             let typeId = this.$cookies.get('goods_type_id')
             this.loadGoodsInfo(goodsId, typeId)
         },
-        mounted() {
+        mounted () {
         },
         methods: {
-            loadGoodsInfo(goodsId, typeId) {
+            loadGoodsInfo (goodsId, typeId) {
                 if (goodsId) {
                     this.loading = true
                     this.$axios({
@@ -147,7 +147,7 @@
                     })
                 }
             },
-            onSubmit() {
+            onSubmit () {
                 this.$refs['goods'].validate((valid) => {
                     if (valid) {
                         let loading = Loading.service({fullscreen: true, text: '加载中'})
@@ -171,7 +171,7 @@
                     }
                 })
             },
-            handleLogoSuccess(res, file) {
+            handleLogoSuccess (res, file) {
                 if (res.code === '1') {
                     this.goods.coverSrc = res.data
                     this.$message.success('上传成功，等待提交')
@@ -181,15 +181,15 @@
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 this.$global.exitLoad(this, loading, res.data)
             },
-            beforePicUpload(file) {
+            beforePicUpload (file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-                const isLt2M = file.size / 1024 / 1024 < 3
+                const isLt2M = file.size / 1024 / 1024 < 5
                 if (!isJPG) {
-                    this.$message.error('上传头像图片格式错误!')
+                    this.$message.error('上传商品图片格式错误!')
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 3MB!')
+                    this.$message.error('上传商品图片大小不能超过 5MB!')
                 }
                 if (!isJPG || !isLt2M) {
                     loading.close()

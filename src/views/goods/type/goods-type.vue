@@ -63,7 +63,7 @@
             <el-input class="goods-type-input" placeholder="请输入类型名称"
                       v-model="typeForm.typeName"></el-input>
           </el-form-item>
-          <el-form-item label="营业状态" prop="typeStatus">
+          <el-form-item label="类型状态" prop="typeStatus">
             <el-select class="goods-type-input" v-model="typeForm.typeStatus">
               <el-option label="正常" value='1'></el-option>
               <el-option label="禁用" value='0'></el-option>
@@ -171,12 +171,12 @@
             beforePicUpload(file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-                const isLt2M = file.size / 1024 / 1024 < 3
+                const isLt2M = file.size / 1024 / 1024 < 2
                 if (!isJPG) {
-                    this.$message.error('上传头像图片格式错误!')
+                    this.$message.error('上传图标格式错误!')
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 3MB!')
+                    this.$message.error('上传图标大小不能超过 2MB!')
                 }
                 if (!isJPG || !isLt2M) {
                     loading.close()

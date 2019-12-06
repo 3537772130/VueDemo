@@ -152,7 +152,7 @@
 
     export default {
         name: 'applet-info',
-        data() {
+        data () {
             return {
                 loading: false,
                 active: 0,
@@ -237,13 +237,13 @@
                 }
             }
         },
-        created() {
+        created () {
             this.loadApplet(this.$cookies.get('applet_id'))
         },
-        mounted() {
+        mounted () {
         },
         methods: {
-            loadApplet(appletId) {
+            loadApplet (appletId) {
                 this.active = 0
                 if (appletId) {
                     this.loading = true
@@ -278,14 +278,14 @@
                     })
                 }
             },
-            handleChange(res) {
+            handleChange (res) {
                 this.appletForm.province = res[0]
                 this.appletForm.city = res[1]
                 this.appletForm.county = res[2]
                 this.$refs['appletForm'].validateField('county', (valid) => {
                 })
             },
-            onSubmit(formName) {
+            onSubmit (formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         let loading = Loading.service({fullscreen: true, text: '加载中'})
@@ -309,7 +309,7 @@
                     }
                 })
             },
-            next(formName) {
+            next (formName) {
                 let bool = true
                 switch (this.active) {
                     case 0:
@@ -367,21 +367,21 @@
                     this.active++
                 }
             },
-            back(formName) {
+            back (formName) {
                 switch (this.active) {
                     case 1:
-                        this.$refs[formName].clearValidate("licenseSrc")
-                        this.$refs[formName].clearValidate("licenseCode")
-                        this.$refs[formName].clearValidate("businessScope")
-                        this.$refs[formName].clearValidate("telephone")
-                        this.$refs[formName].clearValidate("county")
-                        this.$refs[formName].clearValidate("typeId")
+                        this.$refs[formName].clearValidate('licenseSrc')
+                        this.$refs[formName].clearValidate('licenseCode')
+                        this.$refs[formName].clearValidate('businessScope')
+                        this.$refs[formName].clearValidate('telephone')
+                        this.$refs[formName].clearValidate('county')
+                        this.$refs[formName].clearValidate('typeId')
                         break
                     case 2:
-                        this.$refs[formName].clearValidate("managerAccount")
-                        this.$refs[formName].clearValidate("managerPassword")
-                        this.$refs[formName].clearValidate("appId")
-                        this.$refs[formName].clearValidate("appSecret")
+                        this.$refs[formName].clearValidate('managerAccount')
+                        this.$refs[formName].clearValidate('managerPassword')
+                        this.$refs[formName].clearValidate('appId')
+                        this.$refs[formName].clearValidate('appSecret')
                         break
                     default:
                         break
@@ -390,7 +390,7 @@
                     this.active--
                 }
             },
-            handleLogoSuccess(res, file) {
+            handleLogoSuccess (res, file) {
                 if (res.code === '1') {
                     this.appletForm.appletLogo = res.data
                     this.timestamp = '?' + Date.parse(new Date())
@@ -402,7 +402,7 @@
                 this.$refs['appletForm'].validateField('appletLogo', (valid) => {
                 })
             },
-            handleLicenseSuccess(res, file) {
+            handleLicenseSuccess (res, file) {
                 if (res.code === '1') {
                     this.appletForm.licenseSrc = res.data
                     this.timestamp = '?' + Date.parse(new Date())
@@ -414,22 +414,22 @@
                 this.$refs['appletForm'].validateField('licenseSrc', (valid) => {
                 })
             },
-            beforePicUpload(file) {
+            beforePicUpload (file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-                const isLt2M = file.size / 1024 / 1024 < 3
+                const isLt2M = file.size / 1024 / 1024 < 5
                 if (!isJPG) {
-                    this.$message.error('上传头像图片格式错误!')
+                    this.$message.error('上传图片格式错误!')
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 3MB!')
+                    this.$message.error('上传图片大小不能超过 5MB!')
                 }
                 if (!isJPG || !isLt2M) {
                     loading.close()
                 }
                 return isJPG && isLt2M
             },
-            updateType() {
+            updateType () {
                 this.appletForm.appletSimple += 'TEST_1'
                 this.appletForm.appletSimple = this.appletForm.appletSimple.replace('TEST_1', '')
             }
