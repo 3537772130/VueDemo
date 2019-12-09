@@ -1,5 +1,5 @@
 <style type="text/css">
-  .applet-list-input{
+  .applet-list-input {
     width: 190px;
   }
 
@@ -49,7 +49,7 @@
         <el-table-column align="center" prop="appletSimple" label="小程序简称" width="160"></el-table-column>
         <el-table-column align="center" prop="typeName" label="服务类型" width="120"></el-table-column>
         <el-table-column align="center" prop="telephone" label="联系电话" width="120"></el-table-column>
-        <el-table-column align="center" prop="province" label="所属地域" width="180" >
+        <el-table-column align="center" prop="province" label="所属地域" width="180">
           <template slot-scope="scope">
             <span>{{scope.row.province + scope.row.city + scope.row.county}}</span>
           </template>
@@ -69,7 +69,11 @@
         </el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="warning" v-if="scope.row.status == 1" plain @click="loadAppletDetails(scope.row.id)">详情</el-button>
+            <el-button type="warning" v-if="scope.row.status == 1" plain @click="loadAppletDetails(scope.row.id)">详情
+            </el-button>
+            <el-button type="warning" v-if="scope.row.status == 1" plain
+                       @click="editAppletPage(scope.row.id, scope.row.appletName)">编辑页面
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -90,84 +94,98 @@
   </el-container>
 </template>
 <script type="text/javascript">
-  import appletDetails from '@/views/applet/applet-details.vue'
+    import appletDetails from '@/views/applet/applet-details.vue'
 
-  export default {
-    name: 'applet-list',
-    components: {
-      'appletDetails': appletDetails
-    },
-    data() {
-      return {
-        loading: true,
-        tableHeight: 50,
-        currentPage: 1,
-        total: 0,
-        formInline: {
-          appletName: '',
-          status: '',
-          page: 1,
-          pageSize: 5
+    export default {
+        name: 'applet-list',
+        components: {
+            'appletDetails': appletDetails
         },
-        dialogTitle: '提交小程序信息',
-        showInfo: false,
-        timestamp: ''
-      }
-    },
-    created() {
-      this.onSubmit()
-    },
-    mounted() {
-    },
-    methods: {
-      indexMethod(index) {
-        let count = (parseInt(this.formInline.page) - 1) * parseInt(this.formInline.pageSize)
-        return count + (parseInt(index) + 1)
-      },
-      onSubmit() {
-        this.loading = true
-        this.$axios({
-          url: '/api/user/applet/queryAppletToPage',
-          method: 'post',
-          data: this.formInline
-        }).then(res => {
-          console.info('后台返回的数据', res.data)
-          this.$global.setTableHeight(this, 'applet-form')
-          if (res.data.code === '1') {
-            this.tableData = res.data.data.dataSource
-            this.total = res.data.data.totalCount
-          } else if (res.data.code === "-1") {
-            this.$message.error(res.data.data)
-          }
-          this.timestamp = '?' + Date.parse(new Date())
-          this.$global.exitLoad(this, null, res.data)
-        }).catch(error => {
-          console.info('错误信息', error)
-          this.$global.exitLoad(this, null, '')
-        })
-      },
-      selectList() {
-        this.formInline.page = 1
-        this.onSubmit()
-      },
-      handleCurrentChange(val) {
-        this.formInline.page = val
-        this.onSubmit()
-      },
-      loadAppletDetails(id) {
-        this.showInfo = true
-        if (id && id === '0') {
-          this.dialogTitle = '提交小程序信息'
-        } else {
-          this.dialogTitle = '修改小程序信息'
+        data () {
+            return {
+                loading: true,
+                tableHeight: 50,
+                currentPage: 1,
+                total: 0,
+                formInline: {
+                    appletName: '',
+                    status: '',
+                    page: 1,
+                    pageSize: 5
+                },
+                dialogTitle: '提交小程序信息',
+                showInfo: false,
+                timestamp: ''
+            }
+        },
+        created () {
+            this.onSubmit()
+        },
+        mounted () {
+        },
+        methods: {
+            indexMethod (index) {
+                let count = (parseInt(this.formInline.page) - 1) * parseInt(this.formInline.pageSize)
+                return count + (parseInt(index) + 1)
+            },
+            onSubmit () {
+                this.loading = true
+                this.$axios({
+                    url: '/api/user/applet/queryAppletToPage',
+                    method: 'post',
+                    data: this.formInline
+                }).then(res => {
+                    console.info('后台返回的数据', res.data)
+                    this.$global.setTableHeight(this, 'applet-form')
+                    if (res.data.code === '1') {
+                        this.tableData = res.data.data.dataSource
+                        this.total = res.data.data.totalCount
+                    } else if (res.data.code === '-1') {
+                        this.$message.error(res.data.data)
+                    }
+                    this.timestamp = '?' + Date.parse(new Date())
+                    this.$global.exitLoad(this, null, res.data)
+                }).catch(error => {
+                    console.info('错误信息', error)
+                    this.$global.exitLoad(this, null, '')
+                })
+            },
+            selectList () {
+                this.formInline.page = 1
+                this.onSubmit()
+            },
+            handleCurrentChange (val) {
+                this.formInline.page = val
+                this.onSubmit()
+            },
+            loadAppletDetails (id) {
+                this.showInfo = true
+                if (id && id === '0') {
+                    this.dialogTitle = '提交小程序信息'
+                } else {
+                    this.dialogTitle = '修改小程序信息'
+                }
+                this.$cookies.set('applet_id', id)
+                this.$refs.appletDetails.loadApplet(id)
+            },
+            editAppletPage (appletId, appletName) {
+                this.$cookies.set('default_applet_id', appletId)
+                this.$cookies.set('default_applet_name', appletName)
+                const {href} = this.$router.resolve({
+                    name: 'page-default'
+                })
+                try {
+                    if (!this.newWin.closed) {
+                        this.newWin.close()
+                    }
+                } catch (e) {
+                }
+                this.newWin = window.open(href, '_blank')
+            },
+            loadApplet () {
+                this.showInfo = false
+                this.selectList()
+            }
         }
-        this.$cookies.set('applet_id', id)
-        this.$refs.appletDetails.loadApplet(id)
-      },
-      loadApplet() {
-        this.showInfo = false
-        this.selectList()
-      }
     }
-  }
 </script>

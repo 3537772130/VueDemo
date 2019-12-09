@@ -9,7 +9,8 @@ import echarts from 'echarts'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import VueJsDialog from 'vuejs-dialog'
-import global_ from '@/components/tool/global'
+import Global from '@/components/tool/global'
+import PagePart from '@/components/tool/page-part'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'lib-flexible'
 
@@ -22,7 +23,8 @@ Vue.filter('addZero',function(value){
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
-Vue.prototype.$global = global_
+Vue.prototype.$global = Global
+Vue.prototype.$part = PagePart
 
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {

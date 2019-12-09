@@ -6,6 +6,7 @@ import Main from '@/views/home/main-info'
 import Register from '@/views/home/register'
 import Test from '@/views/home/test'
 import Echarts from '@/views/home/echarts'
+import PageDefault from '@/views/applet/page/page-default.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/echarts',
       name: 'echarts',
       component: Echarts
+    },
+    {
+      path: '/page-default',
+      name: 'page-default',
+      component: PageDefault
     }
   ]
 })
