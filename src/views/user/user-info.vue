@@ -292,7 +292,7 @@
             },
             beforeAvatarUpload(file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
-                const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
+                const isJPG = 'image/png,image/jpeg,image/jpg'.indexOf(file.type) >= 0
                 const isLt2M = file.size / 1024 / 1024 < 3
                 if (!isJPG) {
                     this.$message.error('上传头像图片格式错误!')

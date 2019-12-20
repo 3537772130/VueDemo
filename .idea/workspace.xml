@@ -2,23 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7ce7f56a-754c-4562-b697-15068936bd92" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/tool/page-part.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/applet/page/fruit/fruit-main.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/applet/page/page-default.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/applet/page/restaurant/restaurant-main.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/applet/page/store/store-choose.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/applet/page/store/store-main-part.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/applet/page/store/store-main.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/css/page/default.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/css/page/store/store-main-part.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/css/page/store/store-main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/timg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/icon/select-1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tool/global.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tool/global.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/applet/applet-apply.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/applet/applet-apply.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/applet/applet-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/applet/applet-list.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/applet/page/page-default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/applet/page/page-default.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/applet/page/store/store-main-part.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/applet/page/store/store-main-part.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/applet/page/store/store-main.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/applet/page/store/store-main.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/goods/file/goods-file-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/goods/file/goods-file-list.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/goods/goods-info-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/goods/goods-info-list.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/goods/goods-info.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/goods/goods-info.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/goods/specs/goods-specs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/goods/specs/goods-specs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/user-info.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/user-info.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/page/store/store-main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/page/store/store-main.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +32,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/images/icon" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -45,11 +43,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\zhouhuahu\project\applet_user\static\images\icon" />
       <recent name="C:\zhouhuahu\project\applet_user\static\images" />
       <recent name="C:\zhouhuahu\project\applet_user\src\components\tool" />
       <recent name="C:\zhouhuahu\project\applet_user\src\views\applet\page\store" />
       <recent name="C:\zhouhuahu\project\applet_user\static\css\page" />
-      <recent name="C:\zhouhuahu\project\applet_user\src\views\applet\page" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -79,7 +77,10 @@
       <workItem from="1575368172449" duration="612000" />
       <workItem from="1575388290427" duration="8008000" />
       <workItem from="1575601974960" duration="6478000" />
-      <workItem from="1575618903074" duration="14751000" />
+      <workItem from="1575618903074" duration="14952000" />
+      <workItem from="1575949409041" duration="8343000" />
+      <workItem from="1576117720247" duration="16000" />
+      <workItem from="1576828390469" duration="5159000" />
     </task>
     <task id="LOCAL-00001" summary="更新目录">
       <created>1575278314451</created>
@@ -95,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575616530796</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="小程序页面编辑">
+      <created>1575888457552</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1575888457552</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,6 +125,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="更新目录" />
     <MESSAGE value="更新商品信息页面" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新商品信息页面" />
+    <MESSAGE value="小程序页面编辑" />
+    <option name="LAST_COMMIT_MESSAGE" value="小程序页面编辑" />
   </component>
 </project>

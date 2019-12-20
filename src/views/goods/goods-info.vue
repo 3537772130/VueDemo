@@ -183,13 +183,13 @@
             },
             beforePicUpload (file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
-                const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
-                const isLt2M = file.size / 1024 / 1024 < 5
+                const isJPG = 'image/png,image/jpeg,image/jpg'.indexOf(file.type) >= 0
+                const isLt2M = file.size / 1024 / 1024 < 3
                 if (!isJPG) {
                     this.$message.error('上传商品图片格式错误!')
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传商品图片大小不能超过 5MB!')
+                    this.$message.error('上传商品图片大小不能超过 3MB!')
                 }
                 if (!isJPG || !isLt2M) {
                     loading.close()

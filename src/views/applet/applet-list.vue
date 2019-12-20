@@ -60,7 +60,13 @@
             <span v-if="!scope.row.ifRetail">零售</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="updateTime" label="更新日期" width="120"></el-table-column>
+        <el-table-column align="center" prop="updateTime" label="更新日期" width="140"></el-table-column>
+        <el-table-column align="center" prop="ifSelling" label="营业状态" width="80">
+          <template slot-scope="scope">
+            <el-link :underline="false" type="danger" v-if="!scope.row.ifSelling">整顿中</el-link>
+            <el-link :underline="false" type="success" v-if="scope.row.ifSelling">已发布</el-link>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="status" label="状态" width="80">
           <template slot-scope="scope">
             <el-link :underline="false" type="danger" v-if="scope.row.status == -1">禁用</el-link>
@@ -69,9 +75,16 @@
         </el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="warning" v-if="scope.row.status == 1" plain @click="loadAppletDetails(scope.row.id)">详情
-            </el-button>
             <el-button type="warning" v-if="scope.row.status == 1" plain
+                       @click="loadAppletDetails(scope.row.id)">详情
+            </el-button>
+            <el-button type="warning" v-if="scope.row.status == 1 && scope.row.ifSelling" plain
+                       @click="updateAppletSelling(scope.row.id, scope.row.ifSelling)">整顿
+            </el-button>
+            <el-button type="primary" v-if="scope.row.status == 1 && !scope.row.ifSelling" plain
+                       @click="updateAppletSelling(scope.row.id, scope.row.ifSelling)">发布
+            </el-button>
+            <el-button type="primary" v-if="scope.row.status == 1" plain
                        @click="editAppletPage(scope.row.id, scope.row.appletName)">编辑页面
             </el-button>
           </template>
@@ -94,6 +107,7 @@
   </el-container>
 </template>
 <script type="text/javascript">
+    import {Loading} from 'element-ui'
     import appletDetails from '@/views/applet/applet-details.vue'
 
     export default {
@@ -181,6 +195,29 @@
                 } catch (e) {
                 }
                 this.newWin = window.open(href, '_blank')
+            },
+            updateAppletSelling (id, ifSelling) {
+                let title = ifSelling ? '确定整顿小程序吗？' : '确定发布小程序吗？'
+                this.$confirm(title, '温馨提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let loading = Loading.service({fullscreen: true, text: '正在加载'})
+                    this.$axios({
+                        url: '/api/user/applet/updateAppletSelling',
+                        method: 'post',
+                        data: {appletId: id}
+                    }).then(res => {
+                        let that = this
+                        res.data.code === '1' ? this.$message.success({
+                            message: res.data.data, duration: 1000, onClose: function () {
+                                that.onSubmit()
+                            }
+                        }) : this.$message.error(res.data.data)
+                        this.$global.exitLoad(this, loading, res.data)
+                    })
+                })
             },
             loadApplet () {
                 this.showInfo = false

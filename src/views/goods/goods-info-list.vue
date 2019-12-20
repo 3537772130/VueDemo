@@ -117,7 +117,7 @@
                        @click="updateStatus(scope.row.id, scope.row.goodsName, scope.row.goodsStatus)"
                        v-if="scope.row.goodsStatus">下架
             </el-button>
-            <el-button type="primary" plain
+            <el-button type="success" plain
                        @click="updateStatus(scope.row.id, scope.row.goodsName, scope.row.goodsStatus)"
                        v-else>发布
             </el-button>
@@ -339,8 +339,8 @@
                             })
                         } else {
                             this.$message.error(res.data.data)
+                            this.$global.exitLoad(this, null, res.data)
                         }
-                        this.$global.exitLoad(this, null, res.data)
                     })
                 })
             }

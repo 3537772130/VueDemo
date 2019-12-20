@@ -28,14 +28,6 @@
     if (data === '') {
       that.$message.error('当前访问人数过多，请稍后再试')
     } else if (data.code === '0') {
-      // that.$message({
-      //   message: '登录过期，请重新登录',
-      //   type: 'error',
-      //   onClose: function () {
-      //     that.$cookies.remove('user_info')
-      //     that.$router.push({path: '/login'})
-      //   }
-      // })
       that.$cookies.remove('user_info')
       that.$router.push({path: '/login'})
       that.$message.error('登录过期，请重新登录')

@@ -37,7 +37,7 @@
               </el-carousel>
             </div>
             <div class="notice-bar" @click="openDrawer(partIndex)" v-if="item.id === 'notice-bar'">
-              <div class="text-content">{{item.textContent}}</div>
+              <div class="text-content">{{item.describe}}</div>
               <div :style="moveCoverStyle">
                 <div class="cover-left" :style="cover_1">
                   <div></div>
@@ -79,7 +79,7 @@
             <div class="goods-two-row" @click="openDrawer(partIndex)" v-if="item.id === 'goods-two-row'">
               <div class="goods-def" v-for="(goods,index) in item.list" :key="index">
                 <div>
-                  <el-image class="goods-img" :src="goods.icon"></el-image>
+                  <el-image class="goods-img" :src="goods.goodsIcon"></el-image>
                 </div>
                 <div class="goods-price">
                   &yen;{{goods.minPrice|addZero}}
@@ -95,7 +95,7 @@
             <div class="goods-three-row" @click="openDrawer(partIndex)" v-if="item.id === 'goods-three-row'">
               <div class="goods-def" v-for="(goods, index) in item.list" :key="index">
                 <div>
-                  <el-image class="goods-img" :src="goods.icon"></el-image>
+                  <el-image class="goods-img" :src="goods.goodsIcon"></el-image>
                 </div>
                 <div class="goods-price">
                   &yen;{{goods.minPrice|addZero}}
@@ -121,7 +121,7 @@
               <div class="bscroll-container" :style="goodsYScrollStyle">
                 <div class="goods-def" v-for="(goods, index) in item.list" :key="index">
                   <div>
-                    <el-image class="goods-img" :src="goods.icon" style="border-radius: 10px 10px 0px 0px;"></el-image>
+                    <el-image class="goods-img" :src="goods.goodsIcon" style="border-radius: 10px 10px 0px 0px;"></el-image>
                   </div>
                   <div class="goods-price">
                     &yen;{{goods.minPrice|addZero}}
@@ -135,7 +135,7 @@
                  v-if="item.id === 'goodsX-scroll'">
               <div class="bscroll-container" :style="goodsXScrollStyle">
                 <div class="goods-def" v-for="(goods, index) in item.list" :key="index">
-                  <el-image class="goods-img" :src="goods.icon" style="border-radius: 5px;"></el-image>
+                  <el-image class="goods-img" :src="goods.goodsIcon" style="border-radius: 5px;"></el-image>
                   <div>
                     <div class="goods-price">现价：<span>{{goods.minPrice|addZero}}</span></div>
                     <div class="goods-price">原价：<span
@@ -231,7 +231,7 @@
                     this.$axios({
                         url: '/api/user/applet/page/loadPageElement',
                         method: 'post',
-                        data: {appletId: this.$cookies.get('default_applet_id'), pageId: pageId}
+                        data: {appletId: parseInt(this.$cookies.get('default_applet_id')), pageId: parseInt(pageId)}
                     }).then(res => {
                         this.typeList = res.data.data.typeList
                         if (res.data.code === '1') {
@@ -251,9 +251,9 @@
                 let json = JSON.stringify(this.partList)
                 let loading = Loading.service({fullscreen: true, text: '正在加载'})
                 this.$axios({
-                    url: '/api/manage/applet/page/savePageContent',
+                    url: '/api/user/applet/page/savePageContent',
                     method: 'post',
-                    data: {pageId: this.pageId, json: json}
+                    data: {appletId: parseInt(this.$cookies.get('default_applet_id')), pageId: this.pageId, json: json}
                 }).then(res => {
                     res.data.code === '1' ? this.$message.success({
                         message: res.data.data, duration: 1000
