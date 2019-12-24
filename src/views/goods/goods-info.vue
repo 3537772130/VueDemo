@@ -1,13 +1,13 @@
 <style type="text/css">
   .goods-info-form {
     width: 400px;
-    height: 330px;
+    height: 530px;
     margin: auto;
-    text-align: center;
+    text-align: left;
   }
 
   .goods-info-input {
-    width: 190px;
+    width: 220px;
   }
 
   .cover-src-uploader .el-upload {
@@ -59,14 +59,29 @@
             <el-input v-model="goods.coverSrc" class="goods-info-input" style="display: none;"></el-input>
           </el-form-item>
           <el-form-item label="商品名称" prop="goodsName">
-            <el-input v-model="goods.goodsName" placeholder="请输入商品名称"
+            <el-input v-model="goods.goodsName" maxLength="50" placeholder="请输入商品名称"
                       class="goods-info-input"></el-input>
           </el-form-item>
           <el-form-item label="商品类型">
-            <el-select v-model="goods.typeId" class="applet-list-input">
+            <el-select v-model="goods.typeId" class="goods-info-input">
               <el-option label="请选择" value=''></el-option>
               <el-option v-for="(item, index) in typeList" :key="index" :label="item.typeName"
                          :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="折扣" prop="discount">
+            <el-input v-model.number="goods.discount" min="1" max="100" placeholder="请输入折扣"
+                      class="goods-info-input"></el-input>
+          </el-form-item>
+          <el-form-item label="描述" prop="describeStr">
+            <el-input type="textarea" :show-word-limit="true" maxlength="100" resize="none" rows="5"
+                      class="goods-info-input" placeholder="请输入描述"
+                      v-model="goods.describeStr"></el-input>
+          </el-form-item>
+          <el-form-item label="优惠券" prop="ifDiscount">
+            <el-select v-model="goods.ifDiscount" class="goods-info-input">
+              <el-option label="参与" value='1'></el-option>
+              <el-option label="不参与" value='0'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label=" ">
@@ -91,6 +106,9 @@
                     coverSrc: '',
                     goodsName: '',
                     typeId: '',
+                    discount: '100',
+                    describeStr: '',
+                    ifDiscount: '1',
                     status: '1'
                 },
                 timestamp: '',
@@ -103,10 +121,17 @@
                     ],
                     goodsName: [
                         {required: true, message: '商品名称不能为空', trigger: 'blur'},
-                        {type: 'string', min: 1, max: 50, message: '长度为1-50个字符', trigger: 'blur'}
+                        {type: 'string', min: 1, max: 50, message: '商品名称长度为1-50个字符', trigger: 'blur'}
                     ],
                     typeId: [
                         {required: true, message: '请选择类型', trigger: 'blur'}
+                    ],
+                    discount: [
+                        {required: true, message: '折扣不能为空', trigger: 'blur'},
+                        {type: 'number', min: 1, max: 100, message: '折扣只能为1-100', trigger: 'blur'}
+                    ],
+                    describeStr: [
+                        {type: 'string', min: 0, max: 100, message: '描述长度为1-100个字符', trigger: 'blur'}
                     ]
                 }
             }
@@ -131,6 +156,7 @@
                         goodsId = null
                         if (res.data.code === '1') {
                             this.goods = res.data.data.goods
+                            this.goods.ifDiscount = this.goods.ifDiscount ? '1' : '0'
                             this.goods.status = this.goods.status ? '1' : '0'
                             delete this.goods.userId
                             delete this.goods.updateTime

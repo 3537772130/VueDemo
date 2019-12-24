@@ -1,6 +1,6 @@
 <style type="text/css">
   .goods-specs-form {
-    width: 480px;
+    width: 420px;
     height: 620px;
     margin: auto;
     text-align: center;
@@ -69,20 +69,17 @@
                          @input="computePrice()" @blur="blurPrice()"></NumberInput>
             <el-input v-model.number="specsForm.sellPrice" style="display: none;"></el-input>
           </el-form-item>
-          <el-form-item label="商品折扣" prop="discount">
-            <el-input class="goods-specs-input" placeholder="请输入商品折扣"
-                      v-model.number="specsForm.discount" @input="computePrice()"></el-input>
+          <el-form-item label="当前折扣" prop="discount">
+            <div class="goods-specs-input" style="text-align: left;">{{discount}}</div>
           </el-form-item>
-          <el-form-item label="描述" prop="discountDescribe">
+          <el-form-item label="描述" prop="describeStr">
             <el-input type="textarea" :show-word-limit="true" maxlength="220" resize="none" rows="5"
                       class="goods-specs-input" placeholder="请输入描述"
-                      v-model="specsForm.discountDescribe"></el-input>
+                      v-model="specsForm.describeStr"></el-input>
           </el-form-item>
           <el-form-item label="实际价格" prop="actualPrice">
-            <!--            <NumberInput class="goods-specs-input" placeholder="请输入实际价格"-->
-            <!--                         v-model="specsForm.actualPrice" :precision="2"></NumberInput>-->
             <div class="goods-specs-input" style="text-align: left;">
-              <span style="width: 80px;display: inline-block;text-align: center; border-bottom: 1px #cdcdcd solid;">{{specsForm.actualPrice|addZero}}</span>
+              <span style="width: 80px;display: inline-block;text-align: center; border-bottom: 1px #cdcdcd solid;">{{actualPrice|addZero}}</span>
               <span style="color: #cdcdcd;"> = (出售价格&times;商品折扣&divide;100)</span>
             </div>
           </el-form-item>
@@ -104,10 +101,12 @@
 <script type="text/javascript">
     import {Loading} from 'element-ui'
     import NumberInput from '@/components/plugin/number-input.vue'
+    import Test from '../../home/test'
 
     export default {
         name: 'goods-specs',
         components: {
+            Test,
             'NumberInput': NumberInput
         },
         data () {
@@ -115,13 +114,13 @@
                 loading: false,
                 showSellPrice: false,
                 sellPrice: 0,
+                discount: 100,
+                actualPrice: 0.00,
                 specsForm: {
                     specsSrc: '',
                     specsText: '',
                     sellPrice: 0,
-                    actualPrice: 0,
-                    discount: 100,
-                    discountDescribe: '',
+                    describeStr: '',
                     specsStatus: '1'
                 },
                 timestamp: '',
@@ -136,11 +135,7 @@
                         {required: true, message: '出售价格不能为空', trigger: 'blur'},
                         {type: 'number', min: 0.01, max: 99999.99, message: '出售价格为0.00-99999.99', trigger: 'blur'}
                     ],
-                    discount: [
-                        {required: true, message: '商品折扣不能为空', trigger: 'blur'},
-                        {type: 'number', min: 1, max: 100, message: '商品折扣为1-100', trigger: 'blur'}
-                    ],
-                    discountDescribe: [
+                    describeStr: [
                         {type: 'string', min: 0, max: 220, message: '出售价格为0-220个字符', trigger: 'blur'}
                     ]
                 }
@@ -165,8 +160,10 @@
                         data: {specsId: specsId, goodsId: goodsId}
                     }).then(res => {
                         if (res.data.code === '1') {
-                            this.specsForm = res.data.data
+                            this.discount = res.data.data.discount
+                            this.specsForm = res.data.data.specs
                             this.sellPrice = this.specsForm.sellPrice
+                            this.actualPrice = this.sellPrice.toFixed(2) * parseInt(this.discount) / 100
                             this.specsForm.specsStatus = this.specsForm.specsStatus ? '1' : '0'
                             delete this.specsForm.userId
                             delete this.specsForm.typeIndex
@@ -235,7 +232,7 @@
             },
             computePrice () {
                 this.specsForm.sellPrice = this.sellPrice
-                this.specsForm.actualPrice = this.specsForm.sellPrice * this.specsForm.discount / 100
+                this.actualPrice = this.specsForm.sellPrice * this.discount / 100
                 this.$refs.NumberInput.init(this.specsForm.sellPrice)
             },
             blurPrice () {

@@ -59,6 +59,13 @@
             <el-option label="已发布" value="1"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="活动">
+          <el-select v-model="goods.ifDiscount" class="applet-list-input">
+            <el-option label="全部" value=''></el-option>
+            <el-option label="不参与" value="0"></el-option>
+            <el-option label="参与" value="1"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="selectList">查询</el-button>
         </el-form-item>
@@ -82,16 +89,24 @@
                       style="width: 80px; height: 80px;"></el-image>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="goodsName" label="商品名称" width="180"></el-table-column>
+        <el-table-column align="center" prop="goodsName" label="商品名称" width="220"></el-table-column>
         <el-table-column align="center" prop="typeName" label="商品类型" width="80"></el-table-column>
-        <el-table-column align="center" prop="minPrice" label="最低价格" width="80">
+        <el-table-column align="center" prop="discount" label="商品折扣(%)" width="100"></el-table-column>
+        <el-table-column align="center" prop="minPrice" label="最低价格" width="100">
           <template slot-scope="scope">
             <span>{{scope.row.minPrice|addZero}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="maxPrice" label="最高价格" width="80">
+        <el-table-column align="center" prop="maxPrice" label="最高价格" width="100">
           <template slot-scope="scope">
             <span>{{scope.row.maxPrice|addZero}}</span>
+          </template>
+        </el-table-column>
+<!--        <el-table-column align="center" prop="describeStr" label="描述" :show-overflow-tooltip="true" width="220"></el-table-column>-->
+        <el-table-column align="center" prop="ifDiscount" label="优惠券" width="80">
+          <template slot-scope="scope">
+            <el-link :underline="false" type="danger" v-if="!scope.row.ifDiscount">不参与</el-link>
+            <el-link :underline="false" type="success" v-if="scope.row.ifDiscount">参与</el-link>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="goodsIndex" label="排序" width="80">
@@ -176,6 +191,7 @@
                     goodsName: '',
                     typeId: '',
                     goodsStatus: '',
+                    ifDiscount: '',
                     page: 1,
                     pageSize: 10
                 },
