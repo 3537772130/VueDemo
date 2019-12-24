@@ -21,9 +21,18 @@
     height: 128px;
     display: inline-block;
     margin: 5px;
+    text-align: center;
   }
 
-  .goods-file-uploader .el-upload {
+  .goods-file-video {
+    width: 290px;
+    height: 190px;
+    display: inline-block;
+    margin: 5px;
+    text-align: center;
+  }
+
+  .goods-img-file-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
@@ -31,16 +40,42 @@
     overflow: hidden;
   }
 
-  .goods-file-uploader .el-upload:hover {
+  .goods-img--file-uploader .el-upload:hover {
     border-color: #409EFF;
   }
 
-  .goods-file-uploader-icon {
+  .goods-img-file-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 128px;
     height: 128px;
     line-height: 128px;
+    text-align: center;
+  }
+
+  .goods-video-file-uploader{
+    width: 290px;
+    height: 160px;
+    margin-bottom: 5px;
+  }
+
+  .goods-video-file-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .goods-video--file-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .goods-video-file-uploader-icon {
+    font-size: 48px;
+    color: #8c939d;
+    width: 290px;
+    height: 160px;
+    line-height: 160px;
     text-align: center;
   }
 
@@ -50,8 +85,15 @@
     display: block;
   }
 
-  .goods-file-delete {
+  .goods-img-file-delete {
     width: 128px;
+    display: inline-table;
+  }
+
+  .goods-video-file-delete {
+    width: 80px;
+    display: inline-table;
+    margin-right: 5px;
   }
 </style>
 <template>
@@ -61,28 +103,33 @@
         <el-divider content-position="left"><span>商品图片</span></el-divider>
         <div>
           <div v-for="(item, index) in fileList" :key="index" v-if="item.fileType === 1" class="goods-file-img">
-            <el-upload class="goods-file-uploader"
+            <el-upload class="goods-img-file-uploader"
                        :action="'/api/user/goods/uploadGoodsFileImg?fileId=' + item.id + '&goodsId=' + item.goodsId"
                        name="goodsFile" :headers="myHeader" :show-file-list="false"
-                       :on-success="handleFileSuccess" :before-upload="beforeImageUpload"
-                       @click="clickUpload(item.id, item.goodsId)">
+                       :on-success="handleFileSuccess" :before-upload="beforeImageUpload">
               <img v-if="item.fileStatus" :src="item.fileSrc + timestamp" class="file-src">
-              <i v-else class="el-icon-plus goods-file-uploader-icon"></i>
+              <i v-else class="el-icon-plus goods-img-file-uploader-icon"></i>
             </el-upload>
-            <el-button type="info" plain class="goods-file-delete" @click="deleteGoodsFile(item.id)">删除</el-button>
+            <el-button type="danger" plain class="goods-img-file-delete" @click="deleteGoodsFile(item.id)">删除</el-button>
           </div>
         </div>
         <el-divider content-position="left"><span>介绍视频</span></el-divider>
         <div>
-          <div v-for="(item, index) in fileList" :key="index" v-if="item.fileType === 2" class="goods-file-img">
-            <el-upload class="goods-file-uploader" action="/api/user/goods/uploadGoodsFileVideo"
+          <div v-for="(item, index) in fileList" :key="index" v-if="item.fileType === 2" class="goods-file-video">
+            <el-upload class="goods-video-file-uploader" :action="'/api/user/goods/uploadGoodsFileVideo?fileId=' + item.id + '&goodsId=' + item.goodsId"
                        name="goodsFile" :headers="myHeader" :show-file-list="false"
-                       :on-success="handleFileSuccess" :before-upload="beforeVideoUpload"
-                       @click="clickUpload(item.id, item.goodsId)">
-              <img v-if="item.fileSrc" :src="item.fileSrc + timestamp" class="file-src">
-              <i v-else class="el-icon-plus goods-file-uploader-icon"></i>
+                       :on-success="handleFileSuccess" :before-upload="beforeVideoUpload">
+              <!--              <img v-if="item.fileSrc" :src="item.fileSrc + timestamp" class="file-src">-->
+<!--              <video id="myVideo" class="video-js" style="width: 190px;height: 220px;" v-if="item.fileSrc">-->
+<!--                <source :src="item.fileSrc + timestamp" type="video/mp4">-->
+<!--              </video>-->
+              <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true"
+                            :options="playerOptions" style="width: 290px;height: 160px;" v-if="item.fileSrc">
+              </video-player>
+              <i v-else class="el-icon-plus goods-video-file-uploader-icon"></i>
             </el-upload>
-            <el-button type="info" plain class="goods-file-delete" @click="deleteGoodsFile(index)">删除</el-button>
+            <el-button type="danger" plain class="goods-video-file-delete" @click="deleteGoodsFile(index)">删除</el-button>
+            <el-button type="success" plain class="goods-video-file-delete" @click="initVideo()" v-if="item.fileSrc">预览</el-button>
           </div>
         </div>
       </div>
@@ -101,7 +148,8 @@
                 timestamp: '',
                 myHeader: {
                     'X-Requested-With': 'XMLHttpRequest'
-                }
+                },
+                playerOptions: {}
             }
         },
         created () {
@@ -165,7 +213,7 @@
             },
             beforeVideoUpload (file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
-                const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
+                const isJPG = 'video/mp4'.indexOf(file.type) >= 0
                 const isLt2M = file.size / 1024 / 1024 < 10
                 if (!isJPG) {
                     this.$message.error('上传视频格式错误!')
@@ -197,6 +245,46 @@
                         console.info('错误信息', error)
                         this.$global.exitLoad(this, loading, '')
                     })
+                }
+            },
+            initVideo () {
+                let fileSrc = ''
+                if (this.fileList.length > 0) {
+                    fileSrc = this.fileList[0].fileSrc
+                }
+                this.playerOptions = {
+                    // 播放速度
+                    playbackRates: [0.5, 1.0, 1.5, 2.0],
+                        // 如果true,浏览器准备好时开始回放。
+                        autoplay: false,
+                        // 默认情况下将会消除任何音频。
+                        muted: false,
+                        // 导致视频一结束就重新开始。
+                        loop: false,
+                        // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+                        preload: 'auto',
+                        language: 'zh-CN',
+                        // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+                        aspectRatio: '16:9',
+                        // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+                        fluid: true,
+                        sources: [{
+                        // 类型
+                        type: "video/mp4",
+                        // url地址
+                        src: fileSrc
+                    }],
+                        // 你的封面地址
+                        poster: '',
+                        // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
+                        notSupportedMessage: '此视频暂无法播放，请稍后再试',
+                        controlBar: {
+                        timeDivider: true,
+                            durationDisplay: true,
+                            remainingTimeDisplay: false,
+                            // 全屏按钮
+                            fullscreenToggle: true
+                    }
                 }
             }
         }

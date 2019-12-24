@@ -13,10 +13,14 @@ import Global from '@/components/tool/global'
 import PagePart from '@/components/tool/page-part'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'lib-flexible'
+import VideoPlayer from 'vue-video-player'
+import 'vue-video-player/src/custom-theme.css'
+import 'video.js/dist/video-js.css'
 
 Vue.use(ElementUI, {size: 'small', zIndex: 3000})
 Vue.use(VueCookies)
 Vue.use(VueJsDialog)
+Vue.use(VideoPlayer)
 Vue.filter('addZero', function (value) {
   try {
     return parseFloat(value).toFixed(2)
