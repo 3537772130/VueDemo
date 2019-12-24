@@ -168,7 +168,7 @@
                 minPrice: 0.00,
                 maxPrice: 0.00,
                 chooseIndex: null,
-                goodslist: [],
+                goodsList: [],
                 typeList: [],
                 bType: null,
                 dataName: ''
@@ -183,7 +183,7 @@
             loadList (type) {
                 this.bType = type
                 this.chooseIndex = null
-                this.goodslist = []
+                this.goodsList = []
                 this.typeList = []
                 if (type != null) {
                     this.loadInfoList(type, '')
@@ -209,6 +209,7 @@
                         url = 'queryGoodsDiscountList'
                         break
                 }
+                let that = this
                 this.$axios({
                     url: '/api/user/applet/page/' + url,
                     method: 'post',
@@ -216,7 +217,9 @@
                 }).then(res => {
                     if (res.data.code === '1') {
                         this.goodsList = res.data.data.goodsList
-                        this.typeList = res.data.data.typeList
+                        if (that.bType !== 4) {
+                            this.typeList = res.data.data.typeList
+                        }
                     } else {
                         this.$message.message('未找到相关信息')
                     }

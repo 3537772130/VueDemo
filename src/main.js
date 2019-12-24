@@ -17,8 +17,12 @@ import 'lib-flexible'
 Vue.use(ElementUI, {size: 'small', zIndex: 3000})
 Vue.use(VueCookies)
 Vue.use(VueJsDialog)
-Vue.filter('addZero',function(value){
-  return value.toFixed(2)
+Vue.filter('addZero', function (value) {
+  try {
+    return parseFloat(value).toFixed(2)
+  } catch (e) {
+    return 0.00
+  }
 })
 
 Vue.prototype.$echarts = echarts

@@ -279,7 +279,7 @@
                 if (part) {
                     let list = this.partList
                     let limit = true
-                    //滑块part只允许添加一次，超出无效
+                    // 滑块part只允许添加一次，超出无效
                     for (let i = 0; i < list.length; i++) {
                         if (part.id === list[i].id) {
                             if ('imgX-scroll,imgY-scroll,goodsY-scroll,goodsX-scroll'.indexOf(part.id) >= 0) {

@@ -23,7 +23,7 @@
                   <el-form-item label="" style="margin-bottom: 0px;">
                     <el-upload
                       class="img-carousel-uploader"
-                      action="/api/manage/applet/page/uploadAppletPageImage"
+                      action="/api/user/applet/page/uploadAppletPageImage"
                       name="image"
                       :show-file-list="false"
                       :on-success="handleAvatarSuccess"
@@ -49,7 +49,7 @@
                   <el-form-item label=" ">
                     <el-upload
                       class="img-carousel-uploader"
-                      action="/api/manage/applet/page/uploadAppletPageImage"
+                      action="/api/user/applet/page/uploadAppletPageImage"
                       name="image"
                       :show-file-list="false"
                       :on-success="handleAvatarSuccess"
@@ -108,7 +108,7 @@
             <el-form-item label="图标">
               <el-upload
                 class="img-text-title-uploader"
-                action="/api/manage/applet/page/uploadAppletPageImage"
+                action="/api/user/applet/page/uploadAppletPageImage"
                 name="image"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
@@ -135,7 +135,7 @@
                   <el-form-item label="">
                     <el-upload
                       class="img-carousel-uploader"
-                      action="/api/manage/applet/page/uploadAppletPageImage"
+                      action="/api/user/applet/page/uploadAppletPageImage"
                       name="image"
                       :show-file-list="false"
                       :on-success="handleAvatarSuccess"
@@ -236,7 +236,7 @@
                   <el-form-item label="" style="margin-bottom: 0px;">
                     <el-upload
                       class="img-carousel-uploader"
-                      action="/api/manage/applet/page/uploadAppletPageImage"
+                      action="/api/user/applet/page/uploadAppletPageImage"
                       name="image"
                       :show-file-list="false"
                       :on-success="handleAvatarSuccess"
@@ -263,7 +263,7 @@
                   <el-form-item label=" " style="margin-bottom: 0px;">
                     <el-upload
                       class="imgX-scroll-uploader"
-                      action="/api/manage/applet/page/uploadAppletPageImage"
+                      action="/api/user/applet/page/uploadAppletPageImage"
                       name="image"
                       :show-file-list="false"
                       :on-success="handleAvatarSuccess"
@@ -287,7 +287,7 @@
                   <el-form-item label="" style="margin-bottom: 0px;text-align: center;">
                     <el-upload
                       class="img-carousel-uploader"
-                      action="/api/manage/applet/page/uploadAppletPageImage"
+                      action="/api/user/applet/page/uploadAppletPageImage"
                       name="image"
                       :show-file-list="false"
                       :on-success="handleAvatarSuccess"
@@ -314,7 +314,7 @@
                   <el-form-item label="" style="margin-bottom: 0px;text-align: center;">
                     <el-upload
                       class="imgY-scroll-uploader"
-                      action="/api/manage/applet/page/uploadAppletPageImage"
+                      action="/api/user/applet/page/uploadAppletPageImage"
                       name="image"
                       :show-file-list="false"
                       :on-success="handleAvatarSuccess"
