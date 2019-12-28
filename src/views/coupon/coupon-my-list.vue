@@ -115,7 +115,7 @@
           </div>
           <div class="info">
             <div class="name">{{item.couponName}}</div>
-            <div class="price">87{{item.denomination}}<span>元</span></div>
+            <div class="price">{{item.denomination}}<span>元</span></div>
             <div class="date">截止：
               <span>{{item.activityOver}}</span>
             </div>
