@@ -33,20 +33,30 @@
     <el-tab-pane class="tab-div-content" v-for="item in editableTabs" :key="item.name"
                  :label="item.title" :name="item.name" :style="{'height': tabPaneHeight + 'px','overflow-y': 'scroll'}"
                  closable>
+      <!--个人中心-->
       <div v-if="item.name === '1-1'" class="tab-div-content-page">
         <userLoginLog></userLoginLog>
       </div>
+      <div v-if="item.name === '1-2'" class="tab-div-content-page">
+        <couponMyList></couponMyList>
+      </div>
+      <!--小程序管理-->
       <div v-if="item.name === '2-1'" class="tab-div-content-page">
         <appletApplyList></appletApplyList>
       </div>
       <div v-if="item.name === '2-2'" class="tab-div-content-page">
         <appletList></appletList>
       </div>
+      <!--商品管理-->
       <div v-if="item.name === '3-1'" class="tab-div-content-page">
         <goodsTypeList></goodsTypeList>
       </div>
       <div v-if="item.name === '3-2'" class="tab-div-content-page">
         <goodsInfoList></goodsInfoList>
+      </div>
+      <!--配置管理-->
+      <div v-if="item.name === '4-1'" class="tab-div-content-page">
+        <couponCreateList></couponCreateList>
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -58,18 +68,22 @@
   import appletApplyList from '@/views/applet/applet-apply-list.vue'
   import goodsInfoList from '@/views/goods/goods-info-list.vue'
   import goodsTypeList from '@/views/goods/type/goods-type-list.vue'
+  import couponCreateList from '@/views/coupon/coupon-create-list.vue'
+  import couponMyList from '@/views/coupon/coupon-my-list.vue'
 
   export default {
     name: 'tabs-content',
     components: {
-      'userHome': userHome,
-      'userLoginLog': userLoginLog,
-      'appletList': appletList,
-      'appletApplyList': appletApplyList,
-      'goodsInfoList': goodsInfoList,
-      'goodsTypeList': goodsTypeList
+        'userHome': userHome,
+        'userLoginLog': userLoginLog,
+        'appletList': appletList,
+        'appletApplyList': appletApplyList,
+        'goodsInfoList': goodsInfoList,
+        'goodsTypeList': goodsTypeList,
+        'couponCreateList': couponCreateList,
+        'couponMyList': couponMyList
     },
-    data() {
+    data () {
       return {
         tabPaneHeight: `${document.documentElement.clientHeight - 125}`,
         mainShow: 'block',
@@ -79,15 +93,15 @@
         parentMenuIndex: ''
       }
     },
-    created() {
-      this.$cookies.set("tabPaneHeight", this.tabPaneHeight)
+    created () {
+      this.$cookies.set('tabPaneHeight', this.tabPaneHeight)
     },
-    method() {
+    method () {
 
     },
     methods: {
       // 添加标签页
-      addTab(menuIndex, title) {
+      addTab (menuIndex, title) {
         this.mainShow = 'none'
         let menuLists = this.editableTabs
         let ifBe = true
@@ -106,13 +120,13 @@
         this.editableTabsValue = menuIndex
       },
       // 选中标签页
-      clickTab(targetName) {
+      clickTab (targetName) {
         // 更新main-info菜单选中目标
         this.parentMenuIndex = targetName.$el.id.replace('pane-', '')
         this.setActiveIndex()
       },
       // 移除标签页
-      removeTab(targetName) {
+      removeTab (targetName) {
         let tabs = this.editableTabs
         let activeName = this.editableTabsValue
         if (activeName === targetName) {
@@ -134,10 +148,10 @@
         this.parentMenuIndex = tabs.length === 1 ? '0' : this.editableTabsValue
         this.setActiveIndex()
       },
-      updateInfo() {
+      updateInfo () {
         this.$emit('updateInfo')
       },
-      setActiveIndex() {
+      setActiveIndex () {
         this.$emit('updateInfo', this.parentMenuIndex)
       }
     }

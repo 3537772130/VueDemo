@@ -75,14 +75,14 @@
         </el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="warning" v-if="scope.row.status == 1" plain
-                       @click="loadAppletDetails(scope.row.id)">详情
-            </el-button>
             <el-button type="warning" v-if="scope.row.status == 1 && scope.row.ifSelling" plain
                        @click="updateAppletSelling(scope.row.id, scope.row.ifSelling)">整顿
             </el-button>
             <el-button type="primary" v-if="scope.row.status == 1 && !scope.row.ifSelling" plain
                        @click="updateAppletSelling(scope.row.id, scope.row.ifSelling)">发布
+            </el-button>
+            <el-button type="primary" v-if="scope.row.status == 1" plain
+                       @click="loadAppletDetails(scope.row.id)">详情
             </el-button>
             <el-button type="primary" v-if="scope.row.status == 1" plain
                        @click="editAppletPage(scope.row.id, scope.row.appletName)">编辑页面

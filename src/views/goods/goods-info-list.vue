@@ -254,7 +254,6 @@
                     method: 'post',
                     data: this.goods
                 }).then(res => {
-                    console.info('后台返回的数据', res.data)
                     this.$global.setGoodsTableHeight(this, 'goods-list-form')
                     if (res.data.code === '1') {
                         this.tableData = res.data.data.dataSource

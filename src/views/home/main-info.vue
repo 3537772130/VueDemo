@@ -146,7 +146,11 @@
               {
                 index: '1-1',
                 title: '登录日志'
-              }
+              },
+                {
+                    index: '1-2',
+                    title: '我的优惠券'
+                }
             ]
           },
           {
@@ -178,18 +182,29 @@
                 title: '商品列表'
               }
             ]
-          }
+          },
+            {
+                index: 'm-4',
+                title: '配置管理',
+                icon: 'el-icon-discount',
+                items: [
+                    {
+                        index: '4-1',
+                        title: '创建优惠券'
+                    }
+                ]
+            }
         ]
       }
     },
-    created() {
+    created () {
       this.$axios({
         url: '/api/user/checkLogin',
         method: 'post'
       }).then(res => {
         // console.info('后台返回的数据', res.data)
-        if (res.data.code != '1') {
-          this.$cookies.remove("user_info")
+        if (res.data.code !== '1') {
+          this.$cookies.remove('user_info')
           this.$router.push({path: '/login'})
         }
       }).catch(error => {
@@ -197,13 +212,13 @@
       })
     },
     mounted() {
-      this.$refs.headerMenu.setMenuIndex("5-1")
+      this.$refs.headerMenu.setMenuIndex('5-1')
     },
     methods: {
-      updateInfo(index) {
+      updateInfo (index) {
         if (index) {
-          if (index === '0'){
-            this.activeIndex = this.activeIndex === '0' ? '':'0';
+          if (index === '0') {
+            this.activeIndex = this.activeIndex === '0' ? '' : '0'
           } else {
             this.activeIndex = index
           }
@@ -211,7 +226,7 @@
           this.$refs.headerMenu.updateInfo()
         }
       },
-      handleSelect(key, keyPath) {
+      handleSelect (key, keyPath) {
         // console.log(key, keyPath)
         let keyTitle = ''
         let list = this.menuList
@@ -227,10 +242,10 @@
         }
         this.$refs.tabsContent.addTab(key, keyTitle)
       },
-      handleSOpen(key, keyPath) {
+      handleSOpen (key, keyPath) {
         // console.log("打开：", key, keyPath)
       },
-      handleClose(key, keyPath) {
+      handleClose (key, keyPath) {
         // console.log("关闭：", key, keyPath)
       }
     }
