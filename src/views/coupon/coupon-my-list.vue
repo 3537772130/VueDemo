@@ -43,17 +43,29 @@
   }
 
   .coupon-list > .coupon > .info > .name {
-    height: 80px;
-    line-height: 80px;
-    text-align: center;
-    font-size: 24px;
-    font-family: '幼圆';
+    height: 20px;
+    line-height: 20px;
+    margin-top: 10px;
+    text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     white-space: normal !important;
+  }
+
+  .coupon-list > .coupon > .info > .price{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 24px;
+    font-family: '幼圆';
+  }
+
+  .coupon-list > .coupon > .info > .date{
+    height: 30px;
+    line-height: 30px;
   }
 
   .no-record{
@@ -93,6 +105,7 @@
             <!--              <span v-if="item.couponType === 3">满减优惠券</span>-->
             <!--            </div>-->
             <div class="name">{{item.couponName}}</div>
+            <div class="price">{{item.denomination}}元</div>
             <div class="date">截止日期：
               <span>{{item.activityOver}}</span>
             </div>

@@ -20,48 +20,10 @@
     color: #cdcdcd;
     line-height: normal;
   }
-
-  .coupon {
-    width: 100%;
-    height: 130px;
-    text-align: center;
-    margin-top: 30px;
-  }
-
-  .coupon > .content {
-    display: inline-table;
-    width: 110px;
-    text-align: center;
-  }
-
-  .coupon > .content:hover {
-    cursor: pointer;
-    border-radius: 10px;
-    border: 1px #cdcdcd solid;
-  }
-
-  .coupon > .content > .el-image {
-    width: 86px;
-    height: 86px;
-  }
 </style>
 <template>
   <el-container>
     <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;">
-      <!--      <div class="coupon">-->
-      <!--        <div class="content">-->
-      <!--          <el-image src="/static/images/coupon/coupon_67c23a.png"></el-image>-->
-      <!--          <div style="color: #67c23a;padding-bottom: 10px;">通用优惠券</div>-->
-      <!--        </div>-->
-      <!--        <div class="content">-->
-      <!--          <el-image src="/static/images/coupon/coupon_409eff.png"></el-image>-->
-      <!--          <div style="color: #409eff;padding-bottom: 10px;">满减优惠券</div>-->
-      <!--        </div>-->
-      <!--        <div class="content">-->
-      <!--          <el-image src="/static/images/coupon/coupon_d81e06.png"></el-image>-->
-      <!--          <div style="color: #d81e06;padding-bottom: 10px;">点对点优惠券</div>-->
-      <!--        </div>-->
-      <!--      </div>-->
       <div style="width: 100%;float: left;clear: left;margin: auto;">
         <el-form :inline="true" :model="coupon" :rules="rules" ref="coupon" class="demo-form-inline coupon-info-form">
           <el-form-item label="优惠券类型" prop="couponType">
