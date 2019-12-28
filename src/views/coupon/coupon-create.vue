@@ -62,10 +62,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="使用限制" prop="usePrice">
+<!--            <el-input v-model.number="coupon.usePrice" placeholder="消费多少可用"-->
+<!--                      class="coupon-info-input" readonly="readonly" v-if="coupon.couponType === '1'"></el-input>-->
             <el-input v-model.number="coupon.usePrice" placeholder="消费多少可用"
-                      class="coupon-info-input" readonly="readonly" v-if="coupon.couponType === '1'"></el-input>
-            <el-input v-model.number="coupon.usePrice" placeholder="消费多少可用"
-                      class="coupon-info-input" v-else></el-input>
+                      class="coupon-info-input"></el-input>
           </el-form-item>
           <el-form-item label="预派发数量" prop="makeIssueNum">
             <el-input v-model.number="coupon.makeIssueNum" min="1" max="100" placeholder="预定可派发的优惠券数量"
@@ -201,7 +201,7 @@
             chooseCouponType () {
                 let couponType = this.coupon.couponType
                 if (couponType === '1') {
-                    this.coupon.usePrice = 0
+                    // this.coupon.usePrice = 0
                     this.coupon.gainPrice = 0
                 } else {
                     this.coupon.usePrice = ''

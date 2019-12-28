@@ -6,25 +6,28 @@
 
   .coupon-list > .coupon {
     display: inline-table;
-    width: 280px;
-    height: 120px;
+    width: 350px;
+    height: 169px;
+    color: #dda026;
     padding-right: 10px;
     margin-left: 20px;
     border-radius: 8px;
     box-shadow: 3px 3px 6px #b2b2b2;
     border: 1px #cdcdcd solid;
+    background-image: url("/static/images/background/coupon.png");
+    background-size: 360px 169px;
   }
 
   .coupon-list > .coupon:hover {
     cursor: pointer;
     box-shadow: 3px 3px 6px #67c23a;
-    border: 1px #67c23a solid;
+    /*border: 1px #67c23a solid;*/
   }
 
   .coupon-list > .coupon > .applet-logo {
-    float: left;
+    float: right;
     display: inline-table;
-    width: 100px;
+    width: 110px;
     height: 120px;
     text-align: center;
   }
@@ -33,20 +36,22 @@
     width: 80px;
     height: 80px;
     border-radius: 40px;
-    margin-top: 20px;
+    margin-top: 45px;
   }
 
   .coupon-list > .coupon > .info {
     display: inline-table;
-    width: 180px;
+    width: 230px;
     height: 120px;
   }
 
   .coupon-list > .coupon > .info > .name {
     height: 20px;
     line-height: 20px;
-    margin-top: 10px;
+    margin-top: 20px;
     text-align: left;
+    text-indent: 40px;
+    font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -55,31 +60,41 @@
     white-space: normal !important;
   }
 
-  .coupon-list > .coupon > .info > .price{
-    height: 50px;
-    line-height: 50px;
+  .coupon-list > .coupon > .info > .price {
+    height: 80px;
+    line-height: 80px;
     text-align: center;
-    font-size: 24px;
-    font-family: '幼圆';
+    font-size: 50px;
+    font-family: '宋体';
+    padding-left: 35px;
+    margin-bottom: 10px;
   }
 
-  .coupon-list > .coupon > .info > .date{
+  .coupon-list > .coupon > .info > .price > span {
+    font-size: 16px;
+    display: inline-table;
+    margin-left: 5px;
+    font-family: '宋体';
+  }
+
+  .coupon-list > .coupon > .info > .date {
     height: 30px;
     line-height: 30px;
+    text-indent: 55px;
   }
 
-  .no-record{
+  .no-record {
     width: 100%;
     text-align: center;
     margin-top: 50px;
   }
 
-  .no-record > .icon > img{
+  .no-record > .icon > img {
     width: 128px;
     height: 128px;
   }
 
-  .no-record > .text{
+  .no-record > .text {
     margin-top: 10px;
     font-size: 16px;
     color: #cdcdcd;
@@ -99,14 +114,9 @@
             <el-image :src="item.useAppletLogo + timestamp"></el-image>
           </div>
           <div class="info">
-            <!--            <div class="type">-->
-            <!--              <span v-if="item.couponType === 1">通用优惠券</span>-->
-            <!--              <span v-if="item.couponType === 2">满减优惠券</span>-->
-            <!--              <span v-if="item.couponType === 3">满减优惠券</span>-->
-            <!--            </div>-->
             <div class="name">{{item.couponName}}</div>
-            <div class="price">{{item.denomination}}元</div>
-            <div class="date">截止日期：
+            <div class="price">87{{item.denomination}}<span>元</span></div>
+            <div class="date">截止：
               <span>{{item.activityOver}}</span>
             </div>
           </div>
@@ -115,7 +125,7 @@
           <div class="icon">
             <el-image src="/static/images/small_bean_ding.png"></el-image>
           </div>
-          <div class="text">您还没有获得优惠券哦，快去逛逛吧 >>>></div>
+          <div class="text">快去获取优惠券吧 >>>></div>
         </div>
       </div>
     </el-main>
