@@ -36,12 +36,14 @@ export default [
       if (!token) {
         return {
           code: 60204,
+          success: true,
           message: 'Account and password are incorrect.'
         }
       }
 
       return {
         code: 20000,
+        success: true,
         data: token
       }
     }
@@ -65,6 +67,7 @@ export default [
 
       return {
         code: 20000,
+        success: true,
         data: info
       }
     }
@@ -77,6 +80,7 @@ export default [
     response: _ => {
       return {
         code: 20000,
+        success: true,
         data: 'success'
       }
     }
@@ -89,6 +93,7 @@ export default [
     response: _ => {
       return {
         code: 20000,
+        success: true,
         data: [
           {
             path: '/permission',

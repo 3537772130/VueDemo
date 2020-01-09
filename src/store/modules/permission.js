@@ -57,9 +57,9 @@ const actions = {
         if (menus.children) menus.children.forEach(it => handleMenuCode(it))
       }
       data.forEach(it => handleMenuCode(it))
-      const accessedRoutes = filterAsyncRoutes(asyncRoutes, data, codes)
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      // TODO const accessedRoutes = filterAsyncRoutes(asyncRoutes, data, codes)
+      commit('SET_ROUTES', asyncRoutes)
+      resolve(asyncRoutes)
     })
   }
 }

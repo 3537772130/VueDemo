@@ -97,7 +97,20 @@ export const constantRoutes = [
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = []
+export const asyncRoutes = [
+  {
+    path: '/demo',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/demo/index'),
+        name: 'Demo',
+        meta: { title: 'Demo', icon: 'dashboard' }
+      }
+    ]
+  }
+]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
