@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Element Admin',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: 'Applet Manage',
+      logo: 'https://jkeep.oss-cn-shanghai.aliyuncs.com/upload/tail-logo-1.png'
     }
   }
 }
@@ -64,7 +64,7 @@ export default {
     & .sidebar-title {
       display: inline-block;
       margin: 0;
-      color: #fff;
+      color: #FA541C;
       font-weight: 600;
       line-height: 50px;
       font-size: 14px;
