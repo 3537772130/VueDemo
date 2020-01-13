@@ -382,9 +382,9 @@
 
 /**************************搜索栏*****************************/
 .components > .goods-search {
-  height: 45px;
   margin: auto;
   padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .components > .goods-search:hover {
@@ -393,13 +393,13 @@
 }
 
 .components > .goods-search > .search-part {
-  width: 90%;
-  height: 40px;
-  line-height: 40px;
+  width: 80%;
+  height: 26px;
+  line-height: 26px;
   margin: auto;
-  border-radius: 5px;
+  border-radius: 13px;
   background-color: #FFFFFF;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   color: #cdcdcd;
   text-align: left;
