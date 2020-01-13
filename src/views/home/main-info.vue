@@ -132,7 +132,7 @@
       'headerMenu': headerMenu,
       'tabsContent': tabsContent
     },
-    data() {
+    data () {
       return {
         bodyHeight: `${document.documentElement.clientHeight}` + 'px',
         info: this.$cookies.get('user_info'),
@@ -168,7 +168,7 @@
               },
               {
                 index: '2-3',
-                title: '小程序管运费配置'
+                title: '小程序运费配置'
               }
             ]
           },
@@ -215,7 +215,7 @@
         console.info('错误信息', error)
       })
     },
-    mounted() {
+    mounted () {
       this.$refs.headerMenu.setMenuIndex('5-1')
     },
     methods: {
