@@ -17,8 +17,7 @@
     <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;padding-top: 20px;">
       <el-form id="goods-type-form" :inline="true" :model="typeForm" class="demo-form-inline">
         <el-form-item label="小程序">
-          <el-select v-model="typeForm.appletId" class="applet-list-input">
-            <el-option label="全部" value=''></el-option>
+          <el-select v-model="typeForm.appletId" class="applet-list-input" @change="updateApplet">
             <el-option v-for="(item, index) in appletList" :key="index" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
@@ -102,7 +101,9 @@
         data () {
             return {
                 loading: true,
+                appletId: null,
                 appletList: [],
+                tableData: [],
                 tableHeight: 50,
                 currentPage: 1,
                 total: 0,
@@ -125,6 +126,7 @@
             }).then(res => {
                 if (res.data.code === '1') {
                     this.appletList = res.data.data
+                    this.typeForm.appletId = res.data.data[0].id
                     this.onSubmit()
                 }
             }).catch(error => {
@@ -138,6 +140,9 @@
             indexMethod (index) {
                 let count = (parseInt(this.typeForm.page) - 1) * parseInt(this.typeForm.pageSize)
                 return count + (parseInt(index) + 1)
+            },
+            updateApplet: function () {
+                this.onSubmit()
             },
             onSubmit () {
                 this.loading = true
@@ -176,8 +181,12 @@
                 } else {
                     this.infoTitle = '修改类型信息'
                 }
+                this.$cookies.set('goods_type_applet_id', this.typeForm.appletId)
                 this.$cookies.set('goods_type_id', id)
-                this.$refs.goodsType.loadGoodsType(id)
+                try {
+                    this.$refs.goodsType.loadGoodsType(id, this.typeForm.appletId)
+                } catch (e) {
+                }
             },
             refreshList () {
                 this.showInfo = false

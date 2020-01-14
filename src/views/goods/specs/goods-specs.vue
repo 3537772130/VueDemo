@@ -129,6 +129,7 @@
                 },
                 rules: {
                     specsText: [
+                        {required: true, message: '商品规格不能为空', trigger: 'blur'},
                         {type: 'string', min: 0, max: 50, message: '商品规格长度为0-50个字符', trigger: 'blur'}
                     ],
                     sellPrice: [

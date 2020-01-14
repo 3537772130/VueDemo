@@ -83,10 +83,11 @@
 
     export default {
         name: 'applet-info',
-        data() {
+        data () {
             return {
                 loading: false,
                 typeForm: {
+                    appletId: null,
                     typeLogo: '',
                     typeName: '',
                     typeStatus: '1'
@@ -103,15 +104,17 @@
                 }
             }
         },
-        created() {
+        created () {
             let typeId = this.$cookies.get('goods_type_id')
-            this.loadGoodsType(typeId)
+            let appletId = this.$cookies.get('goods_type_applet_id')
+            this.loadGoodsType(typeId, appletId)
         },
-        mounted() {
+        mounted () {
         },
         methods: {
-            loadGoodsType(typeId) {
-                if (typeId && typeId != '0') {
+            loadGoodsType (typeId, appletId) {
+                this.typeForm.appletId = parseInt(appletId)
+                if (typeId && typeId !== '0') {
                     this.loading = true
                     this.$axios({
                         url: '/api/user/goods/loadGoodsType',
@@ -119,6 +122,7 @@
                         data: {id: typeId}
                     }).then(res => {
                         this.$cookies.remove('goods_type_id')
+                        this.$cookies.remove('goods_type_applet_id')
                         if (res.data.code === '1') {
                             this.typeForm = res.data.data
                             this.typeForm.typeStatus = this.typeForm.typeStatus ? '1' : '0'
@@ -134,7 +138,7 @@
                     })
                 }
             },
-            onSubmit() {
+            onSubmit () {
                 this.$refs['typeForm'].validate((valid) => {
                     if (valid) {
                         let loading = Loading.service({fullscreen: true, text: '加载中'})
@@ -146,7 +150,9 @@
                             console.info('后台返回的数据', res.data)
                             let that = this
                             res.data.code === '1' ? this.$message.success({
-                                message: res.data.data, duration: 1000, onClose: function () {
+                                message: res.data.data,
+                                duration: 1000,
+                                onClose: function () {
                                     that.$emit('refreshList')
                                 }
                             }) : this.$message.error(res.data.data)
@@ -158,17 +164,17 @@
                     }
                 })
             },
-            handleLogoSuccess(res, file) {
+            handleLogoSuccess (res, file) {
                 if (res.code === '1') {
                     this.typeForm.typeLogo = res.data
-                  this.$message.success('上传成功，等待提交')
+                    this.$message.success('上传成功，等待提交')
                 } else {
                     this.$message.error(res.data)
                 }
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 this.$global.exitLoad(this, loading, res.data)
             },
-            beforePicUpload(file) {
+            beforePicUpload (file) {
                 let loading = Loading.service({fullscreen: true, text: '正在上传'})
                 const isJPG = 'image/png,image/jpeg'.indexOf(file.type) >= 0
                 const isLt2M = file.size / 1024 / 1024 < 2

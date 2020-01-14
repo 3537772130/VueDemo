@@ -106,7 +106,7 @@
                     coverSrc: '',
                     goodsName: '',
                     typeId: '',
-                    discount: '100',
+                    discount: 100,
                     describeStr: '',
                     ifDiscount: '1',
                     status: '1'
