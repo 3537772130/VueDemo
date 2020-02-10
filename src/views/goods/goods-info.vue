@@ -59,7 +59,8 @@
             <el-input v-model="goods.coverSrc" class="goods-info-input" style="display: none;"></el-input>
           </el-form-item>
           <el-form-item label="商品名称" prop="goodsName">
-            <el-input v-model="goods.goodsName" maxLength="50" placeholder="请输入商品名称"
+            <el-input type="textarea" :show-word-limit="true" maxlength="50" resize="none" rows="3"
+                      v-model="goods.goodsName" placeholder="请输入商品名称"
                       class="goods-info-input"></el-input>
           </el-form-item>
           <el-form-item label="商品类型">

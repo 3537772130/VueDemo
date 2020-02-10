@@ -120,7 +120,7 @@
                     v-if="index === chooseIndex"></el-image>
           <div style="height: 24px;" v-if="index != chooseIndex"></div>
           <div class="part-info"
-               @click="chooseDetails(item.id, item.name, item.icon, item.minPrice, item.maxPrice, index)"
+               @click="chooseDetails(item.id, item.name, item.icon, item.minPrice, item.maxPrice, item.discount, index)"
                :style="index === chooseIndex ? {'border': '1px #67C23A solid'} : ''">
             <div class="part-info-img">
               <el-image :src="item.icon" style="width: 90px;height: 90px;border-radius: 5px;"></el-image>
@@ -137,7 +137,7 @@
                     v-if="index === chooseIndex"></el-image>
           <div style="height: 24px;" v-if="index != chooseIndex"></div>
           <div class="part-info"
-               @click="chooseDetails(item.id, item.name, item.icon, item.minPrice, item.maxPrice, index)"
+               @click="chooseDetails(item.id, item.name, item.icon, item.minPrice, item.maxPrice, item.discount, index)"
                :style="index === chooseIndex ? {'border': '1px #67C23A solid'} : ''">
             <div class="part-info-img">
               <el-image :src="item.icon" style="width: 90px;height: 90px;border-radius: 5px;"></el-image>
@@ -167,6 +167,7 @@
                 icon: '',
                 minPrice: 0.00,
                 maxPrice: 0.00,
+                discount: 100,
                 chooseIndex: null,
                 goodsList: [],
                 typeList: [],
@@ -193,6 +194,7 @@
                 this.loadInfoList(this.bType, this.dataName)
             },
             loadInfoList (type, name) {
+                let appletId = this.$cookies.get('default_applet_id')
                 let loading = Loading.service({fullscreen: true, text: '正在加载'})
                 let url = ''
                 switch (parseInt(type)) {
@@ -213,7 +215,7 @@
                 this.$axios({
                     url: '/api/user/applet/page/' + url,
                     method: 'post',
-                    data: {name: name}
+                    data: {appletId: appletId, name: name}
                 }).then(res => {
                     if (res.data.code === '1') {
                         this.goodsList = res.data.data.goodsList
@@ -236,16 +238,17 @@
                 this.icon = icon
                 this.chooseIndex = index
             },
-            chooseDetails (id, name, icon, minPrice, maxPrice, index) {
+            chooseDetails (id, name, icon, minPrice, maxPrice, discount, index) {
                 this.id = id
                 this.name = name
                 this.icon = icon
                 this.minPrice = minPrice
                 this.maxPrice = maxPrice
+                this.discount = discount
                 this.chooseIndex = index
             },
             confirmInfo () {
-                this.$emit('refreshSet', this.id, this.name, this.icon, this.minPrice, this.maxPrice, this.bType)
+                this.$emit('refreshSet', this.id, this.name, this.icon, this.minPrice, this.maxPrice, this.discount, this.bType)
             },
             refreshSet () {
 
