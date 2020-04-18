@@ -61,7 +61,9 @@
             }
         },
         created () {
-            this.loadAppletData(this.$cookies.get('applet_id'), this.$cookies.get('if_open_pay'))
+            let id = this.$cookies.get('applet_id')
+            let ifOpenPay = this.$cookies.get('if_open_pay')
+            this.loadAppletData(id, ifOpenPay === 'true')
         },
         mounted () {
         },
