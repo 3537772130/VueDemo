@@ -128,7 +128,12 @@
         </el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="primary" plain
+            <el-button type="primary" plain @click="loadGoodsInfo(scope.row.id)">修改</el-button>
+            <el-button type="primary" plain @click="loadGoodsFile(scope.row.id, scope.row.goodsName)">文件
+            </el-button>
+            <el-button type="primary" plain @click="loadGoodsSpecs(scope.row.id, scope.row.goodsName)">规格</el-button>
+            <div style="height: 10px;"></div>
+            <el-button type="info" plain
                        @click="updateStatus(scope.row.id, scope.row.goodsName, scope.row.goodsStatus)"
                        v-if="scope.row.goodsStatus">下架
             </el-button>
@@ -136,10 +141,7 @@
                        @click="updateStatus(scope.row.id, scope.row.goodsName, scope.row.goodsStatus)"
                        v-else>发布
             </el-button>
-            <el-button type="primary" plain @click="loadGoodsInfo(scope.row.id)">修改</el-button>
-            <el-button type="primary" plain @click="loadGoodsFile(scope.row.id, scope.row.goodsName)">文件
-            </el-button>
-            <el-button type="primary" plain @click="loadGoodsSpecs(scope.row.id, scope.row.goodsName)">规格</el-button>
+            <el-button type="info" plain @click="deleteGoodsInfo(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -168,6 +170,8 @@
   </el-container>
 </template>
 <script type="text/javascript">
+    /* eslint-disable no-trailing-spaces */
+
     import goodsInfo from '@/views/goods/goods-info.vue'
     import goodsFileList from '@/views/goods/file/goods-file-list.vue'
     import goodsSpecsList from '@/views/goods/specs/goods-specs-list.vue'
@@ -348,7 +352,9 @@
                         if (res.data.code === '1') {
                             let that = this
                             this.$message.success({
-                                message: res.data.data, duration: 1000, onClose: function () {
+                                message: res.data.data,
+                                duration: 1000,
+                                onClose: function () {
                                     that.onSubmit()
                                 }
                             })
@@ -356,6 +362,35 @@
                             this.$message.error(res.data.data)
                             this.$global.exitLoad(this, null, res.data)
                         }
+                    })
+                })
+            },
+            deleteGoodsInfo (id) {
+                this.$confirm('确定删除商品吗？', name, {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.loading = true
+                    this.$axios({
+                        url: '/api/user/goods/deleteGoodsInfo',
+                        method: 'post',
+                        data: {goodsId: id}
+                    }).then(res => {
+                        console.info('后台返回的数据', res.data)
+                        let that = this
+                        this.$message.success({
+                            message: res.data.data,
+                            duration: 1000,
+                            onClose: function () {
+                                if (res.data.code === '1') {
+                                    that.onSubmit()
+                                } else {
+                                    that.$message.error(res.data.data)
+                                    that.$global.exitLoad(this, null, res.data)
+                                }
+                            }
+                        })
                     })
                 })
             }

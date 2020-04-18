@@ -48,14 +48,6 @@
     width: 200px;
   }
 
-  .el-submenu__title, .el-menu-item, .el-submenu__title i {
-    color: #FFFFFF;
-  }
-
-  .el-submenu__title, .el-menu-item, .el-submenu__title .el-icon-arrow-down{
-    color: #FFFFFF;
-  }
-
   .el-menu-item-group__title {
     display: none;
   }

@@ -10,6 +10,11 @@
   .applet-list-dialog .el-dialog > .el-dialog__body {
     padding: 0px 20px;
   }
+
+  .applet-pay-dialog  .el-dialog {
+    width: 580px;
+    height: 420px;
+  }
 </style>
 <template>
   <el-container>
@@ -67,19 +72,28 @@
             <el-link :underline="false" type="success" v-if="scope.row.ifSelling">已发布</el-link>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="status" label="状态" width="80">
+        <el-table-column align="center" prop="ifOpenPay" label="支付状态" width="80">
+          <template slot-scope="scope">
+            <el-link :underline="false" type="danger" v-if="!scope.row.ifOpenPay">未开通</el-link>
+            <el-link :underline="false" type="success" v-if="scope.row.ifOpenPay">已开通</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="status" label="小程序状态" width="100">
           <template slot-scope="scope">
             <el-link :underline="false" type="danger" v-if="scope.row.status == -1">禁用</el-link>
             <el-link :underline="false" type="success" v-if="scope.row.status == 1">正常</el-link>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="id" label="操作" fixed="right">
+        <el-table-column align="center" prop="id" label="操作" fixed="right" width="180">
           <template slot-scope="scope">
             <el-button type="warning" v-if="scope.row.status == 1 && scope.row.ifSelling" plain
                        @click="updateAppletSelling(scope.row.id, scope.row.ifSelling)">整顿
             </el-button>
             <el-button type="primary" v-if="scope.row.status == 1 && !scope.row.ifSelling" plain
                        @click="updateAppletSelling(scope.row.id, scope.row.ifSelling)">发布
+            </el-button>
+            <el-button type="success" v-if="!scope.row.ifOpenPay" plain
+                       @click="loadAppletOpenPay(scope.row.id, scope.row.ifOpenPay)">开通支付
             </el-button>
             <el-button type="primary" v-if="scope.row.status == 1" plain
                        @click="loadAppletDetails(scope.row.id)">详情
@@ -99,21 +113,29 @@
           :total="total">
         </el-pagination>
       </div>
-      <el-dialog class="applet-list-dialog" :title="dialogTitle" :visible.sync="showInfo"
+      <el-dialog class="applet-list-dialog" :title="infoTitle" :visible.sync="infoShow"
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <appletDetails ref="appletDetails" v-on:loadApplet="loadApplet"></appletDetails>
+      </el-dialog>
+      <el-dialog class="applet-pay-dialog" :title="dataTitle" :visible.sync="dataShow"
+                 :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
+        <appletOpenPay ref="appletOpenPay" v-on:loadAppletData="loadAppletData"></appletOpenPay>
       </el-dialog>
     </el-main>
   </el-container>
 </template>
 <script type="text/javascript">
+    /* eslint-disable no-trailing-spaces */
+
     import {Loading} from 'element-ui'
     import appletDetails from '@/views/applet/applet-details.vue'
+    import appletOpenPay from '@/views/applet/applet-open-pay.vue'
 
     export default {
         name: 'applet-list',
         components: {
-            'appletDetails': appletDetails
+            'appletDetails': appletDetails,
+            'appletOpenPay': appletOpenPay
         },
         data () {
             return {
@@ -127,8 +149,10 @@
                     page: 1,
                     pageSize: 5
                 },
-                dialogTitle: '提交小程序信息',
-                showInfo: false,
+                infoTitle: '提交小程序信息',
+                infoShow: false,
+                dataTitle: '上传微信支付资料',
+                dataShow: false,
                 timestamp: ''
             }
         },
@@ -172,16 +196,6 @@
                 this.formInline.page = val
                 this.onSubmit()
             },
-            loadAppletDetails (id) {
-                this.showInfo = true
-                if (id && id === '0') {
-                    this.dialogTitle = '提交小程序信息'
-                } else {
-                    this.dialogTitle = '修改小程序信息'
-                }
-                this.$cookies.set('applet_id', id)
-                this.$refs.appletDetails.loadApplet(id)
-            },
             editAppletPage (appletId, appletName) {
                 this.$cookies.set('default_applet_id', appletId)
                 this.$cookies.set('default_applet_name', appletName)
@@ -211,7 +225,9 @@
                     }).then(res => {
                         let that = this
                         res.data.code === '1' ? this.$message.success({
-                            message: res.data.data, duration: 1000, onClose: function () {
+                            message: res.data.data,
+                            duration: 1000,
+                            onClose: function () {
                                 that.onSubmit()
                             }
                         }) : this.$message.error(res.data.data)
@@ -219,9 +235,28 @@
                     })
                 })
             },
+            loadAppletDetails (id) {
+                this.infoShow = true
+                if (id && id === '0') {
+                    this.infoTitle = '提交小程序信息'
+                } else {
+                    this.infoTitle = '修改小程序信息'
+                }
+                this.$cookies.set('applet_id', id)
+                this.$refs.appletDetails.loadApplet(id)
+            },
             loadApplet () {
-                this.showInfo = false
+                this.infoShow = false
                 this.selectList()
+            },
+            loadAppletOpenPay (id, ifOpenPay) {
+                this.dataShow = true
+                this.$cookies.set('applet_id', id)
+                this.$cookies.set('if_open_pay', ifOpenPay)
+                this.$refs.appletOpenPay.loadAppletData(id, ifOpenPay)
+            },
+            loadAppletData () {
+                this.dataShow = false
             }
         }
     }

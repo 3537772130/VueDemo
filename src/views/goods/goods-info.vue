@@ -60,7 +60,7 @@
           </el-form-item>
           <el-form-item label="商品名称" prop="goodsName">
             <el-input type="textarea" :show-word-limit="true" maxlength="50" resize="none" rows="3"
-                      v-model="goods.goodsName" placeholder="请输入商品名称"
+                      :readonly="goods.id" v-model="goods.goodsName" placeholder="请输入商品名称（提交后不可变更）"
                       class="goods-info-input"></el-input>
           </el-form-item>
           <el-form-item label="商品类型">
@@ -95,6 +95,8 @@
   </el-container>
 </template>
 <script type="text/javascript">
+    /* eslint-disable no-trailing-spaces */
+
     import {Loading} from 'element-ui'
 
     export default {
@@ -186,7 +188,9 @@
                             console.info('后台返回的数据', res.data)
                             let that = this
                             res.data.code === '1' ? this.$message.success({
-                                message: res.data.data, duration: 1000, onClose: function () {
+                                message: res.data.data,
+                                duration: 1000,
+                                onClose: function () {
                                     that.$emit('refreshList')
                                 }
                             }) : this.$message.error(res.data.data)

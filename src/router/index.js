@@ -7,6 +7,7 @@ import Register from '@/views/home/register'
 import Test from '@/views/home/test'
 import Echarts from '@/views/home/echarts'
 import PageDefault from '@/views/applet/page/page-default.vue'
+import AppletApplyPay from '@/views/applet/applet-apply-pay.vue'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/page-default',
       name: 'page-default',
       component: PageDefault
+    },
+    {
+      path: '/applet-apply-pay',
+      name: 'applet-apply-pay',
+      component: AppletApplyPay
     }
   ]
 })

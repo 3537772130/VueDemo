@@ -10,6 +10,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    // 本地
     proxyTable: {
       '/api': {
         target: 'http://localhost:8080',//设置你调用的接口域名和端口号 别忘了加http
@@ -19,10 +20,19 @@ module.exports = {
         }
       }
     },
-
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8060, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    // 线上
+    // proxyTable: {
+    //   '/api': {
+    //     target: 'http://182.92.172.103:2273',//设置你调用的接口域名和端口号 别忘了加http
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/api': '/api'
+    //     }
+    //   }
+    // },
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
