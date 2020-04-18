@@ -92,8 +92,11 @@
             <el-button type="primary" v-if="scope.row.status == 1 && !scope.row.ifSelling" plain
                        @click="updateAppletSelling(scope.row.id, scope.row.ifSelling)">发布
             </el-button>
+<!--            <el-button type="success" v-if="scope.row.ifOpenPay" plain-->
+<!--                       @click="loadAppletOpenPay(scope.row.id, scope.row.ifOpenPay)">更新支付-->
+<!--            </el-button>-->
             <el-button type="success" v-if="!scope.row.ifOpenPay" plain
-                       @click="loadAppletOpenPay(scope.row.id, scope.row.ifOpenPay)">开通支付
+                       @click="loadAppletOpenPay(scope.row.id, scope.row.ifOpenPay)">支付认证
             </el-button>
             <el-button type="primary" v-if="scope.row.status == 1" plain
                        @click="loadAppletDetails(scope.row.id)">详情
