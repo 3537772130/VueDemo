@@ -7,7 +7,7 @@
   <div>
     <div
          style="display: inline-block;width: 200px;height: 63px;text-align: center;position: absolute;top: 0px;left: 0px;">
-      <img style="position: relative;top: 18px;" src="/api/images/getImage?text=Applet Site&color=16777215&fontFamily=华文隶书">
+      <img style="position: relative;top: 18px;" src="/api/user/setImageText?text=程序坞&color=16777215&fontFamily=华文隶书">
     </div>
     <el-menu
       :default-active="activeIndex"
