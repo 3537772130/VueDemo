@@ -74,11 +74,13 @@
             <div class="remark">活动期间预定数量派发完毕后将不再派发，优惠券活动将自动结束，若不限量派发优惠券，请输入0。(建议设置限量派发)</div>
           </el-form-item>
           <el-form-item label="活动开始日期" prop="activityStart">
-            <el-date-picker type="datetime" placeholder="选择日期" v-model="coupon.activityStart" format="yyyy-MM-dd HH:mm:ss"
+            <el-date-picker type="datetime" placeholder="选择日期" v-model="coupon.activityStart"
+                            :format="format" :value-format="valueFormat" :picker-options="pickerOptionsStart"
                             style="width: 100%;"></el-date-picker>
           </el-form-item>
           <el-form-item label="活动过期时间" prop="activityOver">
-            <el-date-picker type="datetime" placeholder="选择日期" v-model="coupon.activityOver" format="yyyy-MM-dd HH:mm:ss"
+            <el-date-picker type="datetime" placeholder="选择日期" v-model="coupon.activityOver"
+                            :format="format" :value-format="valueFormat" :picker-options="pickerOptionsStart"
                             style="width: 100%;"></el-date-picker>
           </el-form-item>
           <el-form-item label=" ">
@@ -98,6 +100,8 @@
         data () {
             return {
                 loading: false,
+                format: 'yyyy年MM月dd日',
+                valueFormat: 'yyyy/MM/dd',
                 appletList: [],
                 coupon: {
                     couponType: '',
@@ -147,6 +151,11 @@
                     activityOver: [
                         {required: true, message: '请选择活动结束时间', trigger: 'blur'}
                     ]
+                },
+                pickerOptionsStart: {
+                    disabledDate (time) {
+                        return time.getTime() < Date.now() - 8.64e7
+                    }
                 }
             }
         },

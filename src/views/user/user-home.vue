@@ -133,83 +133,83 @@
 </template>
 
 <script type="text/javascript">
-  import userInfo from '@/views/user/user-info.vue'
+    import userInfo from '@/views/user/user-info.vue'
 
-  export default {
-    name: 'user-info',
-    components: {
-      'userInfo': userInfo
-    },
-    data() {
-      return {
-        info: this.$cookies.get('user_info'),
-        loading: false,
-        dialogShow: false
-      }
-    },
-    created() {
+    export default {
+        name: 'user-info',
+        components: {
+            'userInfo': userInfo
+        },
+        data () {
+            return {
+                info: this.$cookies.get('user_info'),
+                loading: false,
+                dialogShow: false
+            }
+        },
+        created () {
 
-    },
-    mounted() {
-      this.selectActivity()
-    },
-    methods: {
-      recoveryInfo() {
-        this.dialogShow = true
-      },
-      updateInfo() {
-        this.info = this.$cookies.get('user_info')
-        this.$emit('updateInfo')
-      },
-      selectActivity() {
-        this.$axios({
-          url: '/api/user/selectUserActivity',
-          method: 'post'
-        }).then(res => {
-          console.info('后台返回的数据', res.data)
-          if (res.data.code === '1') {
-            this.drawActivity(res.data.data)
-          }
-        }).catch(error => {
-          console.info('错误信息', error)
-        })
-      },
-      drawActivity(data) {
-        let activity = this.$echarts.init(document.getElementById('activity'));
-        activity.setOption({
-          title: {
-            text: '最近' + JSON.parse(data.monthJson).length + '个月活跃情况',
-            x: 'center',
-            y: 'top',
-            textStyle: {
-              color: '#ccc',
-              fontStyle: 'normal',
-              fontWeight: 'normal',
-              fontFamily: 'sans-serif',
-              fontSize: 16
+        },
+        mounted () {
+            this.selectActivity()
+        },
+        methods: {
+            recoveryInfo () {
+                this.dialogShow = true
+            },
+            updateInfo () {
+                this.info = this.$cookies.get('user_info')
+                this.$emit('updateInfo')
+            },
+            selectActivity () {
+                this.$axios({
+                    url: '/api/user/selectUserActivity',
+                    method: 'post'
+                }).then(res => {
+                    console.info('后台返回的数据', res.data)
+                    if (res.data.code === '1') {
+                        this.drawActivity(res.data.data)
+                    }
+                }).catch(error => {
+                    console.info('错误信息', error)
+                })
+            },
+            drawActivity (data) {
+                let activity = this.$echarts.init(document.getElementById('activity'))
+                activity.setOption({
+                    title: {
+                        text: '最近' + JSON.parse(data.monthJson).length + '个月活跃情况',
+                        x: 'center',
+                        y: 'top',
+                        textStyle: {
+                            color: '#ccc',
+                            fontStyle: 'normal',
+                            fontWeight: 'normal',
+                            fontFamily: 'sans-serif',
+                            fontSize: 16
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: JSON.parse(data.monthJson)
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name: '活跃度',
+                            type: 'line',
+                            stack: '总量',
+                            data: JSON.parse(data.activityJson)
+                        }
+                    ]
+                })
             }
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: JSON.parse(data.monthJson)
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [
-            {
-              name: '活跃度',
-              type: 'line',
-              stack: '总量',
-              data: JSON.parse(data.activityJson)
-            }
-          ]
-        })
-      }
+        }
     }
-  }
 </script>

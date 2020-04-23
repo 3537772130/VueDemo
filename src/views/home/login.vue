@@ -56,17 +56,19 @@
     <el-main :style="contentStyle">
       <div class="login-div">
         <div class="form-div">
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="login-form">
+          <el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-form">
             <el-form-item prop="mobile">
               <el-input class="input-div" placeholder="请输入账户名" prefix-icon="el-icon-user"
-                        v-model="ruleForm.mobile"></el-input>
+                        v-model="loginForm.mobile" @input="handleClick"></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <el-input type="password" class="input-div" placeholder="请输入密码" prefix-icon="el-icon-lock"
-                        v-model="ruleForm.password" show-password></el-input>
+                        v-model="loginForm.password" show-password></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit('ruleForm')" style="letter-spacing: 5px;">立即登录</el-button>
+              <el-button type="primary" @click="onSubmit('loginForm')"
+                         style="letter-spacing: 5px;">立即登录
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -92,9 +94,9 @@
                     'background-repeat': 'no-repeat',
                     'background-size': 'cover'
                 },
-                ruleForm: {
-                    mobile: '17601301913',
-                    password: '123456'
+                loginForm: {
+                    mobile: '',
+                    password: ''
                 },
                 rules: {
                     mobile: [
@@ -108,6 +110,15 @@
             }
         },
         created () {
+            let that = this
+            document.onkeydown = function (e) {
+                e = window.event || e
+                // 验证在登录界面和按得键是回车键enter
+                if (that.$route.path === '/login' && (e.code === 'Enter' || e.code === 'NumpadEnter')) {
+                    // 登录函数 （handleSubmit2('loginForm2')-登录按钮的点击事件）
+                    that.onSubmit('loginForm')
+                }
+            }
         },
         mounted () {
             this.$refs.headerMenu.setMenuIndex('3')
@@ -120,7 +131,7 @@
                         this.$axios({
                             url: '/api/user/doLogin',
                             method: 'post',
-                            data: this.ruleForm
+                            data: this.loginForm
                         }).then(res => {
                             console.info('后台返回的数据', res.data)
                             if (res.data.code === '1') {
@@ -138,10 +149,14 @@
                             console.info('错误信息', error)
                             this.$global.exitLoad(this, loading, '')
                         })
-                    } else {
-                        this.$message({message: '表单校验失败!', type: 'warning'})
                     }
                 })
+            },
+            handleClick () {
+                try {
+                    this.loginForm.mobile = this.loginForm.mobile.replace(/[^\d]/g, '')
+                } catch (e) {
+                }
             }
         }
     }

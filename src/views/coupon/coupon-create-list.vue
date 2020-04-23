@@ -68,12 +68,14 @@
         <el-table-column align="center" prop="activityOver" label="活动结束日期" width="140"></el-table-column>
         <el-table-column align="center" prop="status" label="审核状态" width="100">
           <template slot-scope="scope">
-            <el-link :underline="false" type="danger" v-if="scope.row.status == -1">未通过</el-link>
-            <el-link :underline="false" type="info" v-if="scope.row.status == 0">待审核</el-link>
-            <el-link :underline="false" type="success" v-if="scope.row.status == 1">已通过</el-link>
+            <el-link :underline="false" type="danger" v-if="scope.row.status == -1">审核未通过</el-link>
+            <el-link :underline="false" target="_blank" v-if="scope.row.status == 0">待审核</el-link>
+            <el-link :underline="false" type="success" v-if="scope.row.status == 1">审核通过</el-link>
             <el-link :underline="false" type="danger" v-if="scope.row.status == 2">已下架</el-link>
+            <el-link :underline="false" type="info" v-if="scope.row.status == 3">已过期</el-link>
           </template>
         </el-table-column>
+        <el-table-column align="center" prop="createTime" label="创建时间" width="140"></el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
             <el-button type="primary" plain @click="loadCouponDetails(scope.row.id, scope.row.couponName)">详情

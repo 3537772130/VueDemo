@@ -51,7 +51,8 @@
             <span>{{scope.row.sellPrice|addZero}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="describeStr" label="描述" :show-overflow-tooltip="true" width="120"></el-table-column>
+        <el-table-column align="center" prop="describeStr" label="描述" :show-overflow-tooltip="true"
+                         width="120"></el-table-column>
         <el-table-column align="center" prop="specsStatus" label="类型状态" width="80">
           <template slot-scope="scope">
             <el-link :underline="false" type="danger" v-if="scope.row.specsStatus == 0">禁用</el-link>
@@ -98,7 +99,7 @@
         components: {
             'goodsSpecs': goodsSpecs
         },
-        data() {
+        data () {
             return {
                 loading: true,
                 showAdd: true,
@@ -117,15 +118,15 @@
                 timestamp: ''
             }
         },
-        created() {
-            let goodsId = this.$cookies.get("goods_id")
+        created () {
+            let goodsId = this.$cookies.get('goods_id')
             this.loadGoodsPage(goodsId)
         },
-        mounted() {
+        mounted () {
         },
         methods: {
-            loadGoodsPage(goodsId){
-                if (goodsId){
+            loadGoodsPage (goodsId) {
+                if (goodsId) {
                     this.specsForm.goodsId = goodsId
                     this.loading = true
                     this.$axios({
@@ -136,10 +137,10 @@
                         console.info('后台返回的数据', res.data)
                         if (res.data.code === '1') {
                             this.showAdd = true
-                        } else if (res.data.code === "-1") {
+                        } else if (res.data.code === '-1') {
                             this.showAdd = false
                         }
-                        this.$cookies.remove("goods-id")
+                        this.$cookies.remove('goods-id')
                         goodsId = null
                         this.specsForm.goodsId = res.data.data
                         this.timestamp = '?' + Date.parse(new Date())
@@ -150,11 +151,11 @@
                     })
                 }
             },
-            indexMethod(index) {
+            indexMethod (index) {
                 let count = (parseInt(this.specsForm.page) - 1) * parseInt(this.specsForm.pageSize)
                 return count + (parseInt(index) + 1)
             },
-            onSubmit() {
+            onSubmit () {
                 this.loading = true
                 this.$axios({
                     url: '/api/user/goods/querySpecsPage',
@@ -166,7 +167,7 @@
                     if (res.data.code === '1') {
                         this.tableData = res.data.data.dataSource
                         this.total = res.data.data.totalCount
-                    } else if (res.data.code === "-1") {
+                    } else if (res.data.code === '-1') {
                         this.$message.error(res.data.data)
                     }
                     this.timestamp = '?' + Date.parse(new Date())
@@ -176,17 +177,17 @@
                     this.$global.exitLoad(this, null, '')
                 })
             },
-            selectList() {
+            selectList () {
                 this.specsForm.page = 1
                 this.onSubmit()
             },
-            handleCurrentChange(val) {
+            handleCurrentChange (val) {
                 this.specsForm.page = val
                 this.onSubmit()
             },
-            loadGoodsSpecs(id) {
+            loadGoodsSpecs (id) {
                 this.showInfo = true
-                let goodsName = this.$cookies.get('goods_name');
+                let goodsName = this.$cookies.get('goods_name')
                 if (id && id === '0') {
                     this.infoTitle = goodsName + ' - 添加规格信息'
                 } else {
@@ -196,11 +197,11 @@
                 this.$cookies.set('goods_id', this.specsForm.goodsId)
                 this.$refs.goodsSpecs.loadGoodsSpecs(id, this.specsForm.goodsId)
             },
-            refreshList() {
+            refreshList () {
                 this.showInfo = false
                 this.onSubmit()
             },
-            shiftSort(id, sort) {
+            shiftSort (id, sort) {
                 this.loading = true
                 this.$axios({
                     url: '/api/user/goods/updateGoodsSpecsIndex',
@@ -209,7 +210,7 @@
                 }).then(res => {
                     if (res.data.code === '1') {
                         this.onSubmit()
-                    } else if (res.data.code === "-1") {
+                    } else if (res.data.code === '-1') {
                         this.$message.error(res.data.data)
                         this.$global.exitLoad(this, null, res.data)
                     }

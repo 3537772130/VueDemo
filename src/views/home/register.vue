@@ -52,7 +52,8 @@
       <div class="c-form-div">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="用户名" prop="mobile" :label-width="formLabelWidth" class="form-info-div">
-            <el-input type="number" v-model="ruleForm.mobile" placeholder="请输入手机号码" class="form-info-val"></el-input>
+            <el-input type="number" v-model="ruleForm.mobile" placeholder="请输入手机号码"
+                      class="form-info-val" @input="handleClick"></el-input>
           </el-form-item>
           <el-form-item label="昵称" prop="nickName" :label-width="formLabelWidth" class="form-info-div">
             <el-input v-model="ruleForm.nickName" minlength="1" maxlength="20" placeholder="请输入昵称"
@@ -71,7 +72,7 @@
           </el-form-item>
           <el-form-item label="验证码" prop="authCode" :label-width="formLabelWidth" class="form-info-div">
             <el-input v-model.number="ruleForm.authCode" maxlength="6" placeholder="请输入验证码"
-                      class="form-info-val"></el-input>
+                      class="form-info-val" @input="handleClick"></el-input>
             <el-button style="width: 120px;" plain @click="sendSms">发送验证码</el-button>
           </el-form-item>
           <el-form-item label="登录密码" prop="password" :label-width="formLabelWidth" class="form-info-div">
@@ -85,8 +86,8 @@
                       show-password></el-input>
           </el-form-item>
           <el-form-item label="推广码" prop="extensionCode" :label-width="formLabelWidth" class="form-info-div">
-            <el-input type="number" v-model="ruleForm.extensionCode" maxlength="20" placeholder="非必填"
-                      class="form-info-val"></el-input>
+            <el-input v-model="ruleForm.extensionCode" maxlength="20" placeholder="非必填"
+                      class="form-info-val" @input="handleClick"></el-input>
           </el-form-item>
           <el-form-item :label-width="formLabelWidth" class="form-info-div">
             <el-button class="sub-but" type="primary" @click="submitForm('ruleForm')">立即注册</el-button>
@@ -239,6 +240,20 @@
                     console.info('错误信息', error)
                     this.$global.exitLoad(this, loading, '')
                 })
+            },
+            handleClick () {
+                try {
+                    this.ruleForm.mobile = this.ruleForm.mobile.replace(/[^\d]/g, '')
+                } catch (e) {
+                }
+                try {
+                    this.ruleForm.authCode = this.ruleForm.authCode.replace(/[^\d]/g, '')
+                } catch (e) {
+                }
+                try {
+                    this.ruleForm.extensionCode = this.ruleForm.extensionCode.replace(/[^\d]/g, '')
+                } catch (e) {
+                }
             }
         }
     }

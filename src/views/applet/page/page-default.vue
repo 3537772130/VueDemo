@@ -37,6 +37,8 @@
   </div>
 </template>
 <script file="text/javascript">
+    /* eslint-disable no-trailing-spaces */
+
     import storeMain from '@/views/applet/page/store/store-main.vue'
 
     export default {
@@ -75,7 +77,9 @@
                         this.$cookies.set('default_page_id', this.pageList[0].pageId)
                     } else {
                         this.$message.error({
-                            message: res.data.data, duration: 2000, onClose: function () {
+                            message: res.data.data,
+                            duration: 2000,
+                            onClose: function () {
                                 window.close()
                             }
                         })

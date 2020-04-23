@@ -57,6 +57,9 @@
       <div v-if="item.name === '3-2'" class="tab-div-content-page">
         <goodsInfoList></goodsInfoList>
       </div>
+      <div v-if="item.name === '3-3'" class="tab-div-content-page">
+        <recommendList></recommendList>
+      </div>
       <!--配置管理-->
       <div v-if="item.name === '4-1'" class="tab-div-content-page">
         <couponCreateList></couponCreateList>
@@ -71,6 +74,7 @@
   import appletApplyList from '@/views/applet/applet-apply-list.vue'
   import goodsInfoList from '@/views/goods/goods-info-list.vue'
   import goodsTypeList from '@/views/goods/type/goods-type-list.vue'
+  import recommendList from '@/views/goods/recommend/recommend-list.vue'
   import couponCreateList from '@/views/coupon/coupon-create-list.vue'
   import couponMyList from '@/views/coupon/coupon-my-list.vue'
   import appletFreightDeploy from '@/views/applet/freightDeploy/applet-freight-deploy-list.vue'
@@ -84,6 +88,7 @@
         'appletApplyList': appletApplyList,
         'goodsInfoList': goodsInfoList,
         'goodsTypeList': goodsTypeList,
+        'recommendList': recommendList,
         'couponCreateList': couponCreateList,
         'couponMyList': couponMyList,
         'appletFreightDeploy': appletFreightDeploy

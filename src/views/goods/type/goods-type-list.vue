@@ -121,7 +121,7 @@
         },
         created () {
             this.$axios({
-                url: '/api/user/goods/queryAppletToMap',
+                url: '/api/user/applet/queryAppletToMap',
                 method: 'post'
             }).then(res => {
                 if (res.data.code === '1') {

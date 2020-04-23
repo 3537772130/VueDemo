@@ -86,7 +86,7 @@
   <el-container :style="{height: bodyHeight}">
     <el-aside width="200px" style="background-color: rgb(84, 92, 100)">
       <div style="width: 200px;height: 63px;display: inline-block;">
-<!--        <img style="position: relative;top: -60px;" src="/api/image/getImage?text=applet site&color=16777215&fontFamily=华文隶书">-->
+        <!--        <img style="position: relative;top: -60px;" src="/api/image/getImage?text=applet site&color=16777215&fontFamily=华文隶书">-->
       </div>
       <el-menu
         :default-active="activeIndex"
@@ -115,135 +115,139 @@
   </el-container>
 </template>
 <script>
-  import headerMenu from '@/views/common/header-menu.vue'
-  import tabsContent from '@/views/common/tabs-content.vue'
+    import headerMenu from '@/views/common/header-menu.vue'
+    import tabsContent from '@/views/common/tabs-content.vue'
 
-  export default {
-    name: 'main-info',
-    components: {
-      'headerMenu': headerMenu,
-      'tabsContent': tabsContent
-    },
-    data () {
-      return {
-        bodyHeight: `${document.documentElement.clientHeight}` + 'px',
-        info: this.$cookies.get('user_info'),
-        activeIndex: '',
-        menuList: [
-          {
-            index: 'm-1',
-            title: '个人管理',
-            icon: 'el-icon-user-solid',
-            items: [
-              {
-                index: '1-1',
-                title: '登录日志'
-              },
-                {
-                    index: '1-2',
-                    title: '我的优惠券'
-                }
-            ]
-          },
-          {
-            index: 'm-2',
-            title: '小程序管理',
-            icon: 'el-icon-menu',
-            items: [
-              {
-                index: '2-1',
-                title: '小程序申请列表'
-              },
-              {
-                index: '2-2',
-                title: '小程序管理列表'
-              },
-              {
-                index: '2-3',
-                title: '小程序运费配置'
-              }
-            ]
-          },
-          {
-            index: 'm-3',
-            title: '商品管理',
-            icon: 'el-icon-s-goods',
-            items: [
-              {
-                index: '3-1',
-                title: '商品类型列表'
-              },
-              {
-                index: '3-2',
-                title: '商品列表'
-              }
-            ]
-          },
-            {
-                index: 'm-4',
-                title: '配置管理',
-                icon: 'el-icon-discount',
-                items: [
+    export default {
+        name: 'main-info',
+        components: {
+            'headerMenu': headerMenu,
+            'tabsContent': tabsContent
+        },
+        data () {
+            return {
+                bodyHeight: `${document.documentElement.clientHeight}` + 'px',
+                info: this.$cookies.get('user_info'),
+                activeIndex: '',
+                menuList: [
                     {
-                        index: '4-1',
-                        title: '创建优惠券'
+                        index: 'm-1',
+                        title: '个人管理',
+                        icon: 'el-icon-user-solid',
+                        items: [
+                            {
+                                index: '1-1',
+                                title: '登录日志'
+                            },
+                            {
+                                index: '1-2',
+                                title: '我的优惠券'
+                            }
+                        ]
+                    },
+                    {
+                        index: 'm-2',
+                        title: '小程序管理',
+                        icon: 'el-icon-menu',
+                        items: [
+                            {
+                                index: '2-1',
+                                title: '小程序申请列表'
+                            },
+                            {
+                                index: '2-2',
+                                title: '小程序管理列表'
+                            },
+                            {
+                                index: '2-3',
+                                title: '小程序运费配置'
+                            }
+                        ]
+                    },
+                    {
+                        index: 'm-3',
+                        title: '商品管理',
+                        icon: 'el-icon-s-goods',
+                        items: [
+                            {
+                                index: '3-1',
+                                title: '商品类型'
+                            },
+                            {
+                                index: '3-2',
+                                title: '商品列表'
+                            },
+                            {
+                                index: '3-3',
+                                title: '商品推荐'
+                            }
+                        ]
+                    },
+                    {
+                        index: 'm-4',
+                        title: '配置管理',
+                        icon: 'el-icon-discount',
+                        items: [
+                            {
+                                index: '4-1',
+                                title: '创建优惠券'
+                            }
+                        ]
                     }
                 ]
             }
-        ]
-      }
-    },
-    created () {
-      this.$axios({
-        url: '/api/user/checkLogin',
-        method: 'post'
-      }).then(res => {
-        // console.info('后台返回的数据', res.data)
-        if (res.data.code !== '1') {
-          this.$cookies.remove('user_info')
-          this.$router.push({path: '/login'})
-        }
-      }).catch(error => {
-        console.info('错误信息', error)
-      })
-    },
-    mounted () {
-      this.$refs.headerMenu.setMenuIndex('5-1')
-    },
-    methods: {
-      updateInfo (index) {
-        if (index) {
-          if (index === '0') {
-            this.activeIndex = this.activeIndex === '0' ? '' : '0'
-          } else {
-            this.activeIndex = index
-          }
-        } else {
-          this.$refs.headerMenu.updateInfo()
-        }
-      },
-      handleSelect (key, keyPath) {
-        // console.log(key, keyPath)
-        let keyTitle = ''
-        let list = this.menuList
-        for (let i = 0; i < list.length; i++) {
-          let items = list[i].items
-          for (let k = 0; k < items.length; k++) {
-            let item = items[k]
-            if (item.index === key) {
-              keyTitle = item.title
-              break
+        },
+        created () {
+            this.$axios({
+                url: '/api/user/checkLogin',
+                method: 'post'
+            }).then(res => {
+                // console.info('后台返回的数据', res.data)
+                if (res.data.code !== '1') {
+                    this.$cookies.remove('user_info')
+                    this.$router.push({path: '/login'})
+                }
+            }).catch(error => {
+                console.info('错误信息', error)
+            })
+        },
+        mounted () {
+            this.$refs.headerMenu.setMenuIndex('5-1')
+        },
+        methods: {
+            updateInfo (index) {
+                if (index) {
+                    if (index === '0') {
+                        this.activeIndex = this.activeIndex === '0' ? '' : '0'
+                    } else {
+                        this.activeIndex = index
+                    }
+                } else {
+                    this.$refs.headerMenu.updateInfo()
+                }
+            },
+            handleSelect (key, keyPath) {
+                // console.log(key, keyPath)
+                let keyTitle = ''
+                let list = this.menuList
+                for (let i = 0; i < list.length; i++) {
+                    let items = list[i].items
+                    for (let k = 0; k < items.length; k++) {
+                        let item = items[k]
+                        if (item.index === key) {
+                            keyTitle = item.title
+                            break
+                        }
+                    }
+                }
+                this.$refs.tabsContent.addTab(key, keyTitle)
+            },
+            handleSOpen (key, keyPath) {
+                // console.log("打开：", key, keyPath)
+            },
+            handleClose (key, keyPath) {
+                // console.log("关闭：", key, keyPath)
             }
-          }
         }
-        this.$refs.tabsContent.addTab(key, keyTitle)
-      },
-      handleSOpen (key, keyPath) {
-        // console.log("打开：", key, keyPath)
-      },
-      handleClose (key, keyPath) {
-        // console.log("关闭：", key, keyPath)
-      }
     }
-  }
 </script>

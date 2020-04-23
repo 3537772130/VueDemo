@@ -13,7 +13,8 @@
       <el-form id="applet-form" :inline="true" :model="form" class="demo-form-inline">
         <el-form-item label="小程序">
           <el-select v-model="form.appletId" placeholder="请选择小程序" @change="loadTableData()">
-            <el-option v-for="appletInfo in appletInfos" :key="appletInfo.id" :label="appletInfo.appletName" :value="appletInfo.id"></el-option>
+            <el-option v-for="(item, index) in appletList" :key="index" :label="item.name"
+                       :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -55,7 +56,7 @@
     export default {
         name: 'applet-freight-deploy-list',
         components: {
-          AppletFreightDeploy
+            AppletFreightDeploy
         },
         data () {
             return {
@@ -72,102 +73,105 @@
                 showInfo: false,
                 infoTitle: '',
                 timestamp: '',
-                appletInfos: null
+                appletList: []
             }
         },
         created () {
-            this.loadApplets()
+            this.loadAppletMap()
         },
         methods: {
             indexMethod (index) {
                 let count = (parseInt(this.form.page) - 1) * parseInt(this.form.pageSize)
                 return count + (parseInt(index) + 1)
             },
-            loadApplets () {
-              let loading = Loading.service({fullscreen: true, text: '加载中'})
-              this.$axios({
-                url: '/api/user/applet/queryApplets',
-                method: 'post'
-              }).then(res => {
-                this.$global.setTableHeight(this, 'applet-form')
-                if (res.data.code === '1') {
-                  this.appletInfos = res.data.data
-                } else if (res.data.code === '-1') {
-                  this.$message.error(res.data.data)
-                }
-                this.$global.exitLoad(this, loading, res.data)
-              }).catch(error => {
-                console.info('错误信息', error)
-                this.$global.exitLoad(this, loading, '')
-              })
+            loadAppletMap () {
+                let loading = Loading.service({fullscreen: true, text: '加载中'})
+                this.$axios({
+                    url: '/api/user/applet/queryAppletToMap',
+                    method: 'post'
+                }).then(res => {
+                    if (res.data.code === '1') {
+                        this.appletList = res.data.data
+                        this.form.appletId = res.data.data[0].id
+                        this.loadTableData()
+                    } else if (res.data.code === '-1') {
+                        this.$message.error(res.data.data)
+                    }
+                    this.$global.exitLoad(this, loading, res.data)
+                }).catch(error => {
+                    console.info('错误信息', error)
+                    this.$global.exitLoad(this, loading, '')
+                })
             },
             loadTableData () {
-              let loading = Loading.service({fullscreen: true, text: '加载中'})
-              this.$axios({
-                url: '/api/user/applet/freightDeploy/queryFreightDeploysByAppletId',
-                method: 'post',
-                data: this.form
-              }).then(res => {
-                this.$global.setTableHeight(this, 'applet-form')
-                if (res.data.code === '1') {
-                  this.tableData = res.data.data.dataSource
-                  this.total = res.data.data.totalCount
-                } else if (res.data.code === '-1') {
-                  this.$message.error(res.data.data)
-                }
-                this.$global.exitLoad(this, loading, res.data)
-              }).catch(error => {
-                console.info('错误信息', error)
-                this.$global.exitLoad(this, loading, '')
-              })
+                let loading = Loading.service({fullscreen: true, text: '加载中'})
+                this.$axios({
+                    url: '/api/user/applet/freightDeploy/queryFreightDeploysByAppletId',
+                    method: 'post',
+                    data: this.form
+                }).then(res => {
+                    this.$global.setTableHeight(this, 'applet-form')
+                    if (res.data.code === '1') {
+                        this.tableData = res.data.data.dataSource
+                        this.total = res.data.data.totalCount
+                    } else if (res.data.code === '-1') {
+                        this.$message.error(res.data.data)
+                    }
+                    this.$global.exitLoad(this, loading, res.data)
+                }).catch(error => {
+                    console.info('错误信息', error)
+                    this.$global.exitLoad(this, loading, '')
+                })
             },
             handleCurrentChange (val) {
                 this.form.page = val
                 this.loadTableData()
             },
             loadFreightDeploy (id) {
-              if (!this.form.appletId) {
-                this.$message.error('请选择小程序')
-                return
-              }
-              this.$cookies.set('appletId', this.form.appletId)
-              this.showInfo = true
-              if (!id) {
-                this.infoTitle = '添加运费配置'
-              } else {
-                this.infoTitle = '修改运费配置'
-                if (this.$refs.AppletFreightDeploy) {
-                  this.$refs.AppletFreightDeploy.loadFreightDeploy(id)
-                } else {
-                  this.$cookies.set('freight_deploy_id', id)
+                if (!this.form.appletId) {
+                    this.$message.error('请选择小程序')
+                    return
                 }
-              }
+                this.$cookies.set('appletId', this.form.appletId)
+                this.showInfo = true
+                if (!id) {
+                    this.infoTitle = '添加运费配置'
+                } else {
+                    this.infoTitle = '修改运费配置'
+                    if (this.$refs.AppletFreightDeploy) {
+                        this.$refs.AppletFreightDeploy.loadFreightDeploy(id)
+                    } else {
+                        this.$cookies.set('freight_deploy_id', id)
+                    }
+                }
             },
             refreshList () {
-              this.showInfo = false
-              this.loadTableData()
+                this.showInfo = false
+                this.loadTableData()
             },
             deleteFreightDeploy (id) {
-              this.$confirm('确认删除运费配置吗？', '温馨提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                let loading = Loading.service({fullscreen: true, text: '正在加载'})
-                this.$axios({
-                  url: '/api/user/applet/freightDeploy/deleteFreightDeploy',
-                  method: 'post',
-                  data: {id: id}
-                }).then(res => {
-                  let that = this
-                  res.data.code === '1' ? this.$message.success({
-                    message: res.data.data, duration: 1000, onClose: function () {
-                      that.loadTableData()
-                    }
-                  }) : this.$message.error(res.data.data)
-                  this.$global.exitLoad(this, loading, res.data)
+                this.$confirm('确认删除运费配置吗？', '温馨提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let loading = Loading.service({fullscreen: true, text: '正在加载'})
+                    this.$axios({
+                        url: '/api/user/applet/freightDeploy/deleteFreightDeploy',
+                        method: 'post',
+                        data: {id: id}
+                    }).then(res => {
+                        let that = this
+                        res.data.code === '1' ? this.$message.success({
+                            message: res.data.data,
+                            duration: 1000,
+                            onClose: function () {
+                                that.loadTableData()
+                            }
+                        }) : this.$message.error(res.data.data)
+                        this.$global.exitLoad(this, loading, res.data)
+                    })
                 })
-              })
             }
         }
     }
