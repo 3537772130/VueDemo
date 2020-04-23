@@ -47,9 +47,6 @@
       <div v-if="item.name === '2-2'" class="tab-div-content-page">
         <appletList></appletList>
       </div>
-      <div v-if="item.name === '2-3'" class="tab-div-content-page">
-        <appletFreightDeploy></appletFreightDeploy>
-      </div>
       <!--商品管理-->
       <div v-if="item.name === '3-1'" class="tab-div-content-page">
         <goodsTypeList></goodsTypeList>
@@ -63,6 +60,9 @@
       <!--配置管理-->
       <div v-if="item.name === '4-1'" class="tab-div-content-page">
         <couponCreateList></couponCreateList>
+      </div>
+      <div v-if="item.name === '4-2'" class="tab-div-content-page">
+        <appletFreightDeploy></appletFreightDeploy>
       </div>
     </el-tab-pane>
   </el-tabs>
