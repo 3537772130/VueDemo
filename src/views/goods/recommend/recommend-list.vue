@@ -179,13 +179,13 @@
                 } else {
                     this.infoTitle = '修改商品推荐'
                 }
-                this.$cookies.set('applet_recommend_goods_id', id)
-                // try {
-                //     this.$refs.goodsInfo.loadRecommendDetails(id)
-                // } catch (e) {
-                // }
+                try {
+                    this.$refs.recommendDetails.loadRecommendDetails(id)
+                } catch (e) {
+                    this.$cookies.set('applet_recommend_goods_id', id)
+                }
             },
-            refreshList () {
+            loadRecommendDetails () {
                 this.infoShow = false
                 this.selectList()
             }

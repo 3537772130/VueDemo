@@ -139,62 +139,62 @@
 </template>
 
 <script>
-  import headerMenu from '@/views/common/header-menu.vue'
+    import headerMenu from '@/views/common/header-menu.vue'
 
-  export default {
-    name: 'index',
-    components: {
-      'headerMenu': headerMenu
-    },
-    data() {
-      return {
-        paneHeight: `${document.documentElement.clientHeight / 2}`,
-        backTopStatus: false,
-        carouselImg1: [
-          '/static/images/home/computer/computer-1.jpg',
-          '/static/images/home/computer/computer-2.jpg',
-          '/static/images/home/computer/computer-3.jpg',
-          '/static/images/home/computer/computer-4.jpg',
-          '/static/images/home/computer/computer-5.jpg',
-          '/static/images/home/computer/computer-6.jpg'
-        ],
-        teams: [
-          {
-            name: '周XX',
-            introduce: 'AppletSite是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
-            position: 'XX经理',
-            avatar: '/static/images/user/default-avatar.jpeg'
-          },
-          {
-            name: '赵XX',
-            introduce: 'AppletSite是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
-            position: 'XX负责人',
-            avatar: '/static/images/user/default-avatar.jpeg'
-          }
-        ]
-      }
-    },
-    created() {
-    },
-    mounted() {
-      window.addEventListener('scroll', this.scrollTop)
-    },
-    methods: {
-      scrollTop() {
-        let scroll = document.documentElement.scrollTop || document.body.scrollTop
-        let height = document.documentElement.clientHeight
-        if (scroll > height / 2) {
-          this.backTopStatus = true
-        } else {
-          this.backTopStatus = false
+    export default {
+        name: 'index',
+        components: {
+            'headerMenu': headerMenu
+        },
+        data () {
+            return {
+                paneHeight: `${document.documentElement.clientHeight / 2}`,
+                backTopStatus: false,
+                carouselImg1: [
+                    '/static/images/home/computer/computer-1.jpg',
+                    '/static/images/home/computer/computer-2.jpg',
+                    '/static/images/home/computer/computer-3.jpg',
+                    '/static/images/home/computer/computer-4.jpg',
+                    '/static/images/home/computer/computer-5.jpg',
+                    '/static/images/home/computer/computer-6.jpg'
+                ],
+                teams: [
+                    {
+                        name: '周XX',
+                        introduce: 'AppletSite是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
+                        position: 'XX经理',
+                        avatar: '/static/images/user/default-avatar.jpeg'
+                    },
+                    {
+                        name: '赵XX',
+                        introduce: 'AppletSite是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
+                        position: 'XX负责人',
+                        avatar: '/static/images/user/default-avatar.jpeg'
+                    }
+                ]
+            }
+        },
+        created () {
+        },
+        mounted () {
+            window.addEventListener('scroll', this.scrollTop)
+        },
+        methods: {
+            scrollTop () {
+                let scroll = document.documentElement.scrollTop || document.body.scrollTop
+                let height = document.documentElement.clientHeight
+                if (scroll > height / 2) {
+                    this.backTopStatus = true
+                } else {
+                    this.backTopStatus = false
+                }
+            },
+            backTop () {
+                document.documentElement.scrollTop = 0
+                document.body.scrollTop = 0
+            }
         }
-      },
-      backTop() {
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-      }
     }
-  }
 </script>
 
 <style scoped>

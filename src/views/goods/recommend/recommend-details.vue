@@ -124,13 +124,13 @@
             <el-input class="recommend-goods-input" placeholder="请选择绑定商品" v-model="goodsName" readonly></el-input>
           </el-form-item>
           <el-form-item label="开始日期" prop="startTime">
-            <el-date-picker v-model="info.startTime" placeholder="请选择日期" :format="format"
+            <el-date-picker type="date" v-model="info.startTime" placeholder="请选择日期" :format="format"
                             :value-format="valueFormat" :picker-options="pickerOptionsStart"
                             class="recommend-goods-input">
             </el-date-picker>
           </el-form-item>
           <el-form-item label="截止日期" prop="expireTime">
-            <el-date-picker v-model="info.expireTime" placeholder="请选择日期" :format="format"
+            <el-date-picker type="date" v-model="info.expireTime" placeholder="请选择日期" :format="format"
                             :value-format="valueFormat" :picker-options="pickerOptionsStart"
                             class="recommend-goods-input">
             </el-date-picker>
@@ -214,7 +214,7 @@
                         method: 'post',
                         data: {id: id}
                     }).then(res => {
-                        this.$cookies.remove('applet_info_goods_id')
+                        this.$cookies.remove('applet_recommend_goods_id')
                         if (res.data.code === '1') {
                             let data = res.data.data
                             this.info = data.info
@@ -241,7 +241,6 @@
                     }
                 }).catch(error => {
                     console.info('错误信息', error)
-                    this.$global.exitLoad(this, null, '')
                 })
             },
             onSubmit () {
@@ -259,7 +258,7 @@
                                 message: res.data.data,
                                 duration: 1000,
                                 onClose: function () {
-                                    that.$emit('refreshList')
+                                    that.$emit('loadRecommendDetails')
                                 }
                             }) : this.$message.error(res.data.data)
                             this.$global.exitLoad(this, loading, res.data)

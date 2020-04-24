@@ -5,12 +5,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'App',
-    data() {
-      return {}
+    export default {
+        name: 'App',
+        created () {
+            let ip = returnCitySN['cip']
+            this.$cookies.set('ip_address', ip)
+            console.info('当前客户端外网IP：' + ip)
+        }
     }
-  }
 </script>
 
 <style>
@@ -56,7 +58,7 @@
     padding: 0px 20px 20px 20px;
   }
 
-  form{
+  form {
     text-align: left;
   }
 
