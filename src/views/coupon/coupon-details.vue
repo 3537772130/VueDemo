@@ -33,6 +33,10 @@
             <div class="info-div" v-if="coupon.couponType === 2">满减优惠券</div>
             <div class="info-div" v-if="coupon.couponType === 3">点对点优惠券</div>
           </el-form-item>
+          <el-form-item label="获取方式" prop="gainType">
+            <div class="info-div" v-if="coupon.gainType === 1">用户主动获取</div>
+            <div class="info-div" v-if="coupon.gainType === 2">用户被动赠送</div>
+          </el-form-item>
           <br>
           <el-form-item label="优惠券名称" prop="couponName">
             <div class="info-div">{{coupon.couponName}}</div>
@@ -53,24 +57,28 @@
             <div class="info-div">满 {{coupon.usePrice}}元可用</div>
           </el-form-item>
           <el-form-item label="预派发数量" prop="makeIssueNum">
-            <div class="info-div">{{coupon.makeIssueNum}} 张</div>
+            <div class="info-div">{{coupon.makeIssueNum > 0 ? coupon.makeIssueNum + ' 张' : '不限量'}}</div>
           </el-form-item>
           <el-form-item label="已派发数量" prop="alreadyIssueNum">
             <div class="info-div">{{coupon.alreadyIssueNum}} 张</div>
           </el-form-item>
-          <el-form-item label="活动开始日期" prop="activityStart">
+          <el-form-item label="活动日期" prop="activityStart">
             <div class="info-div">{{coupon.activityStart}}</div>
           </el-form-item>
-          <el-form-item label="活动过期时间" prop="activityOver">
+          <el-form-item label="截止日期" prop="activityOver">
             <div class="info-div">{{coupon.activityOver}}</div>
           </el-form-item>
           <el-form-item label="审核状态" prop="status">
             <div class="info-div">
               <el-link :underline="false" type="danger" v-if="coupon.status == -1">未通过</el-link>
-              <el-link :underline="false" type="info" v-if="coupon.status == 0">待审核</el-link>
+              <el-link :underline="false" target="_blank" v-if="coupon.status == 0">待审核</el-link>
               <el-link :underline="false" type="success" v-if="coupon.status == 1">已通过</el-link>
               <el-link :underline="false" type="danger" v-if="coupon.status == 2">已下架</el-link>
+              <el-link :underline="false" type="info" v-if="coupon.status == 3">已失效</el-link>
             </div>
+          </el-form-item>
+          <el-form-item label="创建时间" prop="createTime">
+            <div class="info-div">{{coupon.createTime}}</div>
           </el-form-item>
         </el-form>
       </div>

@@ -64,8 +64,8 @@
         </el-table-column>
         <el-table-column align="center" prop="makeIssueNum" label="预派发数量" width="120"></el-table-column>
         <el-table-column align="center" prop="alreadyIssueNum" label="已派发数量" width="120"></el-table-column>
-        <el-table-column align="center" prop="activityStart" label="活动开始日期" width="140"></el-table-column>
-        <el-table-column align="center" prop="activityOver" label="活动结束日期" width="140"></el-table-column>
+        <el-table-column align="center" prop="activityStart" label="活动日期" width="140"></el-table-column>
+        <el-table-column align="center" prop="activityOver" label="截止日期" width="140"></el-table-column>
         <el-table-column align="center" prop="status" label="审核状态" width="100">
           <template slot-scope="scope">
             <el-link :underline="false" type="danger" v-if="scope.row.status == -1">审核未通过</el-link>
