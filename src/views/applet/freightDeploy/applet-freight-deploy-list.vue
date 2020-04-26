@@ -1,6 +1,6 @@
 <style type="text/css">
   .dialog .el-dialog {
-    width: 480px;
+    width: 700px;
   }
 
   .dialog > .el-dialog__body {
@@ -18,14 +18,17 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="success" @click="loadFreightDeploy(null)">添加</el-button>
+          <el-button type="success" @click="loadFreightDeploy('0')">添加</el-button>
         </el-form-item>
       </el-form>
       <el-table :data="tableData" :height="tableHeight" stripe style="width: 100%">
-        <el-table-column align="center" type="index" :index="indexMethod" label="序号"></el-table-column>
-        <el-table-column align="center" prop="minimum" label="最小数（米）"></el-table-column>
-        <el-table-column align="center" prop="maximum" label="最大数（米）"></el-table-column>
-        <el-table-column align="center" prop="freight" label="运费（元）" width="180"></el-table-column>
+        <el-table-column align="center" type="index" :index="indexMethod" label="序号" width="50"></el-table-column>
+        <el-table-column align="center" prop="title" label="标题" width="220"></el-table-column>
+        <el-table-column align="center" prop="minimum" label="开始距离（米）" width="140"></el-table-column>
+        <el-table-column align="center" prop="maximum" label="截止距离（米）" width="140"></el-table-column>
+        <el-table-column align="center" prop="freight" label="运费（元）" width="120"></el-table-column>
+        <el-table-column align="center" prop="exemptAmount" label="免额限制（元）" width="140"></el-table-column>
+        <el-table-column align="center" prop="updateTime" label="更新时间" width="140"></el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
             <el-button type="primary" @click="loadFreightDeploy(scope.row.id)">修改</el-button>
@@ -132,17 +135,18 @@
                     this.$message.error('请选择小程序')
                     return
                 }
-                this.$cookies.set('appletId', this.form.appletId)
+                this.$cookies.set('freight_applet_id', this.form.appletId)
+                this.$cookies.set('freight_applet_list', JSON.stringify(this.appletList))
                 this.showInfo = true
-                if (!id) {
+                if (id !== '0') {
                     this.infoTitle = '添加运费配置'
                 } else {
                     this.infoTitle = '修改运费配置'
-                    if (this.$refs.AppletFreightDeploy) {
-                        this.$refs.AppletFreightDeploy.loadFreightDeploy(id)
-                    } else {
-                        this.$cookies.set('freight_deploy_id', id)
-                    }
+                }
+                try {
+                    this.$refs.AppletFreightDeploy.loadFreightDeploy(id)
+                } catch (e) {
+                    this.$cookies.set('freight_deploy_id', id)
                 }
             },
             refreshList () {
