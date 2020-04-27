@@ -18,8 +18,8 @@
       text-color="#fff"
       active-text-color="#409EFF" :style="menuWidth">
       <el-menu-item index="1">首页</el-menu-item>
-      <el-menu-item index="2">前往TEST</el-menu-item>
-      <el-menu-item index="6">ECHARTS</el-menu-item>
+<!--      <el-menu-item index="2">前往TEST</el-menu-item>-->
+<!--      <el-menu-item index="6">ECHARTS</el-menu-item>-->
       <el-menu-item index="3" v-if="!loginStatus">登录</el-menu-item>
       <el-menu-item index="4">立刻注册</el-menu-item>
       <el-submenu index="5" v-if="loginStatus" @click.native="handleSelect('5-1','5')">

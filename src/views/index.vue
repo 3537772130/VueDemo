@@ -25,7 +25,7 @@
       <el-col :span="24">
         <div class="grid-content" style="height: 600px;">
           <el-divider><span class="server-title">客户至上 , 我们致力于服务</span></el-divider>
-          <div class="server-describe">设计精美和易于修改是AppletSite的两大特点</div>
+          <div class="server-describe">设计精美和易于修改是程序坞的两大特点</div>
           <div class="server-introduce">
             <div class="introduce">
               <div class="img"><img src="/static/images/icon/qq.png"></div>
@@ -52,7 +52,7 @@
       <el-col :span="24">
         <div class="grid-content" style="height: 800px;">
           <el-divider><span class="advantage-title">平台三大优势</span></el-divider>
-          <div class="advantage-describe">无与伦比的设计感是AppletSite为您带来的一份承诺</div>
+          <div class="advantage-describe">无与伦比的设计感是程序坞为您带来的一份承诺</div>
           <div class="advantage-introduce">
             <div class="introduce">
               <div class="img"><img src="/static/images/icon/computer.png"></div>
@@ -160,15 +160,15 @@
                 ],
                 teams: [
                     {
-                        name: '周XX',
-                        introduce: 'AppletSite是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
-                        position: 'XX经理',
+                        name: 'Mr.周',
+                        introduce: '程序坞是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
+                        position: '项目经理',
                         avatar: '/static/images/user/default-avatar.jpeg'
                     },
                     {
-                        name: '赵XX',
-                        introduce: 'AppletSite是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
-                        position: 'XX负责人',
+                        name: 'Mr.戴',
+                        introduce: '程序坞是响应式建站专家，拥有全球最领先的屏幕界面智能识别技术，实现所有建站功能组件在多种屏幕下的完美呈现，真正让您的桌面/平板/手机3个网站同步生成，还可连接微信公众平台，创建您的微站。当今最领先的响应式自助建站平台，我们的流线式网页布局设计方案和可视化图文内容编辑模式让网站制作和维护成为一件轻松惬意的事。无论您是普通互联网用户， 还是专业网站制作人员，都能使用起飞页设计出最具专业水准的网站。',
+                        position: '负责人',
                         avatar: '/static/images/user/default-avatar.jpeg'
                     }
                 ]
