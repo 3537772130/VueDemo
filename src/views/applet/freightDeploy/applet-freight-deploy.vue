@@ -83,7 +83,7 @@
             <el-input v-model.number="form.maximum" placeholder="请输入截止距离（米）" maxlength="7"
                       @input="handleClick"></el-input>
           </el-form-item>
-          <el-form-item label="运费">
+          <el-form-item label="快递费">
             <el-input placeholder="请输入运费（元）" v-model.number="form.freight" maxlength="4"
                       @input="handleClick"></el-input>
           </el-form-item>
@@ -151,8 +151,8 @@
                         {type: 'number', min: 1, max: 9999999, message: '截止距离有效值为0-9999999', trigger: 'blur'}
                     ],
                     freight: [
-                        {required: true, message: '运费不能为空', trigger: 'blur'},
-                        {type: 'number', min: 1, max: 9999, message: '运费有效值为0-9999', trigger: 'blur'}
+                        {required: true, message: '快递费不能为空', trigger: 'blur'},
+                        {type: 'number', min: 1, max: 9999, message: '快递费有效值为0-9999', trigger: 'blur'}
                     ],
                     exemptAmount: [
                         {required: true, message: '免额限制不能为空', trigger: 'blur'},

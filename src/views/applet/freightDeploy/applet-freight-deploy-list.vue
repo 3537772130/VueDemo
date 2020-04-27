@@ -26,7 +26,7 @@
         <el-table-column align="center" prop="title" label="标题" width="220"></el-table-column>
         <el-table-column align="center" prop="minimum" label="开始距离（米）" width="140"></el-table-column>
         <el-table-column align="center" prop="maximum" label="截止距离（米）" width="140"></el-table-column>
-        <el-table-column align="center" prop="freight" label="运费（元）" width="120"></el-table-column>
+        <el-table-column align="center" prop="freight" label="快递费（元）" width="120"></el-table-column>
         <el-table-column align="center" prop="exemptAmount" label="免额限制（元）" width="140"></el-table-column>
         <el-table-column align="center" prop="updateTime" label="更新时间" width="140"></el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">

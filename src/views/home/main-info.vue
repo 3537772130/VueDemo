@@ -193,6 +193,21 @@
                                 title: '运费配置'
                             }
                         ]
+                    },
+                    {
+                        index: 'm-5',
+                        title: '订单管理',
+                        icon: 'el-icon-discount',
+                        items: [
+                            {
+                                index: '5-1',
+                                title: '我的订单'
+                            },
+                            {
+                                index: '5-2',
+                                title: '店铺订单'
+                            }
+                        ]
                     }
                 ]
             }

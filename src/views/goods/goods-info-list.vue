@@ -12,7 +12,7 @@
   }
 
   .goods-file-dialog .el-dialog {
-    width: 750px;
+    width: 650px;
   }
 
   .goods-file-dialog .el-dialog > .el-dialog__body {

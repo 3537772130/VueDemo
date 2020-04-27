@@ -64,6 +64,13 @@
       <div v-if="item.name === '4-2'" class="tab-div-content-page">
         <appletFreightDeploy></appletFreightDeploy>
       </div>
+      <!--订单管理-->
+      <div v-if="item.name === '5-1'" class="tab-div-content-page">
+        <myOrderList></myOrderList>
+      </div>
+      <div v-if="item.name === '5-2'" class="tab-div-content-page">
+        <storeOrderList></storeOrderList>
+      </div>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -78,6 +85,8 @@
   import couponCreateList from '@/views/coupon/coupon-create-list.vue'
   import couponMyList from '@/views/coupon/coupon-my-list.vue'
   import appletFreightDeploy from '@/views/applet/freightDeploy/applet-freight-deploy-list.vue'
+  import myOrderList from '@/views/order/my-order-list.vue'
+  import storeOrderList from '@/views/order/store-order-list.vue'
 
   export default {
     name: 'tabs-content',
@@ -91,7 +100,9 @@
         'recommendList': recommendList,
         'couponCreateList': couponCreateList,
         'couponMyList': couponMyList,
-        'appletFreightDeploy': appletFreightDeploy
+        'appletFreightDeploy': appletFreightDeploy,
+        'myOrderList': myOrderList,
+        'storeOrderList': storeOrderList
     },
     data () {
       return {

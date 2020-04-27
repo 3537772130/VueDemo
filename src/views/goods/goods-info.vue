@@ -1,6 +1,6 @@
 <style type="text/css">
   .goods-info-form {
-    width: 400px;
+    width: 350px;
     height: 530px;
     margin: auto;
     text-align: left;
