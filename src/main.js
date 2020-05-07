@@ -45,6 +45,7 @@ axios.interceptors.request.use(function (config) {
   // params.append("tokenStr", getTimes())
   config.data = params
   config.headers['ipAddress'] = VueCookies.get('ip_address')
+  config.headers['cityCode'] = VueCookies.get('city_code')
   return config
 }, function (error) {
   return Promise.reject(error)
