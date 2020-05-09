@@ -148,7 +148,7 @@
                     {
                         index: 'm-2',
                         title: '小程序管理',
-                        icon: 'el-icon-menu',
+                        icon: 'el-icon-info',
                         items: [
                             {
                                 index: '2-1',

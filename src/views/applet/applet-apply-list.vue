@@ -1,5 +1,5 @@
 <style type="text/css">
-  .applet-list-input{
+  .applet-list-input {
     width: 190px;
   }
 
@@ -8,6 +8,14 @@
   }
 
   .applet-audit-dialog .el-dialog > .el-dialog__body {
+    padding: 0px 20px;
+  }
+
+  .applet-list-dialog .el-dialog {
+    width: 680px;
+  }
+
+  .applet-list-dialog .el-dialog > .el-dialog__body {
     padding: 0px 20px;
   }
 </style>
@@ -49,7 +57,7 @@
         <el-table-column align="center" prop="appletSimple" label="小程序简称" width="140"></el-table-column>
         <el-table-column align="center" prop="typeName" label="服务类型" width="120"></el-table-column>
         <el-table-column align="center" prop="telephone" label="联系电话" width="120"></el-table-column>
-        <el-table-column align="center" prop="province" label="所属地域" width="220" >
+        <el-table-column align="center" prop="province" label="所属地域" width="220">
           <template slot-scope="scope">
             <span>{{scope.row.province + scope.row.city + scope.row.county}}</span>
           </template>
@@ -72,8 +80,12 @@
         <el-table-column align="center" prop="auditTime" label="更新日期" width="140"></el-table-column>
         <el-table-column align="center" prop="id" label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="warning" v-if="scope.row.auditResult == -1" plain @click="updateInfo(scope.row.id, scope.row.appletName)">修改</el-button>
-            <el-button type="warning" v-if="scope.row.auditResult == 1" plain>详情</el-button>
+            <el-button type="warning" v-if="scope.row.auditResult === -1" plain
+                       @click="updateInfo(scope.row.id, scope.row.appletName)">修改
+            </el-button>
+            <el-button type="warning" v-if="scope.row.auditResult === 1 || scope.row.auditResult === 2" plain
+                       @click="loadAppletDetails(scope.row.id)">详情
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -90,91 +102,105 @@
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <appletApply ref="appletApply" v-on:loadApplet="loadApplet"></appletApply>
       </el-dialog>
+      <el-dialog class="applet-list-dialog" :title="infoTitle" :visible.sync="infoShow"
+                 :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
+        <appletDetails ref="appletDetails" v-on:loadApplet="loadApplet"></appletDetails>
+      </el-dialog>
     </el-main>
   </el-container>
 </template>
 <script type="text/javascript">
-  import appletApply from '@/views/applet/applet-apply.vue'
+    import appletApply from '@/views/applet/applet-apply.vue'
+    import appletDetails from '@/views/applet/applet-details.vue'
 
-  export default {
-    name: 'applet-list',
-    components: {
-      'appletApply': appletApply
-    },
-    data() {
-      return {
-        loading: true,
-        tableHeight: 50,
-        currentPage: 1,
-        total: 0,
-        formInline: {
-          appletName: '',
-          status: '',
-          page: 1,
-          pageSize: 5
+    export default {
+        name: 'applet-list',
+        components: {
+            'appletApply': appletApply,
+            'appletDetails': appletDetails
         },
-        dialogTitle: '提交小程序信息',
-        showApply: false,
-        timestamp: ''
-      }
-    },
-    created() {
-      this.onSubmit()
-    },
-    mounted() {
-    },
-    methods: {
-      indexMethod(index) {
-        let count = (parseInt(this.formInline.page) - 1) * parseInt(this.formInline.pageSize)
-        return count + (parseInt(index) + 1)
-      },
-      onSubmit() {
-        this.loading = true
-        this.$axios({
-          url: '/api/user/applet/queryAppletAuditToPage',
-          method: 'post',
-          data: this.formInline
-        }).then(res => {
-          console.info('后台返回的数据', res.data)
-          this.$global.setTableHeight(this, 'applet-form')
-          if (res.data.code === '1') {
-            this.tableData = res.data.data.dataSource
-            this.total = res.data.data.totalCount
-          } else if (res.data.code === "-1") {
-            this.$message.error(res.data.data)
-          }
-          this.timestamp = '?' + Date.parse(new Date())
-          this.$global.exitLoad(this, null, res.data)
-        }).catch(error => {
-          console.info('错误信息', error)
-          this.$global.exitLoad(this, null, '')
-        })
-      },
-      selectList() {
-        this.formInline.page = 1
-        this.onSubmit()
-      },
-      handleCurrentChange(val) {
-        this.formInline.page = val
-        this.onSubmit()
-      },
-      updateInfo(id, name) {
-        this.showApply = true
-        if (id && id === '0') {
-          this.dialogTitle = '填写小程序申请信息'
-        } else {
-          this.dialogTitle = name + ' - 修改信息'
+        data () {
+            return {
+                loading: true,
+                tableHeight: 50,
+                currentPage: 1,
+                total: 0,
+                formInline: {
+                    appletName: '',
+                    status: '',
+                    page: 1,
+                    pageSize: 5
+                },
+                dialogTitle: '提交小程序信息',
+                showApply: false,
+                infoTitle: '',
+                infoShow: false,
+                timestamp: ''
+            }
+        },
+        created () {
+            this.onSubmit()
+        },
+        mounted () {
+        },
+        methods: {
+            indexMethod (index) {
+                let count = (parseInt(this.formInline.page) - 1) * parseInt(this.formInline.pageSize)
+                return count + (parseInt(index) + 1)
+            },
+            onSubmit () {
+                this.loading = true
+                this.$axios({
+                    url: '/api/user/applet/queryAppletAuditToPage',
+                    method: 'post',
+                    data: this.formInline
+                }).then(res => {
+                    console.info('后台返回的数据', res.data)
+                    this.$global.setTableHeight(this, 'applet-form')
+                    if (res.data.code === '1') {
+                        this.tableData = res.data.data.dataSource
+                        this.total = res.data.data.totalCount
+                    } else if (res.data.code === '-1') {
+                        this.$message.error(res.data.data)
+                    }
+                    this.timestamp = '?' + Date.parse(new Date())
+                    this.$global.exitLoad(this, null, res.data)
+                }).catch(error => {
+                    console.info('错误信息', error)
+                    this.$global.exitLoad(this, null, '')
+                })
+            },
+            selectList () {
+                this.formInline.page = 1
+                this.onSubmit()
+            },
+            handleCurrentChange (val) {
+                this.formInline.page = val
+                this.onSubmit()
+            },
+            updateInfo (id, name) {
+                this.showApply = true
+                if (id && id === '0') {
+                    this.dialogTitle = '填写小程序申请信息'
+                } else {
+                    this.dialogTitle = name + ' - 修改信息'
+                }
+                try {
+                    this.$refs.appletApply.loadApplet(id)
+                } catch (e) {
+                    this.$cookies.set('applet_id', id)
+                }
+            },
+            loadApplet () {
+                this.showApply = false
+                this.selectList()
+            },
+            loadAppletDetails (id, appletName) {
+                this.infoShow = true
+                this.infoTitle = appletName
+                this.$cookies.set('applet_id', id)
+                this.$refs.appletDetails.loadApplet(id)
+            }
         }
-        try{
-          this.$refs.appletApply.loadApplet(id)
-        }catch (e) {
-          this.$cookies.set('applet_id', id)
-        }
-      },
-      loadApplet() {
-        this.showApply = false
-        this.selectList()
-      }
     }
-  }
 </script>

@@ -18,18 +18,22 @@
 
   .goods-file-img {
     width: 128px;
-    height: 128px;
+    height: 203px;
     display: inline-block;
     margin: 5px;
     text-align: center;
   }
 
   .goods-file-video {
-    width: 290px;
-    height: 190px;
+    width: 138px;
+    height: 260px;
     display: inline-block;
     margin: 5px;
     text-align: center;
+  }
+
+  .goods-file-video .video-js {
+    height: 100%;
   }
 
   .goods-img-file-uploader .el-upload {
@@ -48,14 +52,14 @@
     font-size: 28px;
     color: #8c939d;
     width: 128px;
-    height: 128px;
-    line-height: 128px;
+    height: 203px;
+    line-height: 203px;
     text-align: center;
   }
 
-  .goods-video-file-uploader{
-    width: 290px;
-    height: 160px;
+  .goods-video-file-uploader {
+    width: 128px;
+    height: 203px;
     margin-bottom: 5px;
   }
 
@@ -70,18 +74,19 @@
   .goods-video--file-uploader .el-upload:hover {
     border-color: #409EFF;
   }
+
   .goods-video-file-uploader-icon {
-    font-size: 48px;
+    font-size: 28px;
     color: #8c939d;
-    width: 290px;
-    height: 160px;
-    line-height: 160px;
+    width: 128px;
+    height: 203px;
+    line-height: 203px;
     text-align: center;
   }
 
   .file-src {
     width: 128px;
-    height: 128px;
+    height: 203px;
     display: block;
   }
 
@@ -91,7 +96,7 @@
   }
 
   .goods-video-file-delete {
-    width: 80px;
+    width: 55px;
     display: inline-table;
     margin-right: 5px;
   }
@@ -110,26 +115,28 @@
               <img v-if="item.fileStatus" :src="item.fileSrc + timestamp" class="file-src">
               <i v-else class="el-icon-plus goods-img-file-uploader-icon"></i>
             </el-upload>
-            <el-button type="danger" plain class="goods-img-file-delete" @click="deleteGoodsFile(item.id)">删除</el-button>
+            <el-button type="danger" plain class="goods-img-file-delete" @click="deleteGoodsFile(item.id)">删除
+            </el-button>
           </div>
         </div>
         <el-divider content-position="left"><span>介绍视频</span></el-divider>
         <div>
           <div v-for="(item, index) in fileList" :key="index" v-if="item.fileType === 2" class="goods-file-video">
-            <el-upload class="goods-video-file-uploader" :action="'/api/user/goods/uploadGoodsFileVideo?fileId=' + item.id + '&goodsId=' + item.goodsId"
+            <el-upload class="goods-video-file-uploader"
+                       :action="'/api/user/goods/uploadGoodsFileVideo?fileId=' + item.id + '&goodsId=' + item.goodsId"
                        name="goodsFile" :headers="myHeader" :show-file-list="false"
                        :on-success="handleFileSuccess" :before-upload="beforeVideoUpload">
-              <!--              <img v-if="item.fileSrc" :src="item.fileSrc + timestamp" class="file-src">-->
-<!--              <video id="myVideo" class="video-js" style="width: 190px;height: 220px;" v-if="item.fileSrc">-->
-<!--                <source :src="item.fileSrc + timestamp" type="video/mp4">-->
-<!--              </video>-->
               <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true"
-                            :options="playerOptions" style="width: 290px;height: 160px;" v-if="item.fileSrc">
+                            :options="playerOptions" style="width: 128px;height: 203px;" v-if="item.fileSrc">
               </video-player>
               <i v-else class="el-icon-plus goods-video-file-uploader-icon"></i>
             </el-upload>
-            <el-button type="danger" plain class="goods-video-file-delete" @click="deleteGoodsFile(index)">删除</el-button>
-            <el-button type="success" plain class="goods-video-file-delete" @click="initVideo()" v-if="item.fileSrc">预览</el-button>
+            <el-button type="danger" plain class="goods-video-file-delete" @click="deleteGoodsFile(index)">删除
+            </el-button>
+            <el-button type="success" plain class="goods-video-file-delete" @click="previewVideo(item.fileSrc)"
+                       v-if="item.fileSrc">
+              预览
+            </el-button>
           </div>
         </div>
       </div>
@@ -169,6 +176,7 @@
                     }).then(res => {
                         if (res.data.code === '1') {
                             this.fileList = res.data.data
+                            this.initVideo()
                         }
                         this.$cookies.remove('goods_id')
                         id = null
@@ -255,37 +263,40 @@
                 this.playerOptions = {
                     // 播放速度
                     playbackRates: [0.5, 1.0, 1.5, 2.0],
-                        // 如果true,浏览器准备好时开始回放。
-                        autoplay: false,
-                        // 默认情况下将会消除任何音频。
-                        muted: false,
-                        // 导致视频一结束就重新开始。
-                        loop: false,
-                        // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-                        preload: 'auto',
-                        language: 'zh-CN',
-                        // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-                        aspectRatio: '16:9',
-                        // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-                        fluid: true,
-                        sources: [{
+                    // 如果true,浏览器准备好时开始回放。
+                    autoplay: false,
+                    // 默认情况下将会消除任何音频。
+                    muted: false,
+                    // 导致视频一结束就重新开始。
+                    loop: false,
+                    // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+                    preload: 'auto',
+                    language: 'zh-CN',
+                    // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+                    aspectRatio: '16:9',
+                    // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+                    fluid: true,
+                    sources: [{
                         // 类型
-                        type: "video/mp4",
+                        type: 'video/mp4',
                         // url地址
                         src: fileSrc
                     }],
-                        // 你的封面地址
-                        poster: '',
-                        // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
-                        notSupportedMessage: '此视频暂无法播放，请稍后再试',
-                        controlBar: {
+                    // 你的封面地址
+                    poster: '',
+                    // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
+                    notSupportedMessage: '此视频暂无法播放，请稍后再试',
+                    controlBar: {
                         timeDivider: true,
-                            durationDisplay: true,
-                            remainingTimeDisplay: false,
-                            // 全屏按钮
-                            fullscreenToggle: true
+                        durationDisplay: true,
+                        remainingTimeDisplay: false,
+                        // 全屏按钮
+                        fullscreenToggle: true
                     }
                 }
+            },
+            previewVideo (fileSrc) {
+                window.open(fileSrc)
             }
         }
     }

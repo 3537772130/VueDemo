@@ -12,7 +12,7 @@
   }
 
   .goods-file-dialog .el-dialog {
-    width: 650px;
+    width: 750px;
   }
 
   .goods-file-dialog .el-dialog > .el-dialog__body {
@@ -29,6 +29,10 @@
 
   .goods-specs-dialog .el-dialog > .el-dialog__body {
     padding: 0px 20px;
+  }
+
+  .goods-spread-dialog .el-dialog {
+    width: 980px;
   }
 
   .no-drop:hover {
@@ -102,7 +106,7 @@
             <span>{{scope.row.maxPrice|addZero}}</span>
           </template>
         </el-table-column>
-<!--        <el-table-column align="center" prop="describeStr" label="描述" :show-overflow-tooltip="true" width="220"></el-table-column>-->
+        <!--        <el-table-column align="center" prop="describeStr" label="描述" :show-overflow-tooltip="true" width="220"></el-table-column>-->
         <el-table-column align="center" prop="ifDiscount" label="优惠券" width="80">
           <template slot-scope="scope">
             <el-link :underline="false" type="danger" v-if="!scope.row.ifDiscount">不参与</el-link>
@@ -126,13 +130,9 @@
             <el-link :underline="false" type="success" v-if="scope.row.goodsStatus == 1">已发布</el-link>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="id" label="操作" fixed="right">
+        <el-table-column align="center" prop="id" label="操作" fixed="right" width="220">
           <template slot-scope="scope">
-            <el-button type="primary" plain @click="loadGoodsInfo(scope.row.id)">修改</el-button>
-            <el-button type="primary" plain @click="loadGoodsFile(scope.row.id, scope.row.goodsName)">文件
-            </el-button>
-            <el-button type="primary" plain @click="loadGoodsSpecs(scope.row.id, scope.row.goodsName)">规格</el-button>
-            <div style="height: 10px;"></div>
+            <el-button type="info" plain @click="loadGoodsInfo(scope.row.id)">修改</el-button>
             <el-button type="info" plain
                        @click="updateStatus(scope.row.id, scope.row.goodsName, scope.row.goodsStatus)"
                        v-if="scope.row.goodsStatus">下架
@@ -142,6 +142,10 @@
                        v-else>发布
             </el-button>
             <el-button type="info" plain @click="deleteGoodsInfo(scope.row.id)">删除</el-button>
+            <div style="height: 10px;"></div>
+            <el-button type="primary" plain @click="loadGoodsFile(scope.row.id, scope.row.goodsName)">文件</el-button>
+            <el-button type="primary" plain @click="loadGoodsSpecs(scope.row.id, scope.row.goodsName)">规格</el-button>
+            <el-button type="primary" plain @click="loadGoodsSpread(scope.row.id, scope.row.goodsName)">推广</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -166,6 +170,10 @@
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <goodsSpecsList ref="goodsSpecsList" v-on:loadGoodsPage="loadGoodsPage"></goodsSpecsList>
       </el-dialog>
+      <el-dialog class="goods-spread-dialog" :title="spreadTitle" :visible.sync="spreadShow"
+                 :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
+        <spreadList ref="spreadList" v-on:loadSpreadList="loadSpreadList"></spreadList>
+      </el-dialog>
     </el-main>
   </el-container>
 </template>
@@ -175,13 +183,15 @@
     import goodsInfo from '@/views/goods/goods-info.vue'
     import goodsFileList from '@/views/goods/file/goods-file-list.vue'
     import goodsSpecsList from '@/views/goods/specs/goods-specs-list.vue'
+    import spreadList from '@/views/goods/spread/spread-list.vue'
 
     export default {
         name: 'goods-info-list',
         components: {
             'goodsInfo': goodsInfo,
             'goodsFileList': goodsFileList,
-            'goodsSpecsList': goodsSpecsList
+            'goodsSpecsList': goodsSpecsList,
+            'spreadList': spreadList
         },
         data () {
             return {
@@ -206,6 +216,8 @@
                 showFile: false,
                 specsTitle: '',
                 showSpecs: false,
+                spreadTitle: '',
+                spreadShow: false,
                 timestamp: '',
                 activeName: ''
             }
@@ -285,28 +297,46 @@
                 this.onSubmit()
             },
             loadGoodsInfo (id) {
+                try {
+                    this.$refs.goodsInfo.loadGoodsInfo(id, this.goods.typeId)
+                } catch (e) {
+                    this.$cookies.set('goods_id', id)
+                    this.$cookies.set('goods_type_id', this.goods.typeId)
+                }
                 this.showInfo = true
                 if (id && id === '0') {
                     this.infoTitle = '添加商品信息'
                 } else {
                     this.infoTitle = '修改商品信息'
                 }
-                this.$cookies.set('goods_id', id)
-                this.$cookies.set('goods_type_id', this.goods.typeId)
-                this.$refs.goodsInfo.loadGoodsInfo(id, this.goods.typeId)
             },
             loadGoodsFile (id, name) {
+                try {
+                    this.$refs.goodsFileList.loadGoodsFile(id)
+                } catch (e) {
+                    this.$cookies.set('goods_id', id)
+                }
                 this.showFile = true
                 this.fileTitle = name + ' - 文件列表'
-                this.$cookies.set('goods_id', id)
-                this.$refs.goodsFileList.loadGoodsFile(id)
             },
             loadGoodsSpecs (id, name) {
+                try {
+                    this.$refs.goodsSpecsList.loadGoodsPage(id)
+                } catch (e) {
+                    this.$cookies.set('goods_id', id)
+                    this.$cookies.set('goods_name', name)
+                }
                 this.showSpecs = true
                 this.specsTitle = name + ' - 规格列表'
-                this.$cookies.set('goods_id', id)
-                this.$cookies.set('goods_name', name)
-                this.$refs.goodsSpecsList.loadGoodsPage(id)
+            },
+            loadGoodsSpread (id, name) {
+                try {
+                    this.$refs.spreadList.loadSpreadList(id)
+                } catch (e) {
+                    this.$cookies.set('goods_id', id)
+                }
+                this.spreadShow = true
+                this.spreadTitle = name + ' - 推广图'
             },
             refreshList () {
                 this.showInfo = false

@@ -11,9 +11,9 @@
     padding: 0px 20px;
   }
 
-  .applet-pay-dialog  .el-dialog {
-    width: 580px;
-    height: 420px;
+  .applet-pay-dialog .el-dialog {
+    width: 980px;
+    height: 850px;
   }
 </style>
 <template>
@@ -34,9 +34,6 @@
         <el-form-item>
           <el-button type="primary" @click="selectList">查询</el-button>
         </el-form-item>
-        <el-form-item>
-          <el-button type="success" @click="updateInfo('0')">申请</el-button>
-        </el-form-item>
         <div style="display: none;">
           <el-input v-model="formInline.page" type="hidden"></el-input>
           <el-input v-model="formInline.pageSize" type="hidden"></el-input>
@@ -46,8 +43,17 @@
         <el-table-column align="center" type="index" :index="indexMethod" label="序号" width="80"></el-table-column>
         <el-table-column align="center" prop="appletLogo" label="小程序LOGO" width="120">
           <template slot-scope="scope">
-            <el-image :src="scope.row.appletLogo + timestamp"
-                      style="width: 100px; height: 100px; border-radius: 50px"></el-image>
+            <el-upload
+              action="/api/user/applet/updateAppletLogo"
+              name="materielImage"
+              :headers="myHeader"
+              :show-file-list="false"
+              :on-success="handleLogoSuccess"
+              :before-upload="beforePicUpload"
+              :data="{'appletId': + scope.row.id}">
+              <el-image :src="scope.row.appletLogo + timestamp" title="点击修改"
+                        style="width: 100px; height: 100px; border-radius: 50px"></el-image>
+            </el-upload>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="appletName" label="小程序名称" width="180"></el-table-column>
@@ -92,14 +98,12 @@
             <el-button type="primary" v-if="scope.row.status == 1 && !scope.row.ifSelling" plain
                        @click="updateAppletSelling(scope.row.id, scope.row.ifSelling)">发布
             </el-button>
-<!--            <el-button type="success" v-if="scope.row.ifOpenPay" plain-->
-<!--                       @click="loadAppletOpenPay(scope.row.id, scope.row.ifOpenPay)">更新支付-->
-<!--            </el-button>-->
             <el-button type="success" v-if="!scope.row.ifOpenPay" plain
-                       @click="loadAppletOpenPay(scope.row.id, scope.row.ifOpenPay)">支付认证
+                       @click="loadAppletOpenPay(scope.row.id, scope.row.appletName, scope.row.ifOpenPay)">支付认证
             </el-button>
+            <div style="height: 10px;"></div>
             <el-button type="primary" v-if="scope.row.status == 1" plain
-                       @click="loadAppletDetails(scope.row.id)">详情
+                       @click="loadAppletMateriel(scope.row.id, scope.row.appletName)">物料
             </el-button>
             <el-button type="primary" v-if="scope.row.status == 1" plain
                        @click="editAppletPage(scope.row.id, scope.row.appletName)">编辑页面
@@ -116,29 +120,27 @@
           :total="total">
         </el-pagination>
       </div>
-      <el-dialog class="applet-list-dialog" :title="infoTitle" :visible.sync="infoShow"
-                 :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
-        <appletDetails ref="appletDetails" v-on:loadApplet="loadApplet"></appletDetails>
-      </el-dialog>
       <el-dialog class="applet-pay-dialog" :title="dataTitle" :visible.sync="dataShow"
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <appletOpenPay ref="appletOpenPay" v-on:loadAppletData="loadAppletData"></appletOpenPay>
+      </el-dialog>
+      <el-dialog class="applet-pay-dialog" :title="materielTitle" :visible.sync="materielShow"
+                 :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
+        <appletMateriel ref="appletMateriel" v-on:loadMaterielPage="loadMaterielPage"></appletMateriel>
       </el-dialog>
     </el-main>
   </el-container>
 </template>
 <script type="text/javascript">
-    /* eslint-disable no-trailing-spaces */
-
     import {Loading} from 'element-ui'
-    import appletDetails from '@/views/applet/applet-details.vue'
     import appletOpenPay from '@/views/applet/applet-open-pay.vue'
+    import appletMateriel from '@/views/applet/materiel/applet-materiel.vue'
 
     export default {
         name: 'applet-list',
         components: {
-            'appletDetails': appletDetails,
-            'appletOpenPay': appletOpenPay
+            'appletOpenPay': appletOpenPay,
+            'appletMateriel': appletMateriel
         },
         data () {
             return {
@@ -152,10 +154,10 @@
                     page: 1,
                     pageSize: 5
                 },
-                infoTitle: '提交小程序信息',
-                infoShow: false,
-                dataTitle: '上传微信支付资料',
+                dataTitle: '',
                 dataShow: false,
+                materielTitle: '',
+                materielShow: false,
                 timestamp: ''
             }
         },
@@ -238,28 +240,62 @@
                     })
                 })
             },
-            loadAppletDetails (id) {
-                this.infoShow = true
-                if (id && id === '0') {
-                    this.infoTitle = '提交小程序信息'
-                } else {
-                    this.infoTitle = '修改小程序信息'
-                }
-                this.$cookies.set('applet_id', id)
-                this.$refs.appletDetails.loadApplet(id)
-            },
             loadApplet () {
                 this.infoShow = false
                 this.selectList()
             },
-            loadAppletOpenPay (id, ifOpenPay) {
+            loadAppletOpenPay (id, appletName, ifOpenPay) {
+                try {
+                    this.$refs.appletOpenPay.loadAppletData(id, ifOpenPay)
+                } catch (e) {
+                    this.$cookies.set('applet_id', id)
+                    this.$cookies.set('if_open_pay', ifOpenPay)
+                }
                 this.dataShow = true
-                this.$cookies.set('applet_id', id)
-                this.$cookies.set('if_open_pay', ifOpenPay)
-                this.$refs.appletOpenPay.loadAppletData(id, ifOpenPay)
+                this.dataTitle = appletName + ' - 上传微信支付资料'
             },
             loadAppletData () {
                 this.dataShow = false
+            },
+            loadAppletMateriel (id, appletName) {
+                try {
+                    this.$refs.appletMateriel.loadMaterielPage(id)
+                } catch (e) {
+                    this.$cookies.set('applet_id', id)
+                }
+                this.materielShow = true
+                this.materielTitle = appletName + ' - 物料信息'
+            },
+            handleLogoSuccess (res, file) {
+                if (res.code === '1') {
+                    let that = this
+                    this.$message.success({
+                        message: res.data,
+                        duration: 1000,
+                        onClose: function () {
+                            that.selectList()
+                        }
+                    })
+                } else {
+                    this.$message.error(res.data)
+                }
+                let loading = Loading.service({fullscreen: true, text: '正在上传'})
+                this.$global.exitLoad(this, loading, res.data)
+            },
+            beforePicUpload (file) {
+                let loading = Loading.service({fullscreen: true, text: '正在上传'})
+                const isJPG = 'image/png,image/jpeg,image/jpg'.indexOf(file.type) >= 0
+                const isLt2M = file.size / 1024 / 1024 < 3
+                if (!isJPG) {
+                    this.$message.error('上传图片格式错误!')
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传图片大小不能超过 3MB!')
+                }
+                if (!isJPG || !isLt2M) {
+                    loading.close()
+                }
+                return isJPG && isLt2M
             }
         }
     }

@@ -95,7 +95,7 @@
             onSubmit: function (formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$confirm('此操作将关闭小程序在线支付功能，需要在小程序页面【我的 - 设置 - 测试支付】测试付款成功后，才可开启支付功能！', '温馨提示', {
+                        this.$confirm('此操作将关闭已开通的小程序在线支付功能，需要在小程序页面【我的 - 设置 - 测试支付】测试付款成功后，才可开启支付功能！', '温馨提示', {
                             confirmButtonText: '确定',
                             cancelButtonText: '取消',
                             type: 'warning'

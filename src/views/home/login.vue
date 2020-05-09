@@ -16,7 +16,7 @@
     height: 200px;
   }
 
-  .login-div > .form-div {
+  .login-div > .login-form-div {
     width: 259px;
     height: 189px;
     margin: auto;
@@ -26,12 +26,12 @@
     box-shadow: 5px 5px 5px #DCDFE6;
   }
 
-  .login-div > .form-div > form {
+  .login-div > .login-form-div > form {
     width: 189px;
     margin: auto;
   }
 
-  .login-div > .form-div > form button {
+  .login-div > .login-form-div > form button {
     width: 189px;
     position: relative;
   }
@@ -55,7 +55,7 @@
     </el-header>
     <el-main :style="contentStyle">
       <div class="login-div">
-        <div class="form-div">
+        <div class="login-form-div">
           <el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-form">
             <el-form-item prop="mobile">
               <el-input class="input-div" placeholder="请输入账户名" prefix-icon="el-icon-user"
@@ -89,7 +89,7 @@
             return {
                 contentStyle: {
                     'width': '100%',
-                    'height': `${document.documentElement.clientHeight - 76}` + 'px',
+                    'height': `${document.documentElement.clientHeight - 60}` + 'px',
                     'background-image': 'url(\'/static/images/home/computer/computer-5.jpg\')',
                     'background-repeat': 'no-repeat',
                     'background-size': 'cover'
