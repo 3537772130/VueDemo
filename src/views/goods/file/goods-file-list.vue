@@ -180,7 +180,6 @@
                         if (res.data.code === '1') {
                             this.fileList = res.data.data
                             this.initVideo()
-                            document.getElementById('vjs_video_3').style.height = '203px'
                         }
                         this.$global.exitLoad(this, null, res.data)
                     }).catch(error => {
