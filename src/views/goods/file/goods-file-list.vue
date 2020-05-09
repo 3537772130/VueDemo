@@ -100,10 +100,6 @@
     display: inline-table;
     margin-right: 5px;
   }
-
-  .goods-video-file-uploader .video-player .video-js.vjs-4-3, .video-js.vjs-16-9, .video-js.vjs-fluid {
-    height: 203px;
-  }
 </style>
 <template>
   <el-container>
@@ -184,6 +180,7 @@
                         if (res.data.code === '1') {
                             this.fileList = res.data.data
                             this.initVideo()
+                            document.getElementById('vjs_video_3').style.height = '203px'
                         }
                         this.$global.exitLoad(this, null, res.data)
                     }).catch(error => {
