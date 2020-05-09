@@ -100,6 +100,10 @@
     display: inline-table;
     margin-right: 5px;
   }
+
+  .goods-video-file-uploader .video-player .video-js.vjs-4-3, .video-js.vjs-16-9, .video-js.vjs-fluid {
+    height: 203px;
+  }
 </style>
 <template>
   <el-container>
@@ -113,9 +117,9 @@
                        name="goodsFile" :headers="myHeader" :show-file-list="false"
                        :on-success="handleFileSuccess" :before-upload="beforeImageUpload">
               <img v-if="item.fileStatus" :src="item.fileSrc + timestamp" class="file-src">
-              <i v-else class="el-icon-plus goods-img-file-uploader-icon"></i>
+              <i v-else class="el-icon-plus goods-img-file-uploader-icon" style="line-height: 203px;"></i>
             </el-upload>
-            <el-button type="danger" plain class="goods-img-file-delete" @click="deleteGoodsFile(item.id)">删除
+            <el-button type="danger" plain class="goods-img-file-delete" @click="deleteGoodsFile(index)">删除
             </el-button>
           </div>
         </div>
@@ -127,9 +131,9 @@
                        name="goodsFile" :headers="myHeader" :show-file-list="false"
                        :on-success="handleFileSuccess" :before-upload="beforeVideoUpload">
               <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true"
-                            :options="playerOptions" style="width: 128px;height: 203px;" v-if="item.fileSrc">
+                            :options="playerOptions" style="width: 128px;height: 203px;" v-if="item.fileStatus">
               </video-player>
-              <i v-else class="el-icon-plus goods-video-file-uploader-icon"></i>
+              <i v-else class="el-icon-plus goods-video-file-uploader-icon" style="line-height: 203px;"></i>
             </el-upload>
             <el-button type="danger" plain class="goods-video-file-delete" @click="deleteGoodsFile(index)">删除
             </el-button>
@@ -151,6 +155,7 @@
         data () {
             return {
                 loading: false,
+                goodsId: '',
                 fileList: [],
                 timestamp: '',
                 myHeader: {
@@ -169,6 +174,8 @@
             loadGoodsFile (id) {
                 if (id) {
                     this.loading = true
+                    this.goodsId = id
+                    this.$cookies.remove('goods_id')
                     this.$axios({
                         url: '/api/user/goods/queryFileList',
                         method: 'post',
@@ -178,8 +185,6 @@
                             this.fileList = res.data.data
                             this.initVideo()
                         }
-                        this.$cookies.remove('goods_id')
-                        id = null
                         this.$global.exitLoad(this, null, res.data)
                     }).catch(error => {
                         console.info('错误信息', error)
@@ -196,6 +201,7 @@
                             break
                         }
                     }
+                    this.initVideo()
                     this.timestamp = '?' + Date.parse(new Date())
                     this.$message.success('上传成功')
                 } else {
@@ -235,7 +241,7 @@
                 return isJPG && isLt2M
             },
             deleteGoodsFile (index) {
-                let file = this.fileList[(index - 1)]
+                let file = this.fileList[(index)]
                 if (file.fileStatus) {
                     let loading = Loading.service({fullscreen: true, text: '正在删除'})
                     this.$axios({
@@ -245,6 +251,7 @@
                     }).then(res => {
                         if (res.data.code === '1') {
                             file.fileStatus = false
+                            // this.loadGoodsFile()
                         } else {
                             this.$message.error(res.data.data)
                         }
@@ -256,42 +263,43 @@
                 }
             },
             initVideo () {
-                let fileSrc = ''
                 if (this.fileList.length > 0) {
-                    fileSrc = this.fileList[0].fileSrc
-                }
-                this.playerOptions = {
-                    // 播放速度
-                    playbackRates: [0.5, 1.0, 1.5, 2.0],
-                    // 如果true,浏览器准备好时开始回放。
-                    autoplay: false,
-                    // 默认情况下将会消除任何音频。
-                    muted: false,
-                    // 导致视频一结束就重新开始。
-                    loop: false,
-                    // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-                    preload: 'auto',
-                    language: 'zh-CN',
-                    // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-                    aspectRatio: '16:9',
-                    // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-                    fluid: true,
-                    sources: [{
-                        // 类型
-                        type: 'video/mp4',
-                        // url地址
-                        src: fileSrc
-                    }],
-                    // 你的封面地址
-                    poster: '',
-                    // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
-                    notSupportedMessage: '此视频暂无法播放，请稍后再试',
-                    controlBar: {
-                        timeDivider: true,
-                        durationDisplay: true,
-                        remainingTimeDisplay: false,
-                        // 全屏按钮
-                        fullscreenToggle: true
+                    let fileSrc = this.fileList[0].fileSrc
+                    if (fileSrc && fileSrc !== '') {
+                        this.playerOptions = {
+                            // 播放速度
+                            playbackRates: [0.5, 1.0, 1.5, 2.0],
+                            // 如果true,浏览器准备好时开始回放。
+                            autoplay: false,
+                            // 默认情况下将会消除任何音频。
+                            muted: false,
+                            // 导致视频一结束就重新开始。
+                            loop: false,
+                            // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+                            preload: 'auto',
+                            language: 'zh-CN',
+                            // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+                            aspectRatio: '16:9',
+                            // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+                            fluid: true,
+                            sources: [{
+                                // 类型
+                                type: 'video/mp4',
+                                // url地址
+                                src: fileSrc + '?' + Date.parse(new Date())
+                            }],
+                            // 你的封面地址
+                            poster: '',
+                            // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
+                            notSupportedMessage: '此视频暂无法播放，请稍后再试',
+                            controlBar: {
+                                timeDivider: true,
+                                durationDisplay: true,
+                                remainingTimeDisplay: false,
+                                // 全屏按钮
+                                fullscreenToggle: true
+                            }
+                        }
                     }
                 }
             },

@@ -53,7 +53,7 @@
                 :on-success="handleLogoSuccess"
                 :before-upload="beforePicUpload">
                 <img v-if="goods.coverSrc" :src="goods.coverSrc + timestamp" class="cover-src">
-                <i v-else class="el-icon-plus cover-src-uploader-icon"></i>
+                <i v-else class="el-icon-plus cover-src-uploader-icon" style="line-height: 98px;"></i>
               </el-upload>
             </div>
             <el-input v-model="goods.coverSrc" class="goods-info-input" style="display: none;"></el-input>
