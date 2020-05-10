@@ -136,7 +136,7 @@
   .spread-right {
     float: right;
     width: 550px;
-    height: 580px;
+    height: 600px;
     overflow-y: scroll;
   }
 
@@ -160,10 +160,10 @@
   }
 </style>
 <template>
-  <div style="height: 650px;">
+  <div>
     <el-tabs type="border-card" v-model="spreadTabsValue" @tab-click="tabsClick">
       <el-tab-pane label="推广列表" name="list">
-        <div class="spread-content">
+        <div class="spread-content" style="overflow-y: scroll;">
           <div class="spread-list-div" v-for="(item, index) in list" :key="index">
             <el-image class="spread-list-image" :src="item.spreadImage + timestamp"></el-image>
             <div class="but" @click="delSpreadImage(item.id)">
@@ -250,7 +250,7 @@
               <img :class="mIndex === materielIndex ? 'select':''" :src="materiel.materielImage + timestamp"
                    style="width: 120px;height: 120px;margin-bottom: 0px;" @click="chooseMateriel(materielIndex, 3)">
             </div>
-            <div v-if="materielList">请前往【小程序管理 - 小程序管理列表】上传物料</div>
+            <div v-if="materielList.length === 0">请前往【小程序管理 - 小程序管理列表】上传物料</div>
           </div>
         </div>
       </el-tab-pane>
@@ -416,6 +416,8 @@
                     this.materielType = materielType
                     if (materielType === 3) {
                         this.isPosition = true
+                    } else {
+                        this.isPosition = false
                     }
                 }
                 this.clickImage()
@@ -437,6 +439,14 @@
                 }
                 this.isSub = false
                 this.previewPath = ''
+                this.image = {
+                    goodsFileId: '',
+                    materielId: '',
+                    startX: '',
+                    startY: '',
+                    sizeX: '',
+                    sizeY: ''
+                }
             },
             createImage: function () {
                 if (this.isCreate) {

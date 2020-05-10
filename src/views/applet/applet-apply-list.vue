@@ -4,7 +4,7 @@
   }
 
   .applet-audit-dialog .el-dialog {
-    width: 750px;
+    width: 770px;
   }
 
   .applet-audit-dialog .el-dialog > .el-dialog__body {
@@ -12,7 +12,7 @@
   }
 
   .applet-list-dialog .el-dialog {
-    width: 680px;
+    width: 700px;
   }
 
   .applet-list-dialog .el-dialog > .el-dialog__body {

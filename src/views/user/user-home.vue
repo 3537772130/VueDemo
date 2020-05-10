@@ -75,7 +75,7 @@
   }
 
   .user-home-dialog .el-dialog {
-    width: 500px;
+    width: 520px;
   }
 </style>
 <template>

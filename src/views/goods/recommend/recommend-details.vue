@@ -79,7 +79,7 @@
   }
 
   .part-choose-dialog .el-dialog {
-    width: 680px;
+    width: 700px;
   }
 
   .part-choose-dialog .el-dialog > .el-dialog__body {

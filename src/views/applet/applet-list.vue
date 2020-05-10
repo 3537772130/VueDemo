@@ -4,7 +4,7 @@
   }
 
   .applet-list-dialog .el-dialog {
-    width: 680px;
+    width: 700px;
   }
 
   .applet-list-dialog .el-dialog > .el-dialog__body {
@@ -12,7 +12,7 @@
   }
 
   .applet-pay-dialog .el-dialog {
-    width: 980px;
+    width: 1000px;
     height: 850px;
   }
 </style>

@@ -1,6 +1,6 @@
 <style type="text/css">
   .dialog .el-dialog {
-    width: 700px;
+    width: 720px;
   }
 
   .dialog > .el-dialog__body {

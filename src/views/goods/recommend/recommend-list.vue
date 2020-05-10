@@ -4,7 +4,7 @@
   }
 
   .recommend-goods-dialog .el-dialog {
-    width: 680px;
+    width: 700px;
     height: 520px;
     text-align: left;
   }

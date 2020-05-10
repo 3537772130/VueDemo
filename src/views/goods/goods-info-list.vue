@@ -4,7 +4,7 @@
   }
 
   .goods-info-dialog .el-dialog {
-    width: 480px;
+    width: 500px;
   }
 
   .goods-info-dialog .el-dialog > .el-dialog__body {
@@ -12,7 +12,7 @@
   }
 
   .goods-file-dialog .el-dialog {
-    width: 780px;
+    width: 800px;
   }
 
   .goods-file-dialog .el-dialog > .el-dialog__body {
@@ -32,7 +32,7 @@
   }
 
   .goods-spread-dialog .el-dialog {
-    width: 980px;
+    width: 1000px;
   }
 
   .no-drop:hover {

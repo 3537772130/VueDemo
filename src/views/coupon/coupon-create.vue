@@ -89,11 +89,9 @@
                          :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="使用限制" prop="usePrice">
-            <el-input v-model.number="coupon.usePrice" placeholder="消费多少可用"
-                      class="coupon-info-input" readonly="readonly" v-if="coupon.couponType === '1'"></el-input>
+          <el-form-item label="使用限制" prop="usePrice" v-if="coupon.couponType !== '1'">
             <el-input v-model.number="coupon.usePrice" placeholder="消费多少可用" maxlength="5"
-                      class="coupon-info-input" @input="handleClick" v-else></el-input>
+                      class="coupon-info-input" @input="handleClick"></el-input>
           </el-form-item>
           <el-form-item label="预派发数量" prop="makeIssueNum">
             <el-input v-model.number="coupon.makeIssueNum" maxlength="5" placeholder="预定可派发的优惠券数量"

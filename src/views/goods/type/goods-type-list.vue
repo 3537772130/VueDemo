@@ -4,7 +4,7 @@
   }
 
   .goods-type-dialog .el-dialog {
-    width: 480px;
+    width: 500px;
   }
 
   .goods-type-dialog .el-dialog > .el-dialog__body {

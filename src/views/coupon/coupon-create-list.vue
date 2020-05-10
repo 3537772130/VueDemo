@@ -4,7 +4,7 @@
   }
 
   .coupon-list-dialog .el-dialog {
-    width: 700px;
+    width: 720px;
   }
 
   .coupon-list-dialog .el-dialog > .el-dialog__body {
