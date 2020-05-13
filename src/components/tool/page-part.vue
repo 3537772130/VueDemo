@@ -65,7 +65,7 @@
                 'name': '商品名称',
                 'minPrice': 166.66,
                 'maxPrice': 188.88,
-                'goodsIcon': '/static/images/goods/goods-1.png'
+                'goodsIcon': '/static/images/icon/shopping.png'
             }]
         }, {
             'id': 'divider-title',
@@ -77,7 +77,7 @@
             'list': [{
                 'goodsId': '',
                 'goodsIcon': '',
-                'icon': '/static/images/carousel/carousel-1.png'
+                'icon': '/static/images/carousel/carousel-2.png'
             }]
         }, {
             'id': 'goods-three-row',
@@ -87,7 +87,7 @@
                 'name': '商品名称',
                 'minPrice': 166.66,
                 'maxPrice': 188.88,
-                'goodsIcon': '/static/images/goods/goods-1.png'
+                'goodsIcon': '/static/images/icon/shopping.png'
             }]
         }, {
             'id': 'imgX-scroll',
@@ -95,7 +95,7 @@
             'list': [{
                 'goodsId': '',
                 'goodsIcon': '',
-                'icon': '/static/images/carousel/carousel-1.png'
+                'icon': '/static/images/carousel/carousel-3.png'
             }]
         }, {
             'id': 'imgY-scroll',
@@ -103,7 +103,7 @@
             'list': [{
                 'goodsId': '',
                 'goodsIcon': '',
-                'icon': '/static/images/carousel/carousel-1.png'
+                'icon': '/static/images/carousel/carousel-4.png'
             }]
         }, {
             'id': 'goodsY-scroll',
@@ -113,7 +113,7 @@
                 'name': '商品名称',
                 'minPrice': 166.66,
                 'maxPrice': 188.88,
-                'goodsIcon': '/static/images/goods/goods-1.png'
+                'goodsIcon': '/static/images/icon/shopping.png'
             }]
         }, {
             'id': 'goodsX-scroll',
@@ -123,7 +123,7 @@
                 'name': '商品名称',
                 'minPrice': 166.66,
                 'maxPrice': 188.88,
-                'goodsIcon': '/static/images/goods/goods-1.png'
+                'goodsIcon': '/static/images/icon/shopping.png'
             }]
         }
     ]

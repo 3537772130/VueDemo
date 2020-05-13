@@ -553,7 +553,12 @@
   display: inline-block;
 }
 
-.components > .goodsX-scroll > .bscroll-container > .goods-def > div > .goods-price {
+.components > .goodsX-scroll > .bscroll-container > .goods-def > .content {
+  position: relative;
+  top: -15px;
+}
+
+.components > .goodsX-scroll > .bscroll-container > .goods-def > .content > .goods-price {
   margin: auto;
   width: 120px;
   height: 20px;
@@ -565,15 +570,15 @@
   font-size: 14px;
 }
 
-.components > .goodsX-scroll > .bscroll-container > .goods-def > div > .goods-price > span {
+.components > .goodsX-scroll > .bscroll-container > .goods-def > .content > .goods-price > span {
   font-size: 16px;
   color: #f76a24;
 }
 
-.components > .goodsX-scroll > .bscroll-container > .goods-def > div > .goods-name {
+.components > .goodsX-scroll > .bscroll-container > .goods-def > .content > .goods-name {
   margin: auto;
   width: 120px;
-  height: 49px;
+  height: 55px;
   font-size: 14px;
   white-space: normal;
   overflow: hidden;
@@ -582,5 +587,22 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   text-align: left;
+}
+
+.components > .goodsX-scroll > .bscroll-container > .goods-def > .content > .shopping {
+  width: 120px;
+  height: 30px;
+  line-height: 30px;
+  display: inline-block;
+  text-align: right;
+}
+
+.components > .goodsX-scroll > .bscroll-container > .goods-def > .content > .shopping > label{
+  padding: 5px 10px;
+  color: #FFFFFF;
+  background-color: #f76a24;
+  font-size: 12px;
+  border-radius: 14px;
+  margin-right: 15px;
 }
 
