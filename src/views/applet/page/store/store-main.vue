@@ -4,12 +4,13 @@
 </style>
 <template>
   <div style="text-align: left;">
-    <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF;scrollbar-width: none;">
+    <el-main v-loading="loading" element-loading-text="加载中"
+             :style="'height: ' + (contentHeight - 80) + 'px;background-color: #FFFFFF;scrollbar-width: none;'">
       <div class="config-operation">
         <el-button type="primary" @click="preserveConfig()"><i class="el-icon-folder-checked"></i>&nbsp;保存配置</el-button>
         <el-button type="danger" @click="cancelConfig()"><i class="el-icon-folder-delete"></i>&nbsp;取消配置</el-button>
       </div>
-      <div class="left-menu" :style="{height: (contentHeight - 100) + 'px'}">
+      <div class="left-menu" :style="{height: (contentHeight - 150) + 'px;center-img: scroll;'}">
         <div v-for="(item1, index1) in typeList" :key="index1">
           <el-divider content-position="left">{{item1.name}}</el-divider>
           <div v-for="(item2, index2) in item1.list" :key="index2" class="style-choose">
@@ -19,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="center-menu" :style="{height: contentHeight + 'px'}">
+      <div class="center-menu" :style="'height: ' + (contentHeight - 30) + 'px;'">
         <el-image src="/static/images/timg.jpg" class="center-img"></el-image>
         <div class="center-content" ref="centerContent" style="scrollbar-width: none;">
           <div class="components" v-for="(item,partIndex) in partList" :key="partIndex"
@@ -30,7 +31,7 @@
               </div>
             </div>
             <div class="img-carousel" @click="openDrawer(partIndex)" v-if="item.id === 'img-carousel'">
-              <el-carousel :interval="3000" arrow="never" height="150px">
+              <el-carousel :interval="3000" arrow="never" height="120px">
                 <el-carousel-item v-for="(car,index) in item.list" :key="index">
                   <el-image class="image" :src="car.icon"></el-image>
                 </el-carousel-item>
@@ -121,7 +122,8 @@
               <div class="bscroll-container" :style="goodsYScrollStyle">
                 <div class="goods-def" v-for="(goods, index) in item.list" :key="index">
                   <div>
-                    <el-image class="goods-img" :src="goods.goodsIcon" style="border-radius: 10px 10px 0px 0px;"></el-image>
+                    <el-image class="goods-img" :src="goods.goodsIcon"
+                              style="border-radius: 10px 10px 0px 0px;"></el-image>
                   </div>
                   <div class="goods-price">
                     &yen;{{goods.minPrice|addZero}}
@@ -174,7 +176,7 @@
         },
         data () {
             return {
-                contentHeight: `${document.documentElement.scrollHeight - 150}`,
+                contentHeight: `${document.documentElement.scrollHeight}`,
                 contentWidth: `${document.documentElement.scrollWidth}`,
                 loading: false,
                 typeList: [],

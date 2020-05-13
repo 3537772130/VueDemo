@@ -3,7 +3,8 @@
 </style>
 <template>
   <div>
-    <el-main v-loading="loading" element-loading-text="加载中" style="background-color: #FFFFFF; padding: 0px 20px;">
+    <el-main v-loading="loading" element-loading-text="加载中"
+             :style="'height: ' + contentHeight + 'px; background-color: #FFFFFF; padding: 0px 20px;'">
       <el-form class="store-main-part-form">
         <div class="store-main-part" v-for="(item, pIndex) in partList" :key="pIndex">
           <div v-if="partIndex === pIndex && item.id === 'notice-bar'">
@@ -409,6 +410,7 @@
         },
         data () {
             return {
+                contentHeight: `${document.documentElement.scrollHeight}`,
                 loading: false,
                 partIndex: 0,
                 partList: [],
@@ -483,7 +485,7 @@
                         if (k === this.partIndex) {
                             let list1 = []
                             for (let i = 0; i < part.list.length; i++) {
-                                if (i != index) {
+                                if (i !== index) {
                                     list1.push(part.list[i])
                                 }
                             }
@@ -509,7 +511,7 @@
                 }).then(() => {
                     let list = []
                     for (let i = 0; i < this.partList.length; i++) {
-                        if (i != this.partIndex) {
+                        if (i !== this.partIndex) {
                             list.push(this.partList[i])
                         }
                     }

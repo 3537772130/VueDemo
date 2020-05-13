@@ -13,6 +13,7 @@
     overflow: auto;
     height: 320px;
     padding-bottom: 50px;
+    text-align: left;
   }
 
   .part-list > div > div > .part-info-select {
@@ -28,8 +29,8 @@
     width: 100px;
     height: 150px;
     padding: 0px 10px;
-    border-top: 1px #b2b2b2 solid;
-    border-left: 1px #b2b2b2 solid;
+    border-top: 1px #f0f0f0 solid;
+    border-left: 1px #f0f0f0 solid;
     border-radius: 5px;
     margin-left: 20px;
     webkit-box-shadow: 8px 8px 6px #b2b2b2;

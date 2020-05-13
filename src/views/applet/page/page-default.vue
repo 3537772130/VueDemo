@@ -48,7 +48,7 @@
         },
         data () {
             return {
-                tabsHeight: `${document.documentElement.scrollHeight + 50}`,
+                tabsHeight: `${document.documentElement.scrollHeight + 35}`,
                 tabHeight: `${document.documentElement.scrollHeight - 25}`,
                 loading: false,
                 showTabs: '',
