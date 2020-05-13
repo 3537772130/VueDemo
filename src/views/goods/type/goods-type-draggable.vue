@@ -70,7 +70,7 @@
         <draggable class="wrapper" v-model="typeList">
           <transition-group class="cm-flex flex-wrap">
             <div class="dg-goods-type" v-for="(item, index) in typeList" :key="item.id" @mousedown="clickGoodsType(item.id)">
-              <label>【{{index+1}}】</label>
+              <label :class="item.id === typeId ? 'dg-goods-type-this' : ''">【{{index+1}}】</label>
               <el-image :src="item.typeLogo + timestamp"
                         style="width: 30px; height: 30px;"></el-image>
               <label :class="item.id === typeId ? 'dg-goods-type-this' : ''">{{item.typeName}}</label>
@@ -119,7 +119,6 @@
             loadApplet (appletId) {
                 if (appletId > 0) {
                     this.appletId = appletId
-                    this.loadNumber = 0
                     this.$cookies.remove('goods_type_applet_id')
                     this.$axios({
                         url: '/api/user/applet/queryAppletToMap',
@@ -138,6 +137,7 @@
             },
             loadType () {
                 this.loading = true
+                this.loadNumber = 0
                 this.$axios({
                     url: '/api/user/goods/loadGoodsTypeDraggableList',
                     method: 'post',

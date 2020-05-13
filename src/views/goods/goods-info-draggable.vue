@@ -74,7 +74,7 @@
         <draggable class="wrapper" v-model="goodsList">
           <transition-group class="cm-flex flex-wrap">
             <div class="dg-goods" v-for="(item, index) in goodsList" :key="item.id" @mousedown="clickGoods(item.id)">
-              <label>【{{index+1}}】</label>
+              <label :class="item.id === goodsId ? 'dg-goods-this' : ''">【{{index+1}}】</label>
               <el-image :src="item.coverSrc + timestamp"
                         style="width: 30px; height: 30px;"></el-image>
               <label :class="item.id === goodsId ? 'dg-goods-this' : ''">{{item.goodsName}}</label>
