@@ -7,6 +7,10 @@
     width: 500px;
   }
 
+  .goods-draggable-dialog .el-dialog {
+    width: 800px;
+  }
+
   .goods-info-dialog .el-dialog > .el-dialog__body {
     padding: 0px 20px;
   }
@@ -72,6 +76,9 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="selectList">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="warning" @click="loadGoodsDraggable()">排序</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="success" @click="loadGoodsInfo('0')">添加</el-button>
@@ -158,15 +165,19 @@
           :total="total">
         </el-pagination>
       </div>
-      <el-dialog class="goods-info-dialog" :title="infoTitle" :visible.sync="showInfo"
+      <el-dialog class="goods-info-dialog" :title="infoTitle" :visible.sync="infoShow"
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <goodsInfo ref="goodsInfo" v-on:refreshList="refreshList"></goodsInfo>
       </el-dialog>
-      <el-dialog class="goods-file-dialog" :title="fileTitle" :visible.sync="showFile"
+      <el-dialog class="goods-draggable-dialog" :title="dgTitle" :visible.sync="dgShow"
+                 :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
+        <goodsInfoDraggable ref="goodsInfoDraggable" v-on:refreshList="refreshList"></goodsInfoDraggable>
+      </el-dialog>
+      <el-dialog class="goods-file-dialog" :title="fileTitle" :visible.sync="fileShow"
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <goodsFileList ref="goodsFileList" v-on:loadGoodsFile="loadGoodsFile"></goodsFileList>
       </el-dialog>
-      <el-dialog class="goods-specs-dialog" :title="specsTitle" :visible.sync="showSpecs"
+      <el-dialog class="goods-specs-dialog" :title="specsTitle" :visible.sync="specsShow"
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <goodsSpecsList ref="goodsSpecsList" v-on:loadGoodsPage="loadGoodsPage"></goodsSpecsList>
       </el-dialog>
@@ -181,6 +192,7 @@
     /* eslint-disable no-trailing-spaces */
 
     import goodsInfo from '@/views/goods/goods-info.vue'
+    import goodsInfoDraggable from '@/views/goods/goods-info-draggable.vue'
     import goodsFileList from '@/views/goods/file/goods-file-list.vue'
     import goodsSpecsList from '@/views/goods/specs/goods-specs-list.vue'
     import spreadList from '@/views/goods/spread/spread-list.vue'
@@ -189,6 +201,7 @@
         name: 'goods-info-list',
         components: {
             'goodsInfo': goodsInfo,
+            'goodsInfoDraggable': goodsInfoDraggable,
             'goodsFileList': goodsFileList,
             'goodsSpecsList': goodsSpecsList,
             'spreadList': spreadList
@@ -211,11 +224,13 @@
                 },
                 typeList: [],
                 infoTitle: '',
-                showInfo: false,
+                infoShow: false,
+                dgTitle: '',
+                dgShow: false,
                 fileTitle: '',
-                showFile: false,
+                fileShow: false,
                 specsTitle: '',
-                showSpecs: false,
+                specsShow: false,
                 spreadTitle: '',
                 spreadShow: false,
                 timestamp: '',
@@ -232,6 +247,7 @@
                     this.appletId = this.appletList[0].id
                     this.loadInfo()
                 }
+                this.$global.exitLoad(this, null, res.data)
             }).catch(error => {
                 console.info('错误信息', error)
                 this.$global.exitLoad(this, null, '')
@@ -253,6 +269,7 @@
                         this.goods.typeId = res.data.data[0].id
                     }
                     this.onSubmit()
+                    this.$global.exitLoad(this, null, res.data)
                 }).catch(error => {
                     console.info('错误信息', error)
                     this.$global.exitLoad(this, null, '')
@@ -303,12 +320,21 @@
                     this.$cookies.set('goods_id', id)
                     this.$cookies.set('goods_type_id', this.goods.typeId)
                 }
-                this.showInfo = true
+                this.infoShow = true
                 if (id && id === '0') {
                     this.infoTitle = '添加商品信息'
                 } else {
                     this.infoTitle = '修改商品信息'
                 }
+            },
+            loadGoodsDraggable () {
+                try {
+                    this.$refs.goodsInfoDraggable.loadApplet(this.goods.typeId)
+                } catch (e) {
+                    this.$cookies.set('goods_type_id', this.goods.typeId)
+                }
+                this.dgShow = true
+                this.dgTitle = '商品排序 - 列表'
             },
             loadGoodsFile (id, name) {
                 try {
@@ -316,7 +342,7 @@
                 } catch (e) {
                     this.$cookies.set('goods_id', id)
                 }
-                this.showFile = true
+                this.fileShow = true
                 this.fileTitle = name + ' - 文件列表'
             },
             loadGoodsSpecs (id, name) {
@@ -326,7 +352,7 @@
                     this.$cookies.set('goods_id', id)
                     this.$cookies.set('goods_name', name)
                 }
-                this.showSpecs = true
+                this.specsShow = true
                 this.specsTitle = name + ' - 规格列表'
             },
             loadGoodsSpread (id, name) {
@@ -339,7 +365,8 @@
                 this.spreadTitle = name + ' - 推广图'
             },
             refreshList () {
-                this.showInfo = false
+                this.infoShow = false
+                this.dgShow = false
                 this.onSubmit()
             },
             shiftSort (id, sort) {

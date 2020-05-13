@@ -11,6 +11,9 @@
     padding: 0px 20px;
   }
 
+  .goods-type-draggable-dialog .el-dialog {
+    width: 600px;
+  }
 </style>
 <template>
   <el-container>
@@ -33,6 +36,9 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="selectList">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="warning" @click="loadGoodsTypeDraggable()">排序</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="success" @click="loadGoodsType('0')">添加</el-button>
@@ -83,20 +89,26 @@
           :total="total">
         </el-pagination>
       </div>
-      <el-dialog class="goods-type-dialog" :title="infoTitle" :visible.sync="showInfo"
+      <el-dialog class="goods-type-dialog" :title="infoTitle" :visible.sync="infoShow"
                  :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
         <goodsType ref="goodsType" v-on:refreshList="refreshList"></goodsType>
+      </el-dialog>
+      <el-dialog class="goods-type-draggable-dialog" :title="dgTitle" :visible.sync="dgShow"
+                 :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
+        <goodsTypeDraggable ref="goodsTypeDraggable" v-on:refreshList="refreshList"></goodsTypeDraggable>
       </el-dialog>
     </el-main>
   </el-container>
 </template>
 <script type="text/javascript">
     import goodsType from '@/views/goods/type/goods-type.vue'
+    import goodsTypeDraggable from '@/views/goods/type/goods-type-draggable.vue'
 
     export default {
         name: 'goods-type-list',
         components: {
-            'goodsType': goodsType
+            'goodsType': goodsType,
+            'goodsTypeDraggable': goodsTypeDraggable
         },
         data () {
             return {
@@ -115,7 +127,9 @@
                     pageSize: 10
                 },
                 infoTitle: '',
-                showInfo: false,
+                infoShow: false,
+                dgTitle: '',
+                dgShow: false,
                 timestamp: ''
             }
         },
@@ -129,6 +143,7 @@
                     this.typeForm.appletId = res.data.data[0].id
                     this.onSubmit()
                 }
+                this.$global.exitLoad(this, null, res.data)
             }).catch(error => {
                 console.info('错误信息', error)
                 this.$global.exitLoad(this, null, '')
@@ -175,7 +190,7 @@
                 this.onSubmit()
             },
             loadGoodsType (id) {
-                this.showInfo = true
+                this.infoShow = true
                 if (id && id === '0') {
                     this.infoTitle = '添加类型信息'
                 } else {
@@ -188,8 +203,18 @@
                 } catch (e) {
                 }
             },
+            loadGoodsTypeDraggable () {
+                try {
+                    this.$refs.goodsTypeDraggable.loadApplet(this.typeForm.appletId)
+                } catch (e) {
+                    this.$cookies.set('goods_type_applet_id', this.typeForm.appletId)
+                }
+                this.dgShow = true
+                this.dgTitle = '商品类型排序 - 列表'
+            },
             refreshList () {
-                this.showInfo = false
+                this.infoShow = false
+                this.dgShow = false
                 this.onSubmit()
             },
             shiftSort (id, sort) {
@@ -197,7 +222,7 @@
                 this.$axios({
                     url: '/api/user/goods/updateGoodsTypeIndex',
                     method: 'post',
-                    data: {typeId: id, sort: sort}
+                    data: {typeId: id, sort: sort, appletId: this.typeForm.appletId}
                 }).then(res => {
                     if (res.data.code === '1') {
                         this.onSubmit()
