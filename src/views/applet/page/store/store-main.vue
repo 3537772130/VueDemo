@@ -142,7 +142,7 @@
                     <div class="goods-name">{{goods.name}}</div>
                     <div class="goods-price">现价：<span>{{goods.minPrice|addZero}}</span></div>
                     <div class="goods-price">原价：
-                      <span style="font-size: 14px;text-decoration:line-through;">{{goods.maxPrice|addZero}}</span>
+                      <span style="font-size: 12px;text-decoration:line-through;">{{goods.maxPrice|addZero}}</span>
                     </div>
                     <div class="shopping">
                       <label>立即购买</label>
