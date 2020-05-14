@@ -25,8 +25,9 @@
   .content-div > .c-form-div {
     width: 740px;
     margin: auto;
-    border: 1px #DCDFE6 solid;
     padding: 30px;
+    border: 1px #F0F0F0 solid;
+    border-radius: 8px;
   }
 
   .form-info-div {

@@ -77,7 +77,7 @@
           <div class="product-title">功能多样满足您的各项需求</div>
           <div class="product-describe">您需要的就是我们追求的，没有最好，只有更好</div>
           <div class="product-register">
-            <div>现在注册 GO</div>
+            <div @click="toRegister">现在注册 GO</div>
           </div>
           <div class="product-img">
             <img src="/static/images/home/business/business-affairs-2.jpg">
@@ -121,7 +121,7 @@
           <div class="recommend-title">拥有一个小程序或仅是尝试一下新的想法</div>
           <div class="recommend-describe">流线式网页布局设计方案，可视化图文内容编辑模式，它让小程序制作和维护成为一件轻松惬意的事</div>
           <div class="recommend-button">
-            <div>马上体验</div>
+            <div @click="toLogo">马上体验</div>
           </div>
         </div>
       </el-col>
@@ -192,6 +192,12 @@
             backTop () {
                 document.documentElement.scrollTop = 0
                 document.body.scrollTop = 0
+            },
+            toRegister () {
+                this.$router.push({path: '/register'})
+            },
+            toLogo () {
+                this.$router.push({path: '/login'})
             }
         }
     }
