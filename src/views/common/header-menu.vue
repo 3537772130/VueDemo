@@ -3,6 +3,16 @@
     float: right;
   }
 
+  .logo-div {
+    display: inline-block;
+    width: 200px;
+    height: 63px;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+
   .logo {
     display: inline-block;
     position: relative;
@@ -19,10 +29,9 @@
 </style>
 <template>
   <div>
-    <div
-      style="display: inline-block;width: 200px;height: 63px;text-align: center;position: absolute;top: 0px;left: 0px;">
+    <div class="logo-div">
       <img class="logo" src="/static/images/logo.png">
-<!--      <img class="logo-title" src="/api/user/setImageText?text=程序坞&color=2196f3&fontFamily=华文隶书">-->
+      <!--      <img class="logo-title" src="/api/user/setImageText?text=程序坞&color=2196f3&fontFamily=华文隶书">-->
     </div>
     <el-menu
       :default-active="activeIndex"
