@@ -13,22 +13,22 @@
   <div>
     <el-main v-loading="loading" element-loading-text="加载中" class="default-main">
       <!--餐饮-->
-      <el-tabs v-model="showTabs" type="border-card" v-if="appletTypeId == 1" :style="{height: tabsHeight + 'px'}">
-        <el-tab-pane :style="{height: tabHeight + 'px'}" v-for="(item, index) in pageList" :key="index"
+      <el-tabs v-model="showTabs" type="border-card" v-if="appletTypeId == 1">
+        <el-tab-pane v-for="(item, index) in pageList" :key="index"
                      :label="item.pageName" :name="'page' + item.pageId">
           {{item.pageLogo + '-' + item.pageName}}
         </el-tab-pane>
       </el-tabs>
       <!--百货超市/便利店-->
-      <el-tabs v-model="showTabs" type="border-card" v-if="appletTypeId == 2" :style="{height: tabsHeight + 'px'}">
-        <el-tab-pane :style="{height: tabHeight + 'px'}" v-for="(item, index) in pageList" :key="index"
+      <el-tabs v-model="showTabs" type="border-card" v-if="appletTypeId == 2">
+        <el-tab-pane v-for="(item, index) in pageList" :key="index"
                      :label="item.pageName" :name="'page' + item.pageId">
           <storeMain trf="storeMain" v-if="item.pageLogo == 'MAIN'"></storeMain>
         </el-tab-pane>
       </el-tabs>
       <!--水果专卖-->
-      <el-tabs v-model="showTabs" type="border-card" v-if="appletTypeId == 3" :style="{height: tabsHeight + 'px'}">
-        <el-tab-pane :style="{height: tabHeight + 'px'}" v-for="(item, index) in pageList" :key="index"
+      <el-tabs v-model="showTabs" type="border-card" v-if="appletTypeId == 3">
+        <el-tab-pane v-for="(item, index) in pageList" :key="index"
                      :label="item.pageName" :name="'page' + item.pageId">
           {{item.pageLogo + '-' + item.pageName}}
         </el-tab-pane>

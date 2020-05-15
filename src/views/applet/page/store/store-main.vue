@@ -5,7 +5,7 @@
 <template>
   <div style="text-align: left;">
     <el-main v-loading="loading" element-loading-text="加载中"
-             :style="'height: ' + (contentHeight - 80) + 'px;background-color: #FFFFFF;scrollbar-width: none;'">
+             :style="'height: ' + (contentHeight - 80) + 'px;background-color: #FFFFFF;scrollbar-width: none;overflow-y: hidden;'">
       <div class="config-operation">
         <el-button type="primary" @click="preserveConfig()"><i class="el-icon-folder-checked"></i>&nbsp;保存配置</el-button>
         <el-button type="danger" @click="cancelConfig()"><i class="el-icon-folder-delete"></i>&nbsp;取消配置</el-button>
