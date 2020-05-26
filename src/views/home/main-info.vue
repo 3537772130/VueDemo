@@ -81,6 +81,10 @@
   .el-submenu .el-menu-item {
     text-align: left;
   }
+
+  .el-submenu__title .el-submenu__icon-arrow{
+    line-height: 1;
+  }
 </style>
 <template>
   <el-container :style="{height: bodyHeight}">

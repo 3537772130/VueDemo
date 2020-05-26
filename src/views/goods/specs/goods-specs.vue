@@ -1,9 +1,14 @@
+<!--suppress ALL -->
 <style type="text/css">
   .goods-specs-form {
     width: 420px;
     height: 620px;
     margin: auto;
     text-align: center;
+  }
+
+  .goods-specs-form .goods-specs-input {
+    width: 260px;
   }
 
   .specs-src-uploader .el-upload {
@@ -39,7 +44,7 @@
       <div style="width: 100%;float: left;clear: left;margin: auto;">
         <el-form :inline="true" :model="specsForm" :rules="rules" class="demo-form-inline goods-specs-form"
                  ref="specsForm">
-          <el-form-item label="规格图标" prop="typeLogo">
+          <el-form-item label="规格图片" prop="typeLogo">
             <div class="goods-specs-input" style="display: inline-block;text-align: left;">
               <el-upload
                 :before-upload="beforePicUpload"
@@ -190,7 +195,9 @@
                             console.info('后台返回的数据', res.data)
                             let that = this
                             res.data.code === '1' ? this.$message.success({
-                                message: res.data.data, duration: 1000, onClose: function () {
+                                message: res.data.data,
+                                duration: 1000,
+                                onClose: function () {
                                     that.$emit('refreshList')
                                 }
                             }) : this.$message.error(res.data.data)

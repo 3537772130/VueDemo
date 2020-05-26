@@ -148,6 +148,8 @@
   </el-container>
 </template>
 <script type="text/javascript">
+    /* eslint-disable no-trailing-spaces */
+
     import {Loading} from 'element-ui'
 
     export default {
@@ -198,7 +200,7 @@
                         {type: 'string', min: 1, max: 20, message: '联系电话长度为1-20个字符', trigger: 'blur'}
                     ],
                     typeId: [
-                        {required: true, message: '请选择服务类型', trigger: 'blur'},
+                        {required: true, message: '请选择服务类型', trigger: 'blur'}
                     ],
                     ifRetail: [
                         {required: true, message: '请选择营业类型', trigger: 'blur'}
@@ -297,7 +299,9 @@
                             console.info('后台返回的数据', res.data)
                             let that = this
                             res.data.code === '1' ? this.$message.success({
-                                message: res.data.data, duration: 1000, onClose: function () {
+                                message: res.data.data,
+                                duration: 1000,
+                                onClose: function () {
                                     that.$emit('loadApplet')
                                 }
                             }) : this.$message.error(res.data.data)

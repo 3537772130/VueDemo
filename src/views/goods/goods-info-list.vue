@@ -346,11 +346,11 @@
                 this.fileTitle = name + ' - 文件列表'
             },
             loadGoodsSpecs (id, name) {
+                this.$cookies.set('goods_name', name)
                 try {
                     this.$refs.goodsSpecsList.loadGoodsPage(id)
                 } catch (e) {
                     this.$cookies.set('goods_id', id)
-                    this.$cookies.set('goods_name', name)
                 }
                 this.specsShow = true
                 this.specsTitle = name + ' - 规格列表'
