@@ -145,6 +145,7 @@
                         this.specsForm.goodsId = res.data.data
                         this.timestamp = '?' + Date.parse(new Date())
                         this.onSubmit()
+                        this.$global.exitLoad(this, null, res.data)
                     }).catch(error => {
                         console.info('错误信息', error)
                         this.$global.exitLoad(this, null, '')

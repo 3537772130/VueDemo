@@ -42,9 +42,10 @@
       text-color="#fff"
       active-text-color="#409EFF" :style="menuWidth">
       <el-menu-item index="1">首页</el-menu-item>
-      <el-menu-item index="2">前往TEST</el-menu-item>
+      <!--      <el-menu-item index="2">前往TEST</el-menu-item>-->
       <!--      <el-menu-item index="6">ECHARTS</el-menu-item>-->
       <el-menu-item index="7">图片压缩</el-menu-item>
+      <el-menu-item index="8">视频压缩</el-menu-item>
       <el-menu-item index="3" v-if="!loginStatus">登录</el-menu-item>
       <el-menu-item index="4">立刻注册</el-menu-item>
       <el-submenu index="5" v-if="loginStatus" @click.native="handleSelect('5-1','5')">
@@ -113,6 +114,9 @@
                         break
                     case '7':
                         window.open('https://www.bejson.com/ui/compress_img/', '_blank')
+                        break
+                    case '8':
+                        window.open('https://www.apowersoft.cn/compress-video-online', '_blank')
                         break
                 }
             },

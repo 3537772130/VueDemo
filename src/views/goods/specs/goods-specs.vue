@@ -177,6 +177,7 @@
                         this.$global.exitLoad(this, null, res.data)
                         this.showSellPrice = true
                         this.$cookies.set('goods_price', this.specsForm.sellPrice)
+                        this.$global.exitLoad(this, null, res.data)
                     }).catch(error => {
                         console.info('错误信息', error)
                         this.$global.exitLoad(this, null, '')
